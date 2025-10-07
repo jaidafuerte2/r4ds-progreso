@@ -352,6 +352,122 @@ my_annoying |>
 #3     3  5.83  1.94
 #4     4  6.40  1.60
 
-# Este es un cambio pequeño para probar git y github
+# Ejemplo del control de tipos por adivinación de R:
+read_csv("
+  logical,numeric,date,string
+  TRUE,1,2021-01-15,abc
+  false,4.5,2021-02-15,def
+  T,Inf,2021-02-16,ghi
+") # produce:
+#> # A tibble: 3 × 4
+#>   logical numeric date       string
+#>   <lgl>     <dbl> <date>     <chr> 
+#> 1 TRUE        1   2021-01-15 abc   
+#> 2 FALSE       4.5 2021-02-15 def   
+#> 3 TRUE      Inf   2021-02-16 ghi
 
-#Este es otro cambio pequeño para probar git y github
+# Esta tabla tiene un error en la detección de tipo porque hay valores
+# inesperados con un valor distinto al NA
+simple_csv <- "
+  x
+  10
+  .
+  20
+  30"
+read_csv(simple_csv) # produce:
+#> # A tibble: 4 × 1
+#>   x    
+#>   <chr>
+#> 1 10   
+#> 2 .    
+#> 3 20   
+#> 4 30
+
+# col_types : es un argumento que toma una lista con los nombres
+# de las columnas. Y a estos nombres de las columnas les puede forzar
+# a tomar un tipo específico.
+
+df <- read_csv(
+  simple_csv,
+  col_types = list(x = col_double())
+) # produce:
+#> Warning: One or more parsing issues, call `problems()` on your data frame for
+#> details, e.g.:
+#>   dat <- vroom(...)
+#>   problems(dat)
+# Este mensaje nos dice que hubo un problema y podemos encontrar más
+# información del problema con la función problems()
+problems(df)
+# A tibble: 1 × 5
+#      row   col expected actual file                          
+#    <int> <int> <chr>    <chr>  <chr>                         
+#  1     3     1 a double .      /tmp/RtmptYWOBf/file18de3f3243
+# Este resultado nos dice que en la fila 3, columna 1 hay actualmente
+# un punto (.) en vez del valor esperado que es un "a double" (Dice
+# fila 3 porque supongo que la fila con los nombres de las variables
+# se cuenta como fila 1). Esto sugiere que este conjunto de datos usa
+# un punto (.) para representar valores faltantes
+
+# Al establecer que na = "." , la suposición automática funciona 
+# correctamente , obteniendo la columna numérica deseada:
+read_csv(simple_csv, na = ".") # produce:
+# A tibble: 4 × 1
+#x
+#  <dbl>
+#1    10
+#2    NA
+#3    20
+#4    30
+
+# Hay 9 tipos de columnas: 
+# col_logical(), col_double() : se necesitan con poca frecuencia ya
+# que r puede identificarlos automaticamente.
+# col_integer(): usan menos memoria que los dobles
+# col_character() : se le asigna a números que no van a realizar cálculos
+# numéricos como la cédula o números de tarjetas de crédito.
+# col_factor(), col_date()y col_datetime() :  crean factores, fechas y
+# horas respectivamente.
+# col_number() : es un analizador numérico permisivo, especialmente 
+# útil para monedas.
+# cols_skip(): omite una columna para que no se incluya en el resultado
+
+# Es posible anular la columna predetermianda cambiando de list() a 
+# cols() y especificando .default:
+another_csv <- "
+x,y,z
+1,2,3"
+read_csv(another_csv) # produce:
+# A tibble: 1 × 3
+#        x     y     z
+#    <dbl> <dbl> <dbl>
+#  1     1     2     3
+read_csv(
+  another_csv,
+  col_types = cols(.default = col_character())
+) # produce:
+#> # A tibble: 1 × 3
+#>   x     y     z    
+#>   <chr> <chr> <chr>
+#> 1 1     2     3
+
+# cols_only() : lee sólo las columnas que se especifican
+read_csv(
+  another_csv,
+  col_types = cols_only(x = col_character())
+) # produce:
+# A tibble: 1 × 1                                                        
+#    x    
+#    <chr>
+#  1 1  
+read_csv(
+  another_csv,
+  col_types = cols_only(col_character())
+) # produce:
+# A tibble: 1 × 1                                                        
+#    x    
+#    <chr>
+#  1 1  
+read_csv(
+  another_csv,
+  col_types = cols_only()
+) # produce: error
