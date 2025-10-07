@@ -471,3 +471,119 @@ read_csv(
   another_csv,
   col_types = cols_only()
 ) # produce: error
+
+# Leer diferentes archivos de datos con tablas de estructura similar:
+sales_files <- c("data/01-sales.csv", "data/02-sales.csv", "data/03-sales.csv")
+read_csv(sales_files, id = "file") # produce:
+#> # A tibble: 19 × 6
+#>   file              month    year brand  item     n
+#>   <chr>             <chr>   <dbl> <dbl> <dbl> <dbl>
+#> 1 data/01-sales.csv January  2019     1  1234     3
+#> 2 data/01-sales.csv January  2019     1  8721     9
+#> 3 data/01-sales.csv January  2019     1  1822     2
+#> 4 data/01-sales.csv January  2019     2  3333     1
+# el argumento id añade una nueva columna file al marco de datos 
+# resultante que identifica el archivo del que provienen los datos
+
+# las bases de datos también se pueden leer directamente desde sus 
+# direcciones:
+sales_files <- c(
+  "https://pos.it/r4ds-01-sales",
+  "https://pos.it/r4ds-02-sales",
+  "https://pos.it/r4ds-03-sales"
+)
+read_csv(sales_files, id = "file") # produce:
+# A tibble: 19 × 6
+#  file              month     year brand  item     n
+#  <chr>             <chr>    <dbl> <dbl> <dbl> <dbl>
+#1 data/01-sales.csv January   2019     1  1234     3
+#2 data/01-sales.csv January   2019     1  8721     9
+#3 data/01-sales.csv January   2019     1  1822     2
+#4 data/01-sales.csv January   2019     2  3333     1
+
+students # produce:
+# A tibble: 6 × 5
+#  `Student ID` `Full Name`      favourite.food     mealPlan         AGE  
+#         <dbl> <chr>            <chr>              <chr>            <chr>
+#1            1 Sunil Huffmann   Strawberry yoghurt Lunch only       4    
+#2            2 Barclay Lynn     French fries       Lunch only       5    
+#3            3 Jayendra Lyne    NA                 Breakfast and l… 7    
+#4            4 Leon Rossini     Anchovies          Lunch only       NA   
+
+write_csv(students, "students.csv")
+students # produce:
+# A tibble: 6 × 5
+#  `Student ID` `Full Name`      favourite.food     mealPlan         AGE  
+#         <dbl> <chr>            <chr>              <chr>            <chr>
+#1            1 Sunil Huffmann   Strawberry yoghurt Lunch only       4    
+#2            2 Barclay Lynn     French fries       Lunch only       5    
+#3            3 Jayendra Lyne    NA                 Breakfast and l… 7    
+#4            4 Leon Rossini     Anchovies          Lunch only       NA 
+
+# Escribe el contenido de una tabla en un nuevo archivo
+write_csv(students, "students-2.csv")
+read_csv("students-2.csv") # produce:
+# A tibble: 6 × 5
+#  `Student ID` `Full Name`      favourite.food     mealPlan         AGE  
+#         <dbl> <chr>            <chr>              <chr>            <chr>
+#1            1 Sunil Huffmann   Strawberry yoghurt Lunch only       4    
+#2            2 Barclay Lynn     French fries       Lunch only       5    
+#3            3 Jayendra Lyne    NA                 Breakfast and l… 7    
+#4            4 Leon Rossini     Anchovies          Lunch only       NA   
+#5            5 Chidiegwu Dunkel Pizza              Breakfast and l… five 
+#6            6 Güvenç Attila    Ice cream          Lunch only       6 
+
+# write_rds y read_rds son funciones iguales a write_csv y read_csv
+# pero de alguna forma más confiables.
+write_rds(students, "students.rds")
+read_rds("students.rds") # produce:
+#> # A tibble: 6 × 5
+#>   student_id full_name        favourite_food     meal_plan             age
+#>        <dbl> <chr>            <chr>              <fct>               <dbl>
+#> 1          1 Sunil Huffmann   Strawberry yoghurt Lunch only              4
+#> 2          2 Barclay Lynn     French fries       Lunch only              5
+#> 3          3 Jayendra Lyne    <NA>               Breakfast and lunch     7
+#> 4          4 Leon Rossini     Anchovies          Lunch only             NA
+
+library(arrow)
+# El paquete arrow permite leer y escribir archivos .parquet, un formato 
+# binario rápido que se puede compratir entre lenguajes de programación 
+write_parquet(students, "students.parquet")
+read_parquet("students.parquet") # produce:
+# A tibble: 6 × 5
+#  `Student ID` `Full Name`      favourite.food     mealPlan         AGE  
+#*        <dbl> <chr>            <chr>              <chr>            <chr>
+#1            1 Sunil Huffmann   Strawberry yoghurt Lunch only       4    
+#2            2 Barclay Lynn     French fries       Lunch only       5    
+#3            3 Jayendra Lyne    NA                 Breakfast and l… 7    
+#4            4 Leon Rossini     Anchovies          Lunch only       NA  
+
+# Crear una tabla por columnas
+tibble(
+  x = c(1, 2, 5), 
+  y = c("h", "m", "g"),
+  z = c(0.08, 0.83, 0.60)
+) # produce:
+# A tibble: 3 × 3
+#      x y         z
+#  <dbl> <chr> <dbl>
+#1     1 h      0.08
+#2     2 m      0.83
+#3     5 g      0.6 
+
+# Crear una tabla por filas. Esto puede tener más sentido en el 
+# sentido de las filas
+tribble(
+  ~x, ~y, ~z,
+  1, "h", 0.08,
+  2, "m", 0.83,
+  5, "g", 0.60
+) # produce:
+# A tibble: 3 × 3
+#      x y         z
+#  <dbl> <chr> <dbl>
+#1     1 h      0.08
+#2     2 m      0.83
+#3     5 g      0.6 
+# Los encabezados de las columnas empiezan con "~" y las entradas se
+# separan por comas
