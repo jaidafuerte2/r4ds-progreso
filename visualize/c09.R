@@ -54,3 +54,89 @@ ggplot(mpg, aes(x = displ, y = hwy, alpha = class)) +
 # Lograr que todos los puntos sean azules
 ggplot(mpg, aes(x = displ, y = hwy)) + 
   geom_point(color = "blue")
+
+########################
+###
+### 9.2.1 Ejercicios
+###
+########################
+
+# 1. Crea un diagrama de dispersión de hwyvs  displdonde los puntos 
+# estén rellenos de rosa en los triángulos.
+ggplot(mpg, aes(x = hwy, y = displ)) + 
+  geom_point(shape = "triangle", color = "pink")
+
+# 2. ¿Por qué el siguiente código no generó un gráfico con puntos azules?
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy, color = "blue"))
+# El color específico debe establecerse por fuera del mapeo estético
+# Debe ser algo como: 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "blue")
+
+# 3. ¿Qué strokehace la estética? ¿Con qué formas funciona? (Pista: 
+# usa ?geom_point)
+?geom_point
+# Parecería que stroke controla el ancho de los puntos
+ggplot(mpg, aes(x = displ, y = hwy, stroke = 0.5)) +
+  geom_point()
+
+# 4. ¿Qué ocurre si asignas una estética a algo distinto del nombre 
+# de una variable, como aes(color = displ < 5)? Ten en cuenta que 
+# también deberás especificar x e y.
+ggplot(mpg, aes(x = displ, y = hwy, color = displ < 5)) +
+  geom_point()
+# Es interesante que si se le asigna una condición a una estética,
+# esta estética cambia según la categoría TRUE y FALSE
+
+# Crear un diagrama de dispersión 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+# Crear una linea suave
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth()
+# Crear un diagrama de dispersión y una línea suave
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() + 
+  geom_smooth()
+
+# Separar las líneas suaves según la variable drv (tipo de tracción)
+ggplot(mpg, aes(x = displ, y = hwy, shape = drv)) +
+  geom_smooth()
+# Lo que resulta un poco extraño
+
+# Separar las líneas suaves según la variable drv (tipo de tracción)
+# Y mostrarlas como tiós de líneas diferentes
+ggplot(mpg, aes(x = displ, y = hwy, linetype = drv)) +
+  geom_smooth()
+# Aquí ya aparece el tipo de transimisión f para transmisión delantera,
+# (o front) , r para transmisión trasera, y 4 para transmisión en 
+# las 4 llantas
+
+# Se puede clarificar con el siguiente gráfico
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(aes(linetype = drv))
+# Esto también sería aceptable
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(aes(shape = drv))
+# Pero sería lo mismo que no poner nada en geom_smooth
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth()
+
+# Se puede agrupar e distintas líneas suaves
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(group = drv))
+# El problema con la estética group es que no pone leyendas así que
+# no se sabe a que nos referimos
+#Por eso se podría agrupar con la estética linetype
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(linetype = drv))
+# Aquí vemos que ya se pueden ver las leyendas del tipo de tracción
+# f, r y 4
+# También la estética color es una buena opción si se necesita ver las 
+# leyendas:
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(color = drv))
