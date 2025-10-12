@@ -3,7 +3,7 @@
     "path": "/cloud/project/whole-game/c07.R",
     "project_path": "whole-game/c07.R",
     "type": "r_source",
-    "hash": "3987576800",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1759589633455.0,
@@ -13,14 +13,14 @@
         "source_window_id": "",
         "Source": "Source",
         "cursorPosition": "205,0",
-        "scrollLine": "202"
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1760018812,
+    "lastKnownWriteTime": 1760208292,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1760018812067,
+    "last_content_update": 1760208292240,
     "read_only": false,
     "read_only_alternatives": []
 }

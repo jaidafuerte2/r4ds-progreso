@@ -140,3 +140,223 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 # leyendas:
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_smooth(aes(color = drv))
+
+# Mostrar diferentes estéticas en distintas capas
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth()
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_point(
+    data = mpg |> filter(class == "2seater" ), # esto es como decir:
+           # filter(mpg, class == "2seater")
+    color = "red"
+  ) + # Hasta aquí se dibuja una capa con puntos rojos para la class
+      # "2seater"
+  geom_point(
+    data = mpg |> filter(class == "2seater" ),
+    shape = "circle open", size = 3, color = "red"
+  ) # Esta capa pone una capa adicional donde se dibujan unos circulos
+    # abiertos (relleno transparente y borde rojo) de 3 pixeles sobre los
+    # puntos rojos de la anterior capa
+
+?mpg
+# hwy : millas por galón en carretera
+# Mostrar histograma para hwy (millas por galón en carretera)
+ggplot(mpg, aes(x = hwy)) +
+  geom_histogram(binwidth = 2)
+# revela que la distribución del kilometraje en carretera es bimodal
+# Mostrar gráfico de densidad para hwy (millas por galón en carretera)
+ggplot(mpg, aes(x = hwy)) +
+  geom_density()
+# revela que la distribución del kilometraje en carretera es bimodal
+# Mostrar diagrama de caja para hwy (millas por galón en carretera)
+ggplot(mpg,aes(x = hwy)) +
+  geom_boxplot()
+# revela que hay dos valores atípicos
+
+# Mostrar gráfico de crestas (densidad) según tipo de tracción
+library(ggridges)
+ggplot(mpg, aes(x = hwy, y = drv, color = drv, fill = drv)) +
+  geom_density_ridges(alpha = 0.5)
+  #geom_density_ridges(alpha = 0.5, show.legend = FALSE)
+
+########################
+###
+### 9.3.1 Ejercicios
+###
+########################
+
+# 1. ¿Qué geometría usarías para dibujar un gráfico de líneas? 
+# ¿Un diagrama de caja? ¿Un histograma? ¿Un gráfico de áreas?
+# Gráfico de líneas : geom_smooth
+# Diagrama de caja : geom_boxplot
+# Histrograma : geom_histogram
+# gráfico de áreas : geom_density (en las respuestas dice geom_area)
+
+# 2. Anteriormente en este capítulo usamos show.legend sin explicarlo:
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  #geom_smooth(aes(color = drv), show.legend = FALSE)
+  geom_smooth(aes(color = drv))
+# ¿Qué show.legend = FALSE hace aquí? ¿Qué pasa si lo eliminas? ¿Por 
+# qué crees que lo usamos antes?
+# Lo que hace la estética color es crear varias líneas de distintos 
+# colores dependiendo del tipo de tracción (drv). Sin embargo por
+# defecto el tipo de tracción y su color deben tener una leyeda 
+# explicativa. Con show.legend = FALSE  esta leyenda desaparece.
+# Si quito show.legend debería aparecer la leyenda con los 3 tipos de 
+# tracción. Pienso que se usa para contrastar con la estética group
+# que por defecto no muestra las leyendas de las diferente líneas
+# que se muestran según el tipo de tracción.
+
+# 3. ¿Qué pretende el se argumento geom_smooth()?
+?geom_smooth() # se : Display confidence band around smooth
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  #geom_smooth(aes(color = drv), show.legend = FALSE)
+  geom_smooth(aes(color = drv, se = FALSE)) # asignando FALSE a se,
+  # igual sigue mostrando el intervalo de confianza, no entiendo.
+
+# 4. Recree el código R necesario para generar los siguientes 
+# gráficos. Tenga en cuenta que siempre que se use una variable 
+# categórica en el gráfico, es drv.
+# a)
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth()
+# b) 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(aes(group = drv))
+# c)
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth()
+# d)
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth()
+# e)
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth(aes(linetype = drv))
+# f) 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(shape = "circle", color = "white", size = 5) +
+  geom_point(aes(color = drv)) #+
+  #geom_point(shape = "circle", color = "white")
+
+# Mostrar el desplazamiento (displ) del motor relacionado con el 
+# kilometraje por galón de gasolina en carretera (hwy), en 4 
+# gráficos distintos según el número de cilindros 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_wrap(~cyl) # cyl : número de cilindros
+?mpg # cyl : significa número de cilindros
+
+# Facetar con dos variables gracias a facet_grid
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_grid(drv ~ cyl)
+
+# Facetar con dos variables pero liberar la escala (que no sea la 
+# misma en x e y). 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_grid(drv ~ cyl, scales = "free")
+
+########################
+###
+### 9.4.1 Ejercicios
+###
+########################
+
+# 1. ¿Qué pasa si se hace una faceta sobre una variable continua?
+# Tal vez tome infinito números de cuadros. Sin embargo en la práctica
+# parece que hay una faceta por cada valor único de la variable 
+# continua. Así:
+ggplot(mpg, aes(x = drv, y = cyl)) + 
+  geom_point() +
+  facet_wrap(~hwy)
+
+# 2. ¿Qué significan las celdas vacías en el gráfico anterior 
+# facet_grid(drv ~ cyl)? Ejecute el siguiente código. 
+ggplot(mpg) + 
+  geom_point(aes(x = drv, y = cyl))
+# ¿Cómo se relacionan con el gráfico resultante?
+# Gráfico anterior:
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_grid(drv ~ cyl)
+# Significa que no hay, en la data, autos con tracción en las 4
+# ruedas y 5 cilindros y tambpoco hay autos con tracción trasera
+# de 4 y 5 cilindros.
+# Este código
+ggplot(mpg) + 
+  geom_point(aes(x = drv, y = cyl))
+# Muestra que drv y cyl no son variables continuas y todos los
+# autos se acumulan en puntos muy específicos dónde se nota claramente
+# que no hay autos de 7 cilindros, ni autos con tracción en las 4
+# ruedas y 5 cilindros y tambpoco hay autos con tracción trasera
+# de 4 y 5 cilindros.
+
+# 3. ¿Qué gráficos crea el siguiente código? ¿Qué . hace?
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .) # Crea 3 facetas horizontales
+  #facet_grid(~drv) # Crea 3 facetas verticales (por defecto)
+# Crea varias facetas horizontales según el tipo de tracción. No sé
+# que hace el punto. Pero el libro de soluciones dice que en este 
+# caso el punto (.) significa no gacer facetas entre columnas. 
+#
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl) # crea 4 facetas verticales
+  #facet_grid(~cyl) # también crea 4 facetas verticales
+# Crea varias facetas verticales; el libro de soluciones dice que
+# el punto significa no hacer facetas entre filas.
+# Es decir, el punto parece que significa mantener todo junto
+
+# 4. Tomemos la primera gráfica facetada de esta sección:
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) + 
+  facet_wrap(~ cyl, nrow = 2)
+# ¿Cuáles son las ventajas de usar facetas en lugar de la estética 
+# del color? ¿Cuáles son las desventajas? ¿Cómo podría cambiar el 
+# equilibrio si se tuviera un conjunto de datos más grande?
+ggplot(mpg, aes(color = cyl)) + 
+  geom_point(aes(x = displ, y = hwy))
+# El problema es que hay un número espcífico de número de cilindros
+# sólo (4, 5, 6 y 8) pero la estética de color pinta como si cyl
+# fuera una variable continua (decimales infinitos) pero en la realidad
+# cyl es más como una categoría. enotnces la estética de colores
+# es un poco confusa, en cambio las facetas son 4 bien limitadas.
+# Yo no veo desventajas, pero el libro dice que la desventaja es
+# que no se pueden comparar las clases entre si cuando están en 
+# gráficos separados.
+# Esta es un opción combinada pero igual sigue facetada y no mitiga 
+# el problema de que es difícil comparar al mismo tiempo:
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy, color = cyl)) + 
+  facet_wrap(~ cyl, nrow = 2)
+# La opción del libro es, sin facetas, resaltar solo un valor en cada
+# capa. Misolución sería esto:
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(color = "gray") +
+  geom_point(
+    data = mpg |> filter(cyl == 6),
+    color = "red"
+  ) +
+  geom_point(
+    data = mpg |> filter(cyl == 8),
+    color = "green"
+  ) +
+  geom_point(
+    data = mpg |> filter(cyl == 4),
+    color = "black"
+  )+
+  geom_point(
+    data = mpg |> filter(cyl == 5),
+    color = "blue"
+  )
+
