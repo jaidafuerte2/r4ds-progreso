@@ -359,4 +359,56 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
     data = mpg |> filter(cyl == 5),
     color = "blue"
   )
+# No es una opción elegante porque crece demasiado. Tal vez la solución
+# correcta es tranformar el tipo de valor de continuo a categórico,
+# a menos que el número de cilindros se necesite para algún cálculo.
+
+# 5. Read ?facet_wrap. What does nrow do? What does ncol do? What 
+# other options control the layout of the individual panels? Why 
+# doesn’t facet_grid() have nrow and ncol arguments?
+?facet_wrap # produce:
+#[...]
+# nrow, ncol: Number of rows and columns.
+# dir : Direction: either "h" for horizontal, the default, or "v", 
+# for vertical
+#[...]
+?facet_grid
+# parece que facet_grid sí tiene los argumentos rows y cols pero
+# no se usan igual que nrow y ncol porque la grid o grilla se usa
+# para mostrar 2 variables entonces ya tiene un ncol y nrow 
+# implícitos por el número del tipo de valores que tiene cada una
+# de las 2 variables que forman la grilla. En cambio facet_wrap no
+# es para 2 variables sino 1 sola
+
+# 6. ¿Cuál de las siguientes gráficas facilita la comparación del
+# tamaño del motor ( displ) en coches con diferentes transmisiones? 
+# ¿Qué indica esto sobre cuándo colocar una variable de facetado 
+# en filas o columnas?
+?mpg
+# displ: tamaño del motor
+# Muestra 3 facetas horizontales
+ggplot(mpg, aes(x = displ)) + 
+  geom_histogram() + 
+  facet_grid(drv ~ .)
+# Muestra 3 facetas verticales
+ggplot(mpg, aes(x = displ)) + 
+  geom_histogram() +
+  facet_grid(. ~ drv)
+# Es más fácil entender la relación entre el tamaño del motor y 
+# el tipo de tracción con el facetado horizontal (drv ~ .) porque
+# me permite comparar la cantidad de autos por tipo de transmisión 
+# y tracción. Con el facetado vertical sólo es más difícil intuir 
+# alguna conclusión.
+
+# 7. Recrea la siguiente gráfica usando facet_wrap()en lugar de 
+# facet_grid(). ¿Cómo cambian las posiciones de las etiquetas de 
+# las facetas?
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+# facet_grid crea 3 facetas horizontales (posición de las etiquetas)
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_wrap(drv ~ .)
+# facet_wrap crea tres facetas verticales (posición de las etiquetas)
 
