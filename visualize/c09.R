@@ -412,3 +412,50 @@ ggplot(mpg) +
   facet_wrap(drv ~ .)
 # facet_wrap crea tres facetas verticales (posición de las etiquetas)
 
+View(diamonds)
+?diamonds
+# cut : calidad del corte
+# En el eje x muestra la calidad del corte, y en el eje Y muestra
+# count. Sin embargo count no es una variable de diamonds, de dónde 
+# viene?
+ggplot(diamonds, aes(x = cut)) +
+  geom_bar()
+# Viene de:
+# - Los gráficos de barras, histogramas y polígonos de frecuencia 
+# agrupan sus datos y luego trazan los recuentos de contenedores, 
+# la cantidad de puntos que caen en cada contenedor.
+# - Los suavizadores ajustan un modelo a sus datos y luego trazan 
+# predicciones a partir del modelo.
+# - Los diagramas de caja calculan el resumen de cinco números de la 
+# distribución y luego muestran ese resumen como un cuadro con 
+# formato especial.
+# En resumen, cuando un gráfico no recibe las varibles necesarias,
+# es como que tomaría unas variables por defecto para completar
+# un gráfico.
+# Por ejemplo en geom_bar el valor predeterminado de stat es "count",
+# y cada geom tiene una estadística predeterminada
+?geom_bar
+
+# Muestra un gráfico de barras en el que se asigna a la altura de 
+# las barras el valor de la variable Y, donde n son los valores sin
+# procesar de la variable Y.
+diamonds |> 
+  count(cut) |>
+  ggplot(aes(x = cut, y = n)) +
+  geom_bar(stat = "identity")
+
+# Muestra un gráfico de barras de proporciones en vez de recuentos.
+ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) + 
+  geom_bar()
+
+?stat_summary
+# Muestra los valores mínimos, máximos y promedios de la profundidad
+# (depth) de los diamantes según su cut (o calidad de corte)
+ggplot(diamonds) +
+  stat_summary(
+    aes(x = cut, y = depth),
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
+# stat_summary : resume los valores de y para cada valor único de x.
