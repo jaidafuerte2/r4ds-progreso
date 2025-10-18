@@ -459,3 +459,78 @@ ggplot(diamonds) +
     fun = median
   )
 # stat_summary : resume los valores de y para cada valor único de x.
+
+########################
+###
+### 9.5.1 Ejercicios
+###
+########################
+
+# 1. ¿Cuál es la función geom predeterminada asociada a 
+# stat_summary()[?]? ¿Cómo se podría reescribir el gráfico 
+# anterior para usar esa función geom en lugar de la función stat?
+?stat_summary()
+# pararece que para stat_summary el tipo de geom es pointrange
+# Esta es mi versión
+ggplot(diamonds, aes(x = cut, y = depth)) + 
+  geom_pointrange(aes(ymin = min(depth), ymax = max(depth)))
+?geom_pointrange()
+# Pero la versión del libro es esta:
+diamonds |>
+  group_by(cut) |>
+  summarize(
+    lower = min(depth),
+    upper = max(depth),
+    midpoint = median(depth)
+  ) |>
+  ggplot(aes(x = cut, y = midpoint)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper))
+
+# 2. ¿Qué geom_col()hace? ¿En qué se diferencia de geom_bar()...?
+# geom_col debe tener en su estética un x y un y
+ggplot(diamonds, aes(x = cut, y = depth)) + 
+  geom_col()
+# No funciona con un valor y, geom_bar sólo debe tener en su estética 
+# un x
+ggplot(diamonds, aes(x = cut)) + 
+  geom_bar()
+# No funciona
+ggplot(diamonds, aes(x = cut)) + 
+  geom_col()
+# NO funciona
+ggplot(diamonds, aes(x = cut, y = depth)) + 
+  geom_bar()
+?geom_bar()
+
+# 3. La mayoría de las geometrías y estadísticas vienen en pares 
+# que casi siempre se usan en conjunto. Haz una lista de todos los 
+# pares. ¿Qué tienen en común? (Pista: Lee la documentación).
+# ?geom_bar() : stat_count()
+# ?geom_boxplot() : stat_boxplot()
+# ?geom_density() : stat_density()
+# ?geom_smooth() : stat_smooth()
+
+# 4. ¿Qué variables componen stat_smooth() el cálculo? ¿Qué 
+# argumentos controlan su comportamiento?
+?stat_smooth()
+# after_stat(x), after_stat(y), after_stat(xmin), after_stat(ymin), 
+# after_stat(xmax), after_stat(ymax), after_stat(se) standard error
+
+# 5. En nuestro gráfico de barras de proporciones, necesitábamos 
+# establecer group = 1. ¿Por qué? En otras palabras, ¿cuál es el 
+# problema con estos dos gráficos?
+ggplot(diamonds, aes(x = cut, y = after_stat(prop))) + 
+  geom_bar()
+ggplot(diamonds, aes(x = cut, fill = color, y = after_stat(prop))) + 
+  geom_bar()
+# Muestra un gráfico de barras de proporciones en vez de recuentos.
+ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) + 
+  geom_bar()
+# Qué pasaría si les doy el argumento group = 1
+ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) + 
+  geom_bar()
+ggplot(diamonds, aes(x = cut, fill = color, y = after_stat(prop), 
+                     group =  color)) + 
+  geom_bar()
+# No entiendo bien pero parece que sin group se llena todo el gráfico
+# de barras, por lo que siempre hay que agrupar
