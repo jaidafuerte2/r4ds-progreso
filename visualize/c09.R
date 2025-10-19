@@ -534,3 +534,59 @@ ggplot(diamonds, aes(x = cut, fill = color, y = after_stat(prop),
   geom_bar()
 # No entiendo bien pero parece que sin group se llena todo el gráfico
 # de barras, por lo que siempre hay que agrupar
+
+# Gráfico de barras con el borde coloreado
+ggplot(mpg, aes(x = drv, color = drv)) +
+  geom_bar()
+# Gráfico de barras coloreadas
+ggplot(mpg, aes(x = drv, fill = drv)) +
+  geom_bar()
+
+# Gráfico de barras multicolor (en cada barra) según el tipo de auto
+ggplot(mpg, aes(x = drv, fill = class)) +
+  geom_bar()
+
+# Gráfico de barras con colores transparentes según el tipo de auto
+# gracias al argumento position que toma "identity" como valor 
+ggplot(mpg, aes(x = drv, fill = class)) +
+  geom_bar(alpha = 1/5,  position = "identity")
+# Gráfico de barras con bordes coloreados según el tipo de auto
+# gracias al argumento "identity"
+ggplot(mpg, aes(x = drv, color = class)) +
+  geom_bar(fill = NA, position = "identity")
+# NOTA: A mi e parecen confusos ambos gráfico, prefiero el que se generó
+# por defecto sin "identity"
+
+# Muestra un gráfico con barras apiladas que tienen la misma altura
+# lo que facilita la comparación de proporciones entre grupos gracias
+# al argumento "fill".
+ggplot(mpg, aes(x = drv, fill = class)) +
+  geom_bar(position = "fill")
+# Muestra un gráfico de barras superpuestas una a lado de otra, lo 
+# que facilita comparar valores individuales gracias al argumento
+# "dodge"
+ggplot(mpg, aes(x = drv, fill = class)) +
+  geom_bar(position = "dodge")
+
+# Los puntos de los diagramas de dispersión suelen superponerse porque
+# los números de las posiciones se redondean. Así un diagrama de 
+# dispersión con 234 observaciones puede llegar a tener sólo 126 
+# puntos. Este problemase conoce como sobregraficación. Esto dificulta
+# la visualización de la distribución de los datos
+# Esto se soluciona con el ajuste de posición "jitter" pues añade cierta
+# cantidad de ruido aleatorio a cada punto (lo que hace que los puntos)
+# tengan posiciones aleatorias ligeramente diferentes para que se 
+# diferencien en el diagrama de dispersión.
+?mpg
+# Muestra un diagrama de dispersión con el tamaño del motor (displ)
+# en el eje x y la cantidad de millas que recorre por galón en
+# carretera (hwy) en el eje Y
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(position = "jitter")
+# Muestra un diagrama de dispersión con el tamaño del motor (displ)
+# en el eje x y la cantidad de millas que recorre por galón en
+# carretera (hwy) en el eje Y. Coloreado según el tipo de auto
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point(position = "jitter")
+
+  
