@@ -688,6 +688,7 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
   geom_point() + 
   geom_abline() +
   coord_fixed()
+?geom_abline()
 # La relación entre el consumo de combustible en ciudad y en carretera
 # es directamente proporcional. abline() crea una línea de referencia
 # con una pendiente que más o menos nos da una idea de la tendencia
@@ -697,4 +698,14 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 # crea una línea dónde x e y son iguales lo que evidencia que todos
 # los autos avanzan más kilómetros en carretera que en ciudad.
 
-?geom_abline()
+# Así se vería una plantilla de gráficos con ggplot (hasta ahora)
+# agregando ajustes de posición, estadísticas, sistemas de coordenadas
+# y facetas
+#ggplot(data = <DATA>) + 
+#  <GEOM_FUNCTION>(
+#    mapping = aes(<MAPPINGS>),
+#    stat = <STAT>, 
+#    position = <POSITION>
+#  ) +
+#  <COORDINATE_FUNCTION> +
+#  <FACET_FUNCTION>
