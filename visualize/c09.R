@@ -589,4 +589,112 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   geom_point(position = "jitter")
 
-  
+########################
+###
+### 9.6.1 Ejercicios
+###
+########################
+
+# ¿Cuál es el problema con la siguiente gráfica? ¿Cómo podrías 
+# mejorarla?
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point()
+#View(mpg)
+# Me parece que pueden estar puntos sobrepuestos así que darles un poco
+# de ruido aleatorio podría ser conveniente.
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point(position = "jitter")
+
+# 2. ¿Cuál es, si acaso, la diferencia entre ambas tramas? ¿Por qué?
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(position = "identity")
+# NO hay diferencia
+
+# 3. ¿Qué parámetros para geom_jitter() controlar la cantidad de 
+# jittering?
+?geom_jitter() # Parece que width y height
+
+# 4. Comparar y contrastar geom_jitter()con geom_count().
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point(position = "jitter")
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_jitter() # De inicio hay diferencia pero mínima
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_jitter(width = 0.9) # Es notorio que hay más ruido
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_jitter(width = 0.9, height = 0.9) # Parece que los puntos 
+# están menos apiñado
+
+# 5. ¿Cuál es el ajuste de posición predeterminado para 
+# geom_boxplot()[?]? Crea una visualización del mpgconjunto de 
+# datos que lo muestre.
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_boxplot() # boxplot es una caja
+?geom_boxplot() # el valor predeterminado del argumento position de 
+# geom_boxplot() es "dodge2". Este código lo demuestra:
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_boxplot(position = "dodge2")
+# Este último gráfico y el anterior, demeuestra que el valor de 
+# por defecto de position es "dodge2"
+
+nz <- map_data("nz")
+# Produce un mapa alargado horizontalmente
+ggplot(nz, aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = "white", color = "black")
+# Produce un mapa aparentemente normal
+ggplot(nz, aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = "white", color = "black") +
+  coord_quickmap()
+
+# clear es la claridad (o calidad) de un diamante
+bar <- ggplot(data = diamonds) +
+  geom_bar(
+    mapping = aes(x = clarity, fill = clarity),
+    show.legend = FALSE,
+    width = 1
+  ) + 
+  theme(aspect.ratio = 1)
+# Muestra un clásico gráfico de barras coloreadas según claridad 
+# del diamante
+bar
+# Muestra el mismo gráfico de barras pero horizontales
+bar + coord_flip()
+# Muestra un gráfico Coxcomb (que no se qué significa)
+bar + coord_polar() # Es como un caracol donde las barras se 
+# representan como parte de un caracol
+
+########################
+###
+### 9.7.1 Ejercicios
+###
+########################
+
+# 1. Convierta un gráfico de barras apiladas en un gráfico circular 
+# usando coord_polar().
+ggplot(mpg, aes(x = class, fill = class)) +
+  geom_bar() +
+  coord_polar()
+
+# 2. ¿Cuál es la diferencia entre coord_quickmap()y coord_map()?
+# Mi parecer es que coord_map crea un gráfico alargado en lo horizontal
+# mientras que coord_quickmap crea un gráfico real
+
+# 3. ¿Qué te dice el siguiente gráfico sobre la relación entre el 
+# consumo de combustible en ciudad y en carretera? ¿Por qué es 
+# coord_fixed()importante? ¿Qué función geom_abline()cumple?
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point() + 
+  geom_abline() +
+  coord_fixed()
+# La relación entre el consumo de combustible en ciudad y en carretera
+# es directamente proporcional. abline() crea una línea de referencia
+# con una pendiente que más o menos nos da una idea de la tendencia
+# de una relación. coord_fixed crea un sistema de cuadrículas donde
+# x e y tienen el mismo tamaño (es decir si un cm es 20 pixeles en x,
+# un cm también es 20 pixeles en y); tomando en cuenta esto, abline 
+# crea una línea dónde x e y son iguales lo que evidencia que todos
+# los autos avanzan más kilómetros en carretera que en ciudad.
+
+?geom_abline()
