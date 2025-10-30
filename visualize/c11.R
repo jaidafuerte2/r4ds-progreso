@@ -295,9 +295,6 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 # Create a series of plots that demonstrate the most important 
 # options.
 ?arrow()
-library(ggplot2)
-library(grid)  # necesario para unit()
-
 df <- data.frame(x = 1, y = 1, xend = 5, yend = 5)
 df # produce:
 #  x y xend yend
@@ -324,3 +321,180 @@ ggplot(df) +
 ggplot(df) +
   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
                arrow = arrow(type = "closed"))
+
+# Relaciona el tamaño del motor con la eficiencia del combustible
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point()
+# Cambia las escalas del eje x e y y también las etiquetas de la escala 
+# de color de la derecha
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  scale_y_continuous(breaks = seq(15, 45, by = 5)) +# breaks anula la
+  # opción predeterminada
+  scale_x_continuous(breaks = seq(0, 7, by = 0.5)) +
+  scale_color_discrete(labels = c("4" = "4-wheel", "f" = "front", 
+                                  "r" = "rear"))
+
+# Relaciona el precio con el corte del diamante
+ggplot(diamonds, aes(x = price, y = cut)) +
+  geom_boxplot(alpha = 0.05)
+# Muestra signo de dolar en la escala de precios
+ggplot(diamonds, aes(x = price, y = cut)) +
+  geom_boxplot(alpha = 0.05) +
+  scale_x_continuous(labels = scales::label_dollar()) # le pone signo
+  # de dólar a las escalas de x (del precio)
+# Cambia las escalas a un sólo dígito por cada mil, cambia el rango
+# y los intervalos de la escala en el eje X
+ggplot(diamonds, aes(x = price, y = cut)) +
+  geom_boxplot(alpha = 0.05) +
+  scale_x_continuous(
+    labels = label_dollar(scale = 1/1000, suffix = "K"), 
+    breaks = seq(1000, 19000, by = 6000)
+  )
+
+# Muestra barras de porcentajes (gracias a position = "fill") para
+# cada tipo de corte de diamante
+ggplot(diamonds, aes(x = cut, fill = clarity)) +
+  geom_bar(position = "fill")
+# Cambia las relaciones /100 a porcentajes en la escala del eje Y
+ggplot(diamonds, aes(x = cut, fill = clarity)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(name = "Percentage", labels = label_percent())
+
+# Muestra cuando inició el gobierno de un presidente
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id)) +
+  geom_point()
+# Muestra cuando inició y cuando terminó el gobierno de una presidente
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id))
+# Puedo usar breaks para mostrar con precisión donde ocurren las 
+# observaciones y date_labels para dar formato al año. Esto se hace
+# cuando hay pocos datos
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_x_date(name = NULL, breaks = presidential$start, 
+               date_labels = "'%y")
+
+# Grafico de dispersión que compara el tamaño del motor con la 
+# eficiciencia del combustible y coloreada por tipo de auto
+base <- ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class))
+base + theme(legend.position = "right") # predeterminada
+base + theme(legend.position = "left")
+# El tipo de auto va arriba
+base + 
+  theme(legend.position = "top")
+# El tipo de auto va arriba  pero en tres filas
+base + 
+  theme(legend.position = "top") +
+  guides(color = guide_legend(nrow = 3))
+# El tipo de auto va abajo en 3 filas
+base + 
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(nrow = 3))
+
+# Mustra un diagrama de dispersión con una línea suave que relaciona
+# el tamaño del motor con la eficiencia del combustible y coloreado
+# por tipo de auto
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE)
+# Poner el tió de auto abajo:
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom")
+# Las bolitas de las leyendas del tipo de auto (que muestran 
+# los colores) se harían un poco más grandes. Tal vez ayude a 
+# ver los colores de los círculos
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(nrow = 2, 
+                              override.aes = list(size = 4)))
+# Parece que nrow = 2 no hace nada así que mejor lo quito
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(override.aes = list(size = 4)))
+
+# Muestra la variación del precio por el peso del diamante
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_bin2d()
+ggplot(diamonds, aes(x = log10(carat), y = log10(price))) +
+  geom_point(aes(color = cut))+
+  geom_smooth(se = FALSE)
+# Muestra la variación del precio por el peso del diamante aplicando
+# una transformación logarítmica. Lo que resulta en que se puede ver
+# más fácil la relación. Pero se daña las leyendas de las escalas 
+# X e Y
+ggplot(diamonds, aes(x = log10(carat), y = log10(price))) +
+  geom_bin2d()
+# Soluciono  el daño a las leyendas de las escalas , etiquetando los
+# ejes en la escala original de los datos
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_bin2d() + 
+  scale_x_log10() + 
+  scale_y_log10()
+
+# Muestra la relación entre el tamaño del motor y la eficiencia del
+# combustible. Coloreada por tipo de auto 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv))
+# Cambio de color para daltónicos con scale_color_brewer():
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  scale_color_brewer(palette = "Set1")
+# Cambio de color para daltónicos con scale_color_brewer(). Además
+# Puedo usar shape() para darles forma, además de color, a los puntos
+# que representan el tipo de auto
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv, shape = drv)) +
+  scale_color_brewer(palette = "Set1")
+
+# Asignar manualmente los colores para ciertos valores con rgb 
+# hexadecimal cy la función scale_color_manual()
+View(presidential)
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id, color = party)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_color_manual(values = c(Republican = "#E81B23", 
+                                Democratic = "#00AEF3"))
+
+# Relación entre tamaño del motor y eficiencia del combustible
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth()
+# Filtrando la relación se obtiene un gráfico en el que se afectó
+# la suavidad de la curva y las escalas de los ejes X e Y (parece que
+# hay una gran banda de error estandar)
+mpg |>
+  filter(displ >= 5 & displ <= 6 & hwy >= 10 & hwy <= 25) |>
+  ggplot(aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth()
+# Aquí sigue afectada la suavidad de la curva
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth() +
+  scale_x_continuous(limits = c(5, 6)) +
+  scale_y_continuous(limits = c(10, 25))
+# Para mejorar la suavidad de la curva se podrían poner los límites 
+# en la función coord_cartesian()
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv)) +
+  geom_smooth() +
+  coord_cartesian(xlim = c(5, 6), ylim = c(10, 25))
+
