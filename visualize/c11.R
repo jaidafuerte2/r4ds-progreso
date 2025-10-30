@@ -498,3 +498,122 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_smooth() +
   coord_cartesian(xlim = c(5, 6), ylim = c(10, 25))
 
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = drv, shape = drv))
+# Creo dos nuesvas tablas con sólo los tipos de auto "suv" y "compact"
+suv <- mpg |> filter(class == "suv")
+compact <- mpg |> filter(class == "compact")
+# Relaciono el tamaño del motor con la eficiencia de combustible
+# de los suv y coloreo por tipo de tracción
+ggplot(suv, aes(x = displ, y = hwy, color = drv)) +
+  geom_point()
+# Relaciono el tamaño del motor con la eficiencia de combustible
+# de los compact y coloreo por tipo de tracción
+ggplot(compact, aes(x = displ, y = hwy, color = drv)) +
+  geom_point()
+# Se comparten las escalas de los dos gráficos , entrenando las escalas
+# con los limits de datos completos
+x_scale <- scale_x_continuous(limits = range(mpg$displ))
+y_scale <- scale_y_continuous(limits = range(mpg$hwy))
+col_scale <- scale_color_discrete(limits = unique(mpg$drv))
+# Mostrar un diagrama de flujo con las escalas entrenadas
+ggplot(suv, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale
+# Mostrar un diagrama de flujo con las escalas entrenadas
+ggplot(compact, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale
+
+########################
+###
+### 11.4.1 Ejercicios
+###
+########################
+
+# 1. ¿Por qué el siguiente código no anula la escala predeterminada?
+
+df <- tibble(
+  x = rnorm(10000),
+  y = rnorm(10000)
+)
+
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  scale_color_gradient(low = "white", high = "red") +
+  coord_fixed()
+# Porque lo correcto no es usar scale_color_gradient() sino
+# scale_fill_viridis()
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  coord_fixed() +
+  #scale_color_gradient(low = "white", high = "red") +
+  scale_fill_viridis_c() # c para continuos
+# Para mostrar paletas agrupadas se usa _b
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  coord_fixed() +
+  #scale_color_gradient(low = "white", high = "red") +
+  scale_fill_viridis_b() # b para paletas agrupadas
+
+# 2. ¿Cuál es el primer argumento para cada escala? ¿Cómo se 
+# compara con labs()...?
+?scale_fill_viridis_b() # El primer argumento es name, el nombre de 
+# la escala. Por defecto es waver que toma el nombre del primer
+# mapeado usado por la estética (sería para los anteriores ejemplos
+# X e Y)
+?labs() # Se observa que tiene muchas más etiquetas de texto: title,
+# subtitle, caption, tag, dictionary, alt y alt_insight y todo
+# con valores por defecto waiver
+
+# 3. Modificar la visualización de los mandatos presidenciales de la 
+# siguiente manera:
+#   
+# - Combinando las dos variantes que personalizan los colores y 
+#   los cortes del eje x.
+# - Mejorar la visualización del eje y.
+# - Etiquetando cada mandato con el nombre del presidente.
+# - Añadiendo etiquetas informativas a los gráficos.
+# - Establecer pausas cada 4 años (¡esto es más complicado de lo 
+#   que parece!).
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id, color = party)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_x_date(name = NULL, breaks = presidential$start, 
+               date_labels = "'%y") +
+  scale_color_manual(values = c(Republican = "#E81B23", 
+                                Democratic = "#00AEF3")) +
+  geom_text(aes(label = name), hjust = -0.1, size = 3) + 
+  geom_label(aes(label = paste0(year(start), "-", year(end))),
+             hjust = 1.2, size = 2.8, label.size = 0, fill = "white", 
+             alpha = 0.6) +
+  labs(title = "Presidentes de EEUU", x = "Años de gobierno", 
+       y = "Identificación")
+
+# 4. Primero, crea el siguiente gráfico. Luego, modifica el 
+# código override.aes para que la leyenda sea más fácil de leer.
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = cut), alpha = 1/20)
+?override.aes
+# El problema con la primera versión del libro es que los puntos
+# de colores de la leyenda casai no se ven por la transparencia alpha.
+# que hereda la transparencia del gráfico. Así que una opción puede
+# ser guide_legend() con override.aes
+# La nueva versión sería algo así:
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = cut), alpha = 1/20) +
+  guides(
+    color = guide_legend(
+      override.aes = list(alpha = 1, size = 8) # alpha = 1 significa
+      # sin trasnaprencia, size es el tamaño de los círculos
+    )
+  )
+
+
+
