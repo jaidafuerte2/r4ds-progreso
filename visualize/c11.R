@@ -598,6 +598,7 @@ presidential |>
 
 # 4. Primero, crea el siguiente gráfico. Luego, modifica el 
 # código override.aes para que la leyenda sea más fácil de leer.
+# NOTA: este ejercicio es muy importante
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point(aes(color = cut), alpha = 1/20)
 ?override.aes
@@ -614,6 +615,186 @@ ggplot(diamonds, aes(x = carat, y = price)) +
       # sin trasnaprencia, size es el tamaño de los círculos
     )
   )
+# Lo que hace la función guide_legend() es llamar al argumento 
+# override.aes que anula o reemplaza los valores de la estética
+# original por unos nuevos que están en una lista
+# Otro ejemplo de uso de override.aes. Esto es muy importante para
+# cambiar el tamaño de los círculos de las leyendas. Lo que es muy 
+# muy, muy, muy importante para poder identificar los colores de los
+# círculos de las leyendas porque de manera predeterminada son 
+# demasiado pequeño y se hace difícil verlos y diferenciarlos.
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  guides(
+    color = guide_legend(
+      override.aes = list(alpha = 1, size = 4)))
+
+# De manera predeterminada el fondo de gris.
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE)
+# Pero se puede usar theme_bw para que el fondo sea blanco
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme_bw()
+
+# Relación de tamaño de motor con eficiencia de combustible, coloreado
+# por tipo de tracción
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  labs(
+    title = "Larger engine sizes tend to have lower fuel economy",
+    caption = "Source: https://fueleconomy.gov."
+  )
+# El mismo gráfico anterior pero cambiado un poco con la función
+# theme()
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  labs(
+    title = "Larger engine sizes tend to have lower fuel economy",
+    caption = "Source: https://fueleconomy.gov."
+  ) +
+  theme(
+    # cambia la posición de la leyenda del tipo de tracción 
+    legend.position = c(0.6, 0.7),
+    # cambia la dirección de la leyenda de vertical a horizonatal
+    legend.direction = "horizontal",
+    # Resalta el cuadro de la leyenda del tipo de tracción con un 
+    # color "black"
+    legend.box.background = element_rect(color = "black"),
+    # Pone en negrita el título
+    plot.title = element_text(face = "bold"),
+    # Le lleva al título un poco hacia la izquierda
+    plot.title.position = "plot",
+    # No veo que hace nada con el caption (el texto de abajo del 
+    # gráfico)
+    plot.caption.position = "plot",
+    # Le trae a la izquierda. Tal vez a la posicición 0
+    plot.caption = element_text(hjust = 0)
+  )
+
+########################
+###
+### 11.5.1 Ejercicios
+###
+########################
+
+# 1 .Elige un tema ofrecido por el paquete ggthemes y aplícalo al 
+# útltimo gráfico que hayas creado.
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = cut), alpha = 1/20) +
+  guides(
+    color = guide_legend(
+      override.aes = list(alpha = 1, size = 8) # alpha = 1 significa
+      # sin transprencia, size es el tamaño de los círculos
+    )
+  ) +
+  theme_bw()
+  #theme_linedraw()
+
+# 2. Pon las etiquetas de los ejes de tu gráfico en azul y en 
+# negrita.
+# NOTA: este ejercicio es más o menos importante
+?theme()
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = cut), alpha = 1/20) +
+  theme(
+    axis.title.x = element_text(color = "blue", face = "bold"),
+    axis.title.y = element_text(color = "blue", face = "bold")
+  )
 
 
+
+# Mostrar dos gráficos juntos
+library(patchwork) # Redefine el operador + para poder juntar 2
+# gráficos
+p1 <- ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  labs(title = "Plot 1")
+p1
+p2 <- ggplot(mpg, aes(x = drv, y = hwy)) + 
+  geom_boxplot() + 
+  labs(title = "Plot 2")
+p2
+p1 + p2
+# Mostrar tres gráficos juntos
+p3 <- ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point() + 
+  labs(title = "Plot 3")
+(p1 | p3) / p2
+
+# Mostrar 5 gráficos juntos:
+# Mostrar una caja de relación de tipo de tracción con eficiencia de
+# combustible sin leyenda
+p1 <- ggplot(mpg, aes(x = drv, y = cty, color = drv)) + 
+  #geom_boxplot(show.legend = FALSE) +
+  geom_boxplot() +
+  labs(title = "Plot 1")
+# Mostrar una caja de relación de tipo de tracción con eficiencia de
+# combustible sin leyenda
+p2 <- ggplot(mpg, aes(x = drv, y = hwy, color = drv)) + 
+  geom_boxplot(show.legend = FALSE) + 
+  labs(title = "Plot 2")
+# Gráfico de densidades (frecuencias relativas) de eficiencia de
+# combustible por tipo de tracción
+p3 <- ggplot(mpg, aes(x = cty, color = drv, fill = drv)) + 
+  geom_density(alpha = 0.5) + 
+  labs(title = "Plot 3")
+# Gráfico de densidades (frecuencias relativas) de eficiencia de
+# combustible por tipo de tracción
+p4 <- ggplot(mpg, aes(x = hwy, color = drv, fill = drv)) + 
+  geom_density(alpha = 0.5) + 
+  labs(title = "Plot 4")
+# Diagrama de dispersión facetado en 3 facetas que relacionan
+# la eficiencia de combustible en ciudad y en autopista
+p5 <- ggplot(mpg, aes(x = cty, y = hwy, color = drv)) + 
+  geom_point(show.legend = FALSE) + 
+  facet_wrap(~drv) +
+  labs(title = "Plot 5")
+# Juntar los 5 gráficos
+(guide_area() / (p1 + p2) / (p3 + p4) / p5) +
+  plot_annotation(
+    title = "City and highway mileage for cars with different drive trains",
+    caption = "Source: https://fueleconomy.gov."
+  ) +
+  plot_layout(
+    guides = "collect",
+    heights = c(1, 3, 2, 4)
+  ) &
+  theme(legend.position = "top")
+# NOTA : Esto es muy imortante porque juntar los gráficos así es
+# muy explicativo. Sin embargo no entiendo qué hace la función 
+# plot_layout(). Parece que sin ella el gráfico funciona bien. 
+
+########################
+###
+### 11.6.1 Ejercicios
+###
+########################
+
+# 1. ¿Qué ocurre si se omiten los paréntesis en el siguiente 
+# diseño de gráfico? ¿Podrías explicar por qué sucede esto?
+
+p1 <- ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  labs(title = "Plot 1")
+p2 <- ggplot(mpg, aes(x = drv, y = hwy)) + 
+  geom_boxplot() + 
+  labs(title = "Plot 2")
+p3 <- ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point() + 
+  labs(title = "Plot 3")
+#(p1 | p2) / p3
+p1 | p2 / p3
+# Parece que los operadores en este contexto tienen reglas de 
+# precedencia.(p1 | p2) / p3 junta p1 y p2 en la horizontal y p3 va
+# abajo de los p1 y p2. En el caso de p1 | p2 / p3 : p2 y p3 se
+# juntan en la vertical y alado y a la izquierda va p1 (junto a p2 
+# y p3)
+
+# Utilizando los tres gráficos del ejercicio anterior, recree el 
+# siguiente mosaico.
+p1 / (p2 | p3)
 
