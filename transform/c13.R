@@ -458,3 +458,66 @@ flights |>
 # los minutos se respresentan hasta 60. Lo que significa por ejemplo
 # que nigún vuelo sale a las 675 porque no hay una hora 6:75.
 #
+flights |> 
+  mutate(
+    my_sched_dep_hour = sched_dep_time %/% 100,
+    sched_dep_minutes = sched_dep_time %% 100,
+    my_sched_dep_minutes = (sched_dep_minutes * 100) / 60,
+    my_sched_dep_time = my_sched_dep_hour + my_sched_dep_minutes
+  ) |>
+  filter(month == 1, day == 1) |>
+  ggplot(aes(x = my_sched_dep_time, y = dep_delay)) +
+  geom_point()
+  
+# 4. Round dep_time and arr_time to the nearest five minutes.
+flights |> 
+  mutate(
+    #my_sched_dep_hour = sched_dep_time %/% 100,
+    #sched_dep_minutes = sched_dep_time %% 100,
+    #my_sched_dep_minutes = (sched_dep_minutes * 100) / 60,
+    #my_sched_dep_time = my_sched_dep_hour + my_sched_dep_minutes,
+    my_dep_time = round(dep_time, -1),
+    my_arr_time = round(arr_time, -1),
+    .keep = "used"
+  )
+
+
+
+x <- c(1, 2, 2, 3, 4, NA)
+# Asignar un valor de orden a números de un vector
+min_rank(x) # produce:
+#[1]  1  2  2  4  5 NA
+#
+x <- c(50, 10, 30, 10)
+# En el caso de valores desordenados primero los ordena internamente
+# y después los categoriza y devuelve esas categorías en el orden
+# que se prensentaron al inicio
+min_rank(x) # produce:
+#[1] 4 1 3 1
+#
+x <- c(1, 2, 2, 3, 4, NA)
+# los valores más pequeños obtienen los rangos más bajos
+min_rank(desc(x)) # produce:
+#[1]  5  3  3  2  1 NA
+#
+x <- c(5, 10, 10, 20)
+min_rank(x)  # produce: [1] 1 2 2 4
+dense_rank(x) # produce: [1] 1 2 2 3 # No deja huecos
+row_number(x) # produce:  [1] 1 2 3 4 # Asigna números cosecutivos
+# sin empates
+#
+df <- tibble(id = 1:10)
+#
+df |> 
+  mutate(
+    row0 = row_number() - 1,
+    three_groups = row0 %% 3,
+    three_in_each_group = row0 %/% 3
+  ) # produce:
+# A tibble: 10 × 4
+#     id  row0 three_groups three_in_each_group
+#  <int> <dbl>        <dbl>               <dbl>
+#1     1     0            0                   0
+#2     2     1            1                   0
+#3     3     2            2                   0
+#4     4     3            0                   1
