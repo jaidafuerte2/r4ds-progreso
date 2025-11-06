@@ -201,3 +201,260 @@ flights |>
 #2 N328AA   939101
 #3 N338AA   931183
 #4 N327AA   915665
+
+
+
+x <- c(1, 2, 10, 20)
+x / 5 # produce
+#> [1] 0.2 0.4 2.0 4.0
+# es una abreviatura de:
+x / c(5, 5, 5, 5)
+#> [1] 0.2 0.4 2.0 4.0
+
+x * c(1, 2)
+#> [1]  1  4 10 40
+x * c(1, 2, 3)
+#> Warning in x * c(1, 2, 3): longer object length is not a multiple of shorter
+#> object length
+#> [1]  1  4 30 20
+
+# Es un error filtrar Enero y febrero de esta forma (porque se 
+# intercalan las filas -pares e impares-):
+flights |> 
+  filter(month == c(1, 2)) # produce:
+# A tibble: 25,977 × 19
+#   year month   day dep_time sched_dep_time dep_delay arr_time
+#  <int> <int> <int>    <int>          <int>     <dbl>    <int>
+#1  2013     1     1      517            515         2      830
+#2  2013     1     1      542            540         2      923
+#3  2013     1     1      554            600        -6      812
+#4  2013     1     1      555            600        -5      913
+# Lo correcto sería esto:
+flights |> 
+  filter(month == 1 | month == 2) # produce:
+# A tibble: 51,955 × 19
+#   year month   day dep_time sched_dep_time dep_delay arr_time
+#  <int> <int> <int>    <int>          <int>     <dbl>    <int>
+#1  2013     1     1      517            515         2      830
+#2  2013     1     1      533            529         4      850
+#3  2013     1     1      542            540         2      923
+#4  2013     1     1      544            545        -1     1004
+
+df <- tribble(
+  ~x, ~y,
+  1,  3,
+  5,  2,
+  7, NA,
+)
+# Mostrar los valores mínimos  y máximos de una fila con pmin y pmax
+df |> 
+  mutate(
+    min = pmin(x, y, na.rm = TRUE),
+    max = pmax(x, y, na.rm = TRUE)
+  )
+# produce:
+# A tibble: 3 × 4
+#      x     y   min   max
+#  <dbl> <dbl> <dbl> <dbl>
+#1     1     3     1     3
+#2     5     2     2     5
+#3     7    NA     7     7
+#
+# pmin y pmax son distintos a min y max
+df |> 
+  mutate(
+    min = min(x, y, na.rm = TRUE),
+    max = max(x, y, na.rm = TRUE)
+  ) # produce:
+# A tibble: 3 × 4
+#      x     y   min   max
+#  <dbl> <dbl> <dbl> <dbl>
+#1     1     3     1     7
+#2     5     2     1     7
+#3     7    NA     1     7
+
+# el clásico módulo de toda la vida
+1:10 %% 3 # produce:
+#[1] 1 2 0 1 2 0 1 2 0 1
+# la clásica división entera:
+1:10 %/% 3
+#[1] 0 0 1 1 1 2 2 2 3 3
+#
+# Esto es útil, por ejemplo, para descomponer a sched_dep_time en 
+# horas y minutos (porque por defecto sched_dep_time viene en algo
+# como las 600 horas, que significa las 6:00)
+flights |> 
+  mutate(
+    hour = sched_dep_time %/% 100,
+    minute = sched_dep_time %% 100,
+    .keep = "used"
+  ) # produce:
+# A tibble: 336,776 × 3
+#  sched_dep_time  hour minute
+#           <int> <dbl>  <dbl>
+#1            515     5     15
+#2            529     5     29
+#3            540     5     40
+#4            545     5     45
+
+# Agrupo por hora de salida programada y luego saco la proporción
+# de vuelos cancelados (vuelos cancelados sobre total de vuelos)
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n())
+# produce:
+# A tibble: 20 × 3
+#   hour prop_cancelled     n
+#  <dbl>          <dbl> <int>
+#1     1        1           1
+#2     5        0.00461  1953
+#3     6        0.0164  25951
+#4     7        0.0127  22821
+#
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) |> 
+  filter(hour > 1) # filtro por hora > 1
+# produce:
+# A tibble: 19 × 3
+#   hour prop_cancelled     n
+#  <dbl>          <dbl> <int>
+#1     5        0.00461  1953
+#2     6        0.0164  25951
+#3     7        0.0127  22821
+#4     8        0.0162  27242
+#
+# Muestro un diagrama de dispersión con la hora de salida programada
+# en X y la proporción de vuelos cancelados en Y
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) |> 
+  filter(hour > 1) |> 
+  ggplot(aes(x = hour, y = prop_cancelled)) +
+  geom_line(color = "grey50") + 
+  geom_point(aes(size = n))
+
+round(123.456) # produce: 123
+round(123.456, 2) # produce: 123.46
+round(123.456, 1) # produce: 123.5
+round(123.456, 0) # produce: 123
+round(123.456, -1) # produce: 120 # redondea a la decena más cercana
+round(123.456, -2) # produce: 100 # redondea a la centena más cercana
+round(123.456, -3) # produce: 0
+
+round(c(1.5, 2.5)) # produce: 2 2 # esto es lo que se conoce como 
+# redondeo al entero par o redondeo bancario. Es una buena práctica 
+# porque porque mantiene el redondeo imparcial, la mitaad de .5's
+# va para arriba y la otra mitad para abajo.
+
+x <- 123.456
+# floor() redondea hacia abajo
+floor(x) # produce: 123
+# ceiling() redondea hacia arriba
+ceiling(x) # produce: 124
+
+x <- c(1, 2, 5, 10, 15, 20)
+# cut : divide o agrupa un vector en intervalos discretos:
+cut(x, breaks = c(0, 5, 10, 15, 20)) # produce:
+#[1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]
+#Levels: (0,5] (5,10] (10,15] (15,20]
+#
+# Los intervalos no necesitan estar espaciados uniformemente:
+cut(x, breaks = c(0, 5, 10, 100)) # produce:
+#[1] (0,5]    (0,5]    (0,5]    (5,10]   (10,100] (10,100]
+#Levels: (0,5] (5,10] (10,100]
+#
+cut(x, breaks = c(0, 5, 10, 15, 20)) # produce:
+#[1] (0,5]   (0,5]   (0,5]   (5,10]  (10,15] (15,20]
+#Levels: (0,5] (5,10] (10,15] (15,20]
+# Los levels son los intervalos
+#
+# Sin embargo los levels se pueden etiquetar
+cut(x, 
+    breaks = c(0, 5, 10, 15, 20), 
+    labels = c("sm", "md", "lg", "xl")
+) # produce:
+#[1] sm sm sm md lg xl
+#Levels: sm md lg xl
+#
+# Los valores por fuera del rango de los intervalos se convertirá
+# en NA
+y <- c(NA, -10, 5, 10, 30)
+cut(y, breaks = c(0, 5, 10, 15, 20)) # produce:
+#[1] <NA>   <NA>   (0,5]  (5,10] <NA>  
+#Levels: (0,5] (5,10] (10,15] (15,20]
+
+x <- 1:10
+# cumsum() : acumula sumas
+cumsum(x) # produce:
+#[1]  1  3  6 10 15 21 28 36 45 55
+
+########################
+###
+### 13.4.8 Ejercicios
+###
+########################
+
+# 1. Explique con palabras qué hace cada línea del código 
+# utilizado para generar la Figura  13.1 .
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) |> 
+  filter(hour > 1) |> 
+  ggplot(aes(x = hour, y = prop_cancelled)) +
+  geom_line(color = "grey50") + 
+  geom_point(aes(size = n))
+#group_by(hour = sched_dep_time %/% 100) # Esta línea transforma 
+# el sched_dep_time (La hora esperada de partida del avión) a horas
+# (de 0 a 23 probablemente) puesto que las horas tienem un formato
+# raro tipo 645 que significa 6:45. Entonces:
+645 %/% 100 # produce: 6
+786 %/% 100 # produce: 7
+#summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) # lo que
+# hace summarize() es crear dos nuevas variables en la tabla, 
+# prop_cancelled que es la proporción de vuelos cancelados en una
+# hora específica sobre el total de vuelos en una hora específica
+# y n que es la cantidad de vuelos en una hora específica. Entonces:
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n())
+# produce:
+# A tibble: 20 × 3
+#   hour prop_cancelled     n
+#  <dbl>          <dbl> <int>
+#1     1        1           1
+#2     5        0.00461  1953
+#3     6        0.0164  25951
+#4     7        0.0127  22821
+#
+#filter(hour > 1) : esta línea filtra los vuelos para que sean los
+# mayores a 1 hora 
+#
+#ggplot(aes(x = hour, y = prop_cancelled)) + # crea la relación
+#geom_line(color = "grey50") + # Crea una línea unida a cada punto
+#geom_point(aes(size = n)) # Todo este código crea el diagrama de
+# flujo
+
+# 2. What trigonometric functions does R provide? Guess some 
+# names and look up the documentation. Do they use degrees or 
+# radians?
+# Respuesta: tal vez : sin, cos, tan.
+?Trig()
+# Lo que dice la documentación es: Angles are in radians, not 
+# degrees, for the standard versions
+
+# 3. Actualmente, `a` dep_timey sched_dep_time`b` son convenientes 
+# de ver, pero difíciles de calcular porque no son números 
+# realmente continuos. Puede ver el problema básico ejecutando 
+# el código a continuación: hay un espacio entre cada hora.
+flights |> 
+  filter(month == 1, day == 1) |> 
+  ggplot(aes(x = sched_dep_time, y = dep_delay)) +
+  geom_point()
+#Conviértalos a una representación más precisa del tiempo (ya sean 
+# horas fraccionarias o minutos desde la medianoche).
+#
+# Claro, hay un espacio entre 61 y 99 que no tiene vuelos porque
+# los minutos se respresentan hasta 60. Lo que significa por ejemplo
+# que nigún vuelo sale a las 675 porque no hay una hora 6:75.
+#
