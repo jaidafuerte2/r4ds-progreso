@@ -1126,3 +1126,320 @@ row_number(x) # produce: [1] 4 2 3 1
 # desgrupar todo, lo mejor es usar "drop" y no "drop_last"
 #
 
+
+
+# A veces es conveniente usar la mediana en lugar de la media. No 
+# entiendo bien en qué casos pero el libro dice que que en el 
+# caso de los retrasos de salida puede ser más imparcial usar
+# la mediana y no la moda porque los vuelos a veces a salen con
+# retraso pero nunca con antelación. Obvio (por eso los valores
+# de la mediana son menores):
+flights |>
+  group_by(year, month, day) |>
+  summarize(
+    mean = mean(dep_delay, na.rm = TRUE),
+    median = median(dep_delay, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  ) |> 
+  ggplot(aes(x = mean, y = median)) + 
+  geom_abline(slope = 1, intercept = 0, color = "white", linewidth = 2) +
+  geom_point()
+# NOTA: La visión del autor es usar la moda no es útil en análisis
+# de datos.
+#
+# max() da los valores máximos, min() los valores mínimos y
+# quantil(x, 0.y) da el valor que supera al y% de los valores
+# de un grupo. Por ejemplo, por los valores atípicos, puede ser
+# preferible usar quatile(x, 0.95) que max() pues max() puede estar
+# excesivamente alejado del 95% de valores:
+flights |>
+  group_by(year, month, day) |>
+  summarize(
+    max = max(dep_delay, na.rm = TRUE),
+    q95 = quantile(dep_delay, 0.95, na.rm = TRUE),
+    .groups = "drop"
+  )
+# A tibble: 365 × 5
+#   year month   day   max   q95
+#  <int> <int> <int> <dbl> <dbl>
+#1  2013     1     1   853  70.1
+#2  2013     1     2   379  85  
+#3  2013     1     3   291  68  
+#4  2013     1     4   288  60 
+
+# El rango intercuartilico IQR() es la distancia que contienen el
+# 50% central de los datos: quantile(x, 0.75) - quantile(x, 0.25)
+# En general debería ser cero pero hay anomalías en los datos
+# dan un valor distinto:
+# 
+flights |> 
+  group_by(origin, dest) |> 
+  summarize(
+    distance_iqr = IQR(distance),
+    q25 = quantile(distance, 0.25),
+    q75 = quantile(distance, 0.75),
+    n = n(),
+    .groups = "drop"
+  ) #|> 
+  #filter(distance_iqr > 0)
+# produce: 
+# A tibble: 224 × 6
+#  origin dest  distance_iqr   q25   q75     n
+#  <chr>  <chr>        <dbl> <dbl> <dbl> <int>
+#1 EWR    ALB              0   143   143   439
+#2 EWR    ANC              0  3370  3370     8
+#3 EWR    ATL              0   746   746  5022
+#4 EWR    AUS              0  1504  1504   968
+# Estos valores se produce porque la distancia siempre es la misma
+# de un lugar a otro, los aeropuertos no suelen cambiar de posición
+# pero si hay valores mal ingresados, esto puede cambiar:
+flights |> 
+  group_by(origin, dest) |> 
+  summarize(
+    distance_iqr = IQR(distance),
+    q25 = quantile(distance, 0.25),
+    q75 = quantile(distance, 0.75),
+    n = n(),
+    .groups = "drop"
+  ) |> 
+  filter(distance_iqr > 0) # produce:
+# A tibble: 2 × 6
+#  origin dest  distance_iqr   q25   q75     n
+#  <chr>  <chr>        <dbl> <dbl> <dbl> <int>
+#1 EWR    EGE              1  1725  1726   110
+#2 JFK    EGE              1  1746  1747   103
+
+# Es importante ver el tipo de distribución de una variable antes
+# de elegir la estadística descriptiva correcta.
+# Por ejemplo, aquí parece haber una distribución asimétrica:
+flights |>
+  filter(dep_delay < 120) |> 
+  ggplot(aes(x = dep_delay, group = interaction(day, month))) + 
+  geom_freqpoly(binwidth = 5, alpha = 1/5)
+  
+# Encontrar la primera, la quinta y la última salida de cada día
+flights |> 
+  group_by(year, month, day) |> 
+  summarize(
+    first_dep = first(dep_time, na_rm = TRUE), 
+    fifth_dep = nth(dep_time, 5, na_rm = TRUE),
+    last_dep = last(dep_time, na_rm = TRUE)
+  ) # produce:
+# A tibble: 365 × 6
+# Groups:   year, month [12]
+#   year month   day first_dep fifth_dep last_dep
+#  <int> <int> <int>     <int>     <int>    <int>
+#1  2013     1     1       517       554     2356
+#2  2013     1     2        42       535     2354
+#3  2013     1     3        32       520     2349
+#4  2013     1     4        25       531     2358
+
+# Extraer valores en posiciones es complementario a filtrar por 
+# rangos. Por ejemplo:
+# Filtrar los vuelos dónde sus sched_dep_time son iguales a 1
+# o al máximo valor de su ranking
+flights |> 
+  group_by(year, month, day) |> 
+  mutate(r = min_rank(sched_dep_time)) |>
+  # Filtrar si  en el rankin de r, sched_dep_time está primera
+  # o última
+  filter(r %in% c(1, max(r))) |>
+  select(r) # produce:
+# A tibble: 1,195 × 4
+# Groups:   year, month, day [365]
+#   year month   day     r
+#  <int> <int> <int> <int>
+#1  2013     1     1     1
+#2  2013     1     1   840
+#3  2013     1     1   840
+#4  2013     1     1   840
+#
+# Sin select, se muestra cada observación o fila entera:
+flights |> 
+  group_by(year, month, day) |> 
+  mutate(r = min_rank(sched_dep_time)) |>
+  # Filtrar si  en el rankin de r, sched_dep_time está primera
+  # o última
+  filter(r %in% c(1, max(r))) # produce:
+# A tibble: 1,195 × 20
+# Groups:   year, month, day [365]
+#   year month   day dep_time sched_dep_time dep_delay arr_time
+#  <int> <int> <int>    <int>          <int>     <dbl>    <int>
+#1  2013     1     1      517            515         2      830
+#2  2013     1     1     2353           2359        -6      425
+#3  2013     1     1     2353           2359        -6      418
+#4  2013     1     1     2356           2359        -3      425
+
+
+########################
+###
+### 13.6.7 Ejercicios
+###
+########################
+
+# 1. Propón al menos 5 maneras diferentes de evaluar las 
+# características típicas de retraso de un grupo de vuelos. 
+# ¿Cuándo es mean()útil? ¿Cuándo sería median()útil? ¿Cuándo 
+# podrías querer usar otra cosa? ¿Deberías usar el retraso en la 
+# llegada o en la salida? ¿Por qué querrías usar datos de planes?
+
+# mean() se usa cuando los retrasos son más o menos simétricos
+# y no tienen demasiados valores extremos:
+?flights # carrier es el tipo de aeorolínea
+flights |>
+  group_by(carrier) |>
+  summarize(mean_delay = mean(dep_delay, na.rm = TRUE)) # produce:
+# A tibble: 16 × 2
+#  carrier mean_delay
+#  <chr>        <dbl>
+#1 9E           16.7 
+#2 AA            8.59
+#3 AS            5.80
+#4 B6           13.0 
+#
+# Cuando hay muchos valores extremos y la distribución es asimétrica
+# es mejor usar median
+flights |>
+  group_by(carrier) |>
+  summarize(median_delay = median(dep_delay, na.rm = TRUE))
+# produce:
+# A tibble: 16 × 2
+#  carrier median_delay
+#  <chr>          <dbl>
+#1 9E              -2  
+#2 AA              -3  
+#3 AS              -3  
+#4 B6              -1 
+# Aquí por ejemplo, usando la mediana, se observa que en general
+# las aerolíneas tiene cierto adelnato en su salida
+#
+# A veces no es tan importante saber cuanto se retrasa sino la 
+# proporción de vuelos a tiempo:
+flights |>
+  mutate(on_time = dep_delay <= 5) |>
+  group_by(carrier) |>
+  summarize(prop_ontime = mean(on_time, na.rm = TRUE)) # produce:
+# A tibble: 16 × 2
+#  carrier prop_ontime
+#  <chr>         <dbl>
+#1 9E            0.663
+#2 AA            0.772
+#3 AS            0.781
+#4 B6            0.682
+#
+# Los percentiles, por ejemplo, pueden ayudarnos a entender que
+# tan malo puede ser un restraso extremo
+flights |>
+  group_by(carrier) |>
+  summarize(p90_delay = quantile(dep_delay, 0.9, na.rm = TRUE))
+# A tibble: 16 × 2
+#carrier p90_delay
+#  <chr>       <dbl>
+#1 9E           68  
+#2 AA           35  
+#3 AS           22.9
+#4 B6           51  
+# Para la primera observación  esto significa que el 90% de los 
+# vuelos sale con menos de 68 minutos de retraso
+# 
+# Para medir la consistencia de los tiempos de salida y llegada
+# puede ser conveniente la desviación estándar
+flights |>
+  group_by(carrier) |>
+  summarize(sd_delay = sd(dep_delay, na.rm = TRUE)) # produce:
+# A tibble: 16 × 2
+#  carrier sd_delay
+#  <chr>      <dbl>
+#1 9E          45.9
+#2 AA          37.4
+#3 AS          31.4
+#4 B6          38.5
+#
+# Retraso en la salida o en la llegada? Depede del negocio. Si te 
+# interesa la operación del aeropuerto, es más importante la hora 
+# de salida. Si eres pasajero es más importante la hora de llegada
+
+# 2. ¿Qué destinos presentan la mayor variación en la velocidad 
+# del aire?
+flights |> 
+  filter(!is.na(air_time), !is.na(distance)) |> 
+  mutate(air_speed = distance / (air_time / 60)) |>
+  group_by(dest) |> 
+  summarize(
+    sd_air_speed = sd(air_speed, na.rm = TRUE),
+    mean_air_speed = mean(air_speed, na.rm = TRUE),
+    n = n(),
+    .groups = "drop" # desagrupar todos los niveles
+  ) |> 
+  filter(n > 10) |>      # evitar destinos con pocos vuelos
+  arrange(desc(sd_air_speed)) # produce:
+# A tibble: 101 × 4
+#  dest  sd_air_speed mean_air_speed     n
+#  <chr>        <dbl>          <dbl> <int>
+#1 OKC           38.3           416.   315
+#2 TUL           37.5           412.   294
+#3 ILM           36.9           402.   107
+#4 BNA           36.9           401.  6084
+# Esto significa: Alta variación por diferencias en viento, tráfico 
+# aéreo, o tipo de avión. Baja variación muestra trayectos más 
+# consistentes, tal vezz por rutas más cortas y bien controladas.
+
+# 3. Crea una trama para explorar más a fondo las aventuras de 
+# EGE. ¿Puedes encontrar alguna evidencia de que el aeropuerto 
+# cambió de ubicación? ¿Puedes encontrar otra variable que 
+# explique la diferencia? 
+# El aeropuerto EGE se refiere al aeropuesrto Eagle County, Colorado.
+# El primer paso sería calcular velocidad aérea para EGE
+flights |> 
+  filter(dest == "EGE", !is.na(air_time)) |> 
+  mutate(air_speed = distance / (air_time / 60)) |> 
+  ggplot(aes(x = time_hour, y = air_speed)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(se = FALSE, color = "blue") +
+  labs(
+    title = "Velocidad promedio de vuelos al aeropuerto EGE a lo largo del tiempo",
+    x = "Fecha y hora de salida",
+    y = "Velocidad (millas por hora aprox.)"
+  )
+# Parece que desde abril 2013 a Enero 2014 no hay vuelos en este
+# aeropuerto.
+#
+# El siguiente paso sería comprobar si hay más de una distancia 
+# regidtrada para EGE, lo cual no debería ocurrir si el aeropuerto
+# no se movió físicamente
+flights |> 
+  filter(dest == "EGE") |> 
+  distinct(origin, dest, distance) # distinct elimina filas duplicadas
+  # , conservando sólo una fila por cada combinación única de filas
+  # de las columnas que se especifiquen
+# produce:
+# A tibble: 4 × 3
+#  origin dest  distance
+#  <chr>  <chr>    <dbl>
+#1 EWR    EGE       1726
+#2 JFK    EGE       1747
+#3 EWR    EGE       1725
+#4 JFK    EGE       1746
+# Efectivamente hay un origen diferente para EWR y otro para JFK
+# pero parece una diferencia de distancia mínima. Tal vez un error
+# de tipeo
+#
+# El último paso sería buscar otra variable que explique la diferencia
+# Se podría explorar la aerolínea (carrier) o aeropuerto de origen
+# (origin)
+flights |> 
+  filter(dest == "EGE", !is.na(air_time)) |> 
+  mutate(air_speed = distance / (air_time / 60)) |> 
+  ggplot(aes(x = carrier, y = air_speed, fill = carrier)) +
+  geom_boxplot() +
+  labs(
+    title = "Velocidad aérea a EGE por aerolínea",
+    x = "Aerolínea",
+    y = "Velocidad (mph)"
+  )
+# Las cajas muestran un valor promedio casi idéntico, con algunos
+# valores atípicos distintos.
+#
+# No sé, parecería todo normal, al menos con las variables que 
+# investigué
