@@ -182,3 +182,144 @@ df |>
 #> 1 Carmen  banana, apple               
 #> 2 Marvin  nectarine                   
 #> 3 Terence cantaloupe, papaya, mandarin
+
+########################
+###
+### 14.3.4 Ejercicios
+###
+########################
+
+# 1. Compare and contrast the results of paste0() with str_c() 
+# for the following inputs:
+str_c("hi ", NA) # produce: [1] NA
+str_c(letters[1:2], letters[1:3]) # produce: error
+#
+paste0("hi ", NA) # produce: [1] "hi NA"
+paste0(letters[1:2], letters[1:3]) # produce: [1] "aa" "bb" "ac"
+#
+# Respuesta: en el caso de str_c parece que no puede operar sobre
+# valores desconocidos y sobre vectores de distinto tamaño
+letters[1:2] # produce: [1] "a" "b"
+letters[1:3] # produce: [1] "a" "b" "c"
+str_c(letters[2:4], letters[1:3]) # produce:
+[1] "ba" "cb" "dc"
+letters[2:4] # produce: [1] "b" "c" "d"
+# En cambio paste0() si opera con valores faltantes NA (hasta parece
+# que los transforma a cadenas) y también puede operar sobre
+# vectores de distintos tamaños
+
+# 2. What’s the difference between paste() and paste0()? How can you 
+# recreate the equivalent of paste() with str_c()?
+paste0("hi ", NA) # produce: [1] "hi NA"
+paste0(letters[1:2], letters[1:3]) # produce: [1] "aa" "bb" "ac"
+paste("hi ", NA) # produce: [1] "hi  NA" # notar que hay 2 espacios
+                                         # entre "hi" y "NA"
+paste(letters[1:2], letters[1:3]) # produce: [1] "a a" "b b" "a c"
+# Respuesta: La diferencia entre paste() y paste0() es que paste
+# incluye un espacio en entre cada cadena que une, paste0() no lo 
+# hace.
+# Además para recrear el comportamiento de paste() con str_c(), lo que 
+# debo hacer es usar el argumento sep
+str_c("Hola", "mundo", sep = " ") # produce:
+#> [1] "Hola mundo"
+str_c("Hola", "mundo")
+#> [1] "Holamundo"
+paste("Hola", "mundo") # produce:
+#[1] "Hola mundo"
+
+# 3. Convert the following expressions from str_c() to str_glue() 
+# or vice versa:
+str_c("The price of ", food, " is ", price)
+# la versión str_glue() sería:
+str_glue("The price of, {food}, is, {price}")
+#
+str_glue("I'm {age} years old and live in {country}") 
+# la versión str_c() sería:
+str_c("I'm ", age, " years old and live in ", country)
+#
+str_c("\\section{", title, "}")
+# la versión str_glue() sería:
+str_glue("\\section{{{title}}}")
+
+
+
+df1 <- tibble(x = c("a,b,c", "d,e", "f"))
+df1 # produce:
+# A tibble: 3 × 1
+#  x    
+#  <chr>
+#1 a,b,c
+#2 d,e  
+#3 f  
+df1 |> 
+  separate_longer_delim(x, delim = ",")
+#> # A tibble: 6 × 1
+#>   x    
+#>   <chr>
+#> 1 a    
+#> 2 b    
+#> 3 c    
+#> 4 d    
+#> 5 e    
+#> 6 f
+
+df3 <- tibble(x = c("a10.1.2022", "b10.2.2011", "e15.1.2015"))
+df3 # produce: 
+# A tibble: 3 × 1
+#  x         
+#  <chr>     
+#1 a10.1.2022
+#2 b10.2.2011
+#3 e15.1.2015
+# Separar el texto en distintas variables y asignarles un nombre
+df3 |> 
+  separate_wider_delim(
+    x,
+    delim = ".",
+    names = c("code", "edition", "year")
+  )
+#> # A tibble: 3 × 3
+#>   code  edition year 
+#>   <chr> <chr>   <chr>
+#> 1 a10   1       2022 
+#> 2 b10   2       2011 
+#> 3 e15   1       2015
+
+# Separar cadenas en varias partes, asignar filas propias a las
+# nuevas cadenas, asignarle un nombre a cada nueva variable y omitir
+# edition gracias a NA
+df3 |> 
+  separate_wider_delim(
+    x,
+    delim = ".",
+    names = c("code", NA, "year")
+  )
+#> # A tibble: 3 × 2
+#>   code  year 
+#>   <chr> <chr>
+#> 1 a10   2022 
+#> 2 b10   2011 
+#> 3 e15   2015
+
+df4 <- tibble(x = c("202215TX", "202122LA", "202325CA")) 
+df4 # produce:
+# A tibble: 3 × 1
+#  x       
+#  <chr>   
+#1 202215TX
+#2 202122LA
+#3 202325CA
+# Separar una cadena según su posición en el texto (no con un 
+# delimitador delim) y asignar cada texto nuevo a una nueva columna
+# y asignarle un nombre a cada variable 
+df4 |> 
+  separate_wider_position(
+    x,
+    widths = c(year = 4, age = 2, state = 2)
+  )
+#> # A tibble: 3 × 3
+#>   year  age   state
+#>   <chr> <chr> <chr>
+#> 1 2022  15    TX   
+#> 2 2021  22    LA   
+#> 3 2023  25    CA
