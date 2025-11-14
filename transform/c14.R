@@ -717,4 +717,74 @@ babynames |>
     y = "Proporción de nombres"
   ) +
   theme_minimal()
+# 
+# Una versión mínima para la primera letra podría ser algo así:
+babynames |>
+  mutate(first = str_sub(name, 1, 1)) |>
+  filter(year %in% c(1900, 1950, 2000, 2020)) |>
+  count(year, first, sort = TRUE)
 
+
+
+# Acceder a la representación de una cadena (La asignación de un 
+# número hexadecimal a un carácter se llama codificación)
+charToRaw("Hadley") # produce:
+#> [1] 48 61 64 6c 65 79
+
+x1 <- "text\nEl Ni\xf1o was particularly bad this year"
+read_csv(x1)$text # produce: error y:
+#> [1] "El Ni\xf1o was particularly bad this year"
+#
+x2 <- "text\n\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd"
+read_csv(x2)$text # produce: error y esto:
+#> [1] "\x82\xb1\x82\xf1\x82ɂ\xbf\x82\xcd"
+
+# Para leer correctamente los textos anteriores es necesaria
+# la función locale()
+read_csv(I(x1), locale = locale(encoding = "Latin1"))$text
+# produce: error
+read_csv(x2, locale = locale(encoding = "Shift-JIS"))$text
+# produce: error
+
+# NOTA: el código del libro tampoco funcionó. Así que otra opción
+# podría ser usar la biblioteca readr. (Este tema de la codificación
+# parece bastante complejo)
+library(readr)
+x1 <- "text\nEl Niño was particularly bad this year"
+read_csv(I(x1))$text
+
+# esto funcionará?
+prueba1 <- "mí ñaño"
+prueba1 # produce: [1] "mí ñaño" # Parece que r sí representa 
+# correctamente los carácteres vocales tildadas y la ñ.
+
+# Mostrar dos formas distintas de representar la ü, parecen iguales 
+# pero no lo son
+u <- c("\u00fc", "u\u0308")
+str_view(u) # produce:
+#> [1] │ ü
+#> [2] │ ü
+#
+str_length(u) # produce:
+#> [1] 1 2
+#> Lo que se entiende es que la primera u es un sólo caracter y la
+#> segunda u parece que tiene 2 caracteres pegados uno encima del otro
+str_sub(u, 1, 1) # produce:
+#> [1] "ü" "u"
+str_sub(u, 1, 2) # produce:
+#[1] "ü" "ü"
+#
+# Estos dos caracteres parecen iguales, y puede ser que sí, pero
+# no necesariamente:
+u[[1]] == u[[2]] # produce:
+#> [1] FALSE
+#
+str_equal(u[[1]], u[[2]]) # produce:
+#> [1] TRUE
+
+# La ordenación de las letras varía de un idioma a otro:
+str_sort(c("a", "c", "ch", "h", "z")) # produce:
+#> [1] "a"  "c"  "ch" "h"  "z" # Inglés predeterminado
+#> En checo locale = "cs" el orden cambia
+str_sort(c("a", "c", "ch", "h", "z"), locale = "cs") # produce:
+#> [1] "a"  "c"  "h"  "ch" "z"
