@@ -86,3 +86,5 @@ str_view(fruit, "aa|ee|ii|oo|uu")
 #> [33] │ g<oo>seberry
 #> [47] │ lych<ee>
 #> [66] │ purple mangost<ee>n
+
+"hola mundo"
