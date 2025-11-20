@@ -104,7 +104,8 @@ View(forcats::gss_cat)
 # de entender? ¿Cómo podrías mejorar el gráfico?
 gss_cat %>% 
   ggplot(aes(x = rincome)) +
-  geom_bar()
+  geom_bar() + 
+  coord_flip()
 # El gráfico es difícil de entender porque hay un montón de 
 # categorías y no se entiende, en el gráfico, de qué va cada 
 # categoría, las etiquetas ocupan demasiado espacio en la 
@@ -345,3 +346,208 @@ gss_cat |>
 # pero en las coordenadas verticales el principio aparece abajo.
 # Entonces si "Not applicable" queda como primer nivel del factor
 # entonces ggplot lo dibuja primero, es decir abajo
+
+gss_cat |> count(partyid)
+#> # A tibble: 10 × 2
+#>   partyid                n
+#>   <fct>              <int>
+#> 1 No answer            154
+#> 2 Don't know             1
+#> 3 Other party          393
+#> 4 Strong republican   2314
+#> 5 Not str republican  3032
+#> 6 Ind,near rep        1791
+#> # ℹ 4 more rows
+#
+# Renombrar los niveles para que sean más consistentes. Para esto
+# se ponen los nuevos valores a la izquierda y los antiguos a la 
+# derecha:
+gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+                         "Republican, strong"    = "Strong republican",
+                         "Republican, weak"      = "Not str republican",
+                         "Independent, near rep" = "Ind,near rep",
+                         "Independent, near dem" = "Ind,near dem",
+                         "Democrat, weak"        = "Not str democrat",
+                         "Democrat, strong"      = "Strong democrat"
+    )
+  ) |>
+  count(partyid) # produce:
+#> # A tibble: 10 × 2
+#>   partyid                   n
+#>   <fct>                 <int>
+#> 1 No answer               154
+#> 2 Don't know                1
+#> 3 Other party             393
+#> 4 Republican, strong     2314
+#> 5 Republican, weak       3032
+#> 6 Independent, near rep  1791
+#> # ℹ 4 more rows
+#
+# Para combinar grupos se puede asignar varios niveles antiguos al
+# mismo nivel nuevo
+gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+                         "Republican, strong"    = "Strong republican",
+                         "Republican, weak"      = "Not str republican",
+                         "Independent, near rep" = "Ind,near rep",
+                         "Independent, near dem" = "Ind,near dem",
+                         "Democrat, weak"        = "Not str democrat",
+                         "Democrat, strong"      = "Strong democrat",
+                         "Other"                 = "No answer",
+                         "Other"                 = "Don't know",
+                         "Other"                 = "Other party"
+    )
+  ) # produce:
+# A tibble: 21,483 × 9
+#   year marital         age race  rincome    partyid relig denom tvhours
+#   <int> <fct>         <int> <fct> <fct>      <fct>   <fct> <fct>   <int>
+#1  2000 Never married    26 White $8000 to … Indepe… Prot… Sout…      12
+#2  2000 Divorced         48 White $8000 to … Republ… Prot… Bapt…      NA
+#3  2000 Widowed          67 White Not appli… Indepe… Prot… No d…       2
+#4  2000 Never married    39 White Not appli… Indepe… Orth… Not …       4
+#
+# Colapsar muchos niveles con fct_collapse()
+gss_cat |>
+  mutate(
+    partyid = fct_collapse(partyid,
+                           "other" = c("No answer", "Don't know", "Other party"),
+                           "rep" = c("Strong republican", "Not str republican"),
+                           "ind" = c("Ind,near rep", "Independent", "Ind,near dem"),
+                           "dem" = c("Not str democrat", "Strong democrat")
+    )
+  ) |>
+  count(partyid) # produce:
+#> # A tibble: 4 × 2
+#>   partyid     n
+#>   <fct>   <int>
+#> 1 other     548
+#> 2 rep      5346
+#> 3 ind      8409
+#> 4 dem      7180
+
+# Agrupar niveles muy pequeños en "others" con fct_lump_lowfreq()
+gss_cat |>
+  mutate(relig = fct_lump_lowfreq(relig)) |>
+  count(relig) # produce:
+#> # A tibble: 2 × 2
+#>   relig          n
+#>   <fct>      <int>
+#> 1 Protestant 10846
+#> 2 Other      10637
+
+# También se puede especificar que queremos 10 niveles pequeños
+# con fct_lump_n()
+gss_cat |>
+  mutate(relig = fct_lump_n(relig, n = 10)) |>
+  count(relig, sort = TRUE)
+#> # A tibble: 10 × 2
+#>   relig          n
+#>   <fct>      <int>
+#> 1 Protestant 10846
+#> 2 Catholic    5124
+#> 3 None        3523
+#> 4 Christian    689
+#> 5 Other        458
+#> 6 Jewish       388
+#> # ℹ 4 more rows
+
+########################
+###
+### 16.5.1 Ejercicios
+###
+########################
+
+# 1. ¿Cómo han cambiado con el tiempo las proporciones de personas 
+# que se identifican como demócratas, republicanas e 
+# independientes?
+# Rectegorizar o renombrar los niveles con fct_collapse()
+party <- gss_cat |>
+  mutate(party_simp = fct_collapse(
+    partyid,
+    "other" = c("No answer", "Don't know", "Other party"),
+    "rep" = c("Strong republican", "Not str republican"),
+    "ind" = c("Ind,near rep", "Independent", "Ind,near dem"),
+    "dem" = c("Not str democrat", "Strong democrat")
+  )) |>
+  filter(!is.na(year))
+
+party |>
+  count(year, party_simp) |>
+  group_by(year) |>
+  mutate(prop = n / sum(n)) |>
+  ggplot(aes(year, prop, color = party_simp)) +
+  geom_line(size = 1.1) +
+  labs(y = "Proportion", color = "Party")
+# Lo que se observa es que los republicanos han ido disminuyendo,
+# mientras que los republicanos han aumentado ligeramente, los
+# independientes casi se han mantenido
+#
+party |>
+  count(year, party_simp) |>
+  group_by(year) |>
+  mutate(prop = n / sum(n)) # produce:
+# Groups:   year [8]
+#   year party_simp     n   prop
+#   <int> <fct>      <int>  <dbl>
+#1  2000 other         60 0.0213
+#2  2000 rep          684 0.243 
+#3  2000 ind         1152 0.409 
+#4  2000 dem          921 0.327 
+#5  2002 other         84 0.0304
+#6  2002 rep          764 0.276 
+
+# 2. ¿Cómo podrías reducirlo rincome a un pequeño conjunto de 
+# categorías?
+rincome_summary # produce:
+# A tibble: 16 × 3
+#  rincome          age     n
+#  <fct>          <dbl> <int>
+#1 No answer       45.5   183
+#2 Don't know      45.6   267
+#3 Refused         47.6   975
+#4 $25000 or more  44.2  7363
+# El problema es que hay demasiadas categorías. Y probablemete tantas 
+# no son útiles. Por lo que sería bueno cambiaer los niveles con 
+# fct_collapse()
+gss_cat |>
+  mutate(
+    rincome_collapsed = fct_collapse(
+      rincome,
+      "Low" = c(
+        "Lt $1000", "$1000 to 2999", "$3000 to 3999",
+        "$4000 to 4999", "$5000 to 5999", "$6000 to 6999",
+        "$7000 to 7999"
+      ),
+      "Middle" = c(
+        "$8000 to 9999", "$10000 - 14999"
+      ),
+      "High" = c("$15000 - 19999", "$20000 - 24999", 
+                 "$25000 or more"),
+      "Unknown" = c("No answer", "Don't know", "Refused")
+    )
+  )
+# 3. Notice there are 9 groups (excluding other) in the fct_lump 
+# example above. Why not 10? (Hint: type ?fct_lump, and find the 
+# default for the argument other_level is “Other”.)
+# Parece que la función fct_lump_n() tiene un argumento other_level
+# que tiene el valor por defecto "Other". Así que los niveles 
+# menos frecuentes, los que no entren en el top n, van al nivel
+# "Others". Es decir en un top n = 10, 9 son los niveles más 
+# frecuentes y "Other" es el décimo nivel. Es decir:
+#fct_lump(relig, n = 10) # Tiene 10 niveles inluido "Other"
+
+
+
+# oredered: crea factores ordenados. Estos implican un orden estricto
+# entre los niveles. Se usa cuando se conoce el orden de los niveles
+# pero no existe una clasificación numérica precisa (tal vez no
+# sea convenientes para los niveles de obesidad). Se identifican
+# porque utiliza el símbolo "<" entre los niveles del factor:
+ordered(c("a", "b", "c")) # produce:
+#> [1] a b c
+#> Levels: a < b < c
+# 
+
