@@ -171,3 +171,262 @@ as_date(now()) # produce:
 
 # NO REALIZADOS
 
+
+
+datetime <- ymd_hms("2026-07-08 12:34:56")
+datetime # produce: [1] "2026-07-08 12:34:56 UTC"
+year(datetime) # produce:
+#> [1] 2026
+month(datetime) # produce:
+#> [1] 7
+# día del mes
+mday(datetime) # produce:
+#> [1] 8
+#
+# día del año
+yday(datetime) # produce
+#> [1] 189
+# día de la semana "week day"
+wday(datetime)
+#> [1] 4
+
+month(datetime, label = TRUE) # produce:
+#> [1] Jul
+#> 12 Levels: Jan < Feb < Mar < Apr < May < Jun < Jul < Aug < Sep < ... < Dec
+# 
+wday(datetime, label = TRUE) # produce:
+#[1] Wed
+#Levels: Sun < Mon < Tue < Wed < Thu < Fri < Sat
+wday(datetime, label = TRUE, abbr = FALSE)
+#> [1] Wednesday
+#> 7 Levels: Sunday < Monday < Tuesday < Wednesday < Thursday < ... < Saturday
+month(datetime, label = TRUE, abbr = FALSE) # produce:
+#[1] July
+#12 Levels: January < February < March < April < May < June < ... < December
+
+# Hay más vuelos el fin de semana que entre semana
+flights_dt |> 
+  mutate(wday = wday(dep_time, label = TRUE)) |> 
+  ggplot(aes(x = wday)) +
+  geom_bar()
+
+# Se retrasan menos los vuelos que salen en los minutos 20-30 y 
+# 50-60 que los que salen el resto de la hora
+flights_dt |> 
+  mutate(minute = minute(dep_time)) |> 
+  group_by(minute) |> 
+  summarize(
+    avg_delay = mean(dep_delay, na.rm = TRUE),
+    n = n()
+  ) |> 
+  ggplot(aes(x = minute, y = avg_delay)) +
+  geom_line()
+#
+minute(530) # produce: 8
+minute(517)
+flights_dt |> 
+  mutate(minute = minute(dep_time)) |> # notar que flights_dt tiene
+  group_by(minute) |> # produce:       # dep_time en formato de fecha
+  select(minute)
+# A tibble: 328,063 × 10
+# Groups:   minute [60]
+#  origin dest  dep_delay arr_delay dep_time           
+#  <chr>  <chr>     <dbl>     <dbl> <dttm>             
+#1 EWR    IAH           2        11 2013-01-01 05:17:00
+#2 LGA    IAH           4        20 2013-01-01 05:33:00
+#3 JFK    MIA           2        33 2013-01-01 05:42:00
+#4 JFK    BQN          -1       -18 2013-01-01 05:44:00
+
+# En las salidas programadas no hay un patrón tan marcado
+sched_dep <- flights_dt |> 
+  mutate(minute = minute(sched_dep_time)) |> 
+  group_by(minute) |> 
+  summarize(
+    avg_delay = mean(arr_delay, na.rm = TRUE),
+    n = n()
+  )
+#
+ggplot(sched_dep, aes(x = minute, y = avg_delay)) +
+  geom_line()
+
+# Graficar los vuelos por semana , segpun su hora de salida
+flights_dt |> 
+  count(week = floor_date(dep_time, "week")) |> 
+  ggplot(aes(x = week, y = n)) +
+  geom_line() + 
+  geom_point()
+
+# Contar vuelos por semanas (53-54 semanas). Parece que la función 
+# floor_date() recibe una cadena de argumento dependiendo de 
+# como se quieran agrupar las fechas. En este caso "week"
+flights_dt |> 
+  count(week = floor_date(dep_time, "week")) # produce:
+# A tibble: 53 × 2
+#  week                    n
+#  <dttm>              <int>
+#1 2012-12-30 00:00:00  4300
+#2 2013-01-06 00:00:00  6082
+#3 2013-01-13 00:00:00  5976
+#4 2013-01-20 00:00:00  5925
+#5 2013-01-27 00:00:00  5774
+
+# Utilizar redondeo (floor_date) para mostrar la distribución de 
+# vuelos a lo largo del día, calculando la diferencia entre el
+# momento actual dep_time y el primer instante de ese día
+flights_dt |> 
+  mutate(floor_hour = (floor_date(dep_time, "day")),
+         dep_hour = dep_time - floor_hour) |> 
+  ggplot(aes(x = dep_hour)) +
+  geom_freqpoly(binwidth = 60 * 30)
+
+# Mostrar dep_hour que es una resta de la hora de salida menos 
+# el inicio del día (que se calcula usando floor date)
+flights_dt |> 
+  mutate(floor_hour = (floor_date(dep_time, "day")),
+         dep_hour = dep_time - floor_hour) |>
+  select(dep_time, dep_hour, floor_hour) # produce:
+# A tibble: 328,063 × 3
+#  dep_time            dep_hour   floor_hour         
+#  <dttm>              <drtn>     <dttm>             
+#1 2013-01-01 05:17:00 19020 secs 2013-01-01 00:00:00
+#2 2013-01-01 05:33:00 19980 secs 2013-01-01 00:00:00
+#3 2013-01-01 05:42:00 20520 secs 2013-01-01 00:00:00
+#4 2013-01-01 05:44:00 20640 secs 2013-01-01 00:00:00
+  
+# Usar hms::as_hms para visualizar mejor las horas en el eje X del
+# gráfico. Parece que la mayor parte de salidas son entre las 8
+# de la mañana y las 3 de la tarde
+flights_dt |> 
+  mutate(floor_hour = (floor_date(dep_time, "day")),
+         dep_hour = hms::as_hms(dep_time - floor_hour)) |> 
+  ggplot(aes(x = dep_hour)) +
+  geom_freqpoly(binwidth = 60 * 30)
+
+# Es posible usar las funciones de acceso para modificar los 
+# componentes de una fecha y hora, para limpiar datos con fechas
+# claramente incorrectas
+(datetime <- ymd_hms("2026-07-08 12:34:56")) # produce:
+#> [1] "2026-07-08 12:34:56 UTC"
+#
+year(datetime) <- 2030 
+datetime # produce:
+#> [1] "2030-07-08 12:34:56 UTC"
+month(datetime) <- 01
+datetime
+#> [1] "2030-01-08 12:34:56 UTC"
+hour(datetime) <- hour(datetime) + 1
+datetime
+#> [1] "2030-01-08 13:34:56 UTC"
+
+# También es posible establecer varios valores en un sólo paso
+update(datetime, year = 2030, month = 2, mday = 2, hour = 2)
+# produce:
+#> [1] "2030-02-02 02:34:56 UTC"
+
+# Los valores demasiado grandes se desbordarán:
+update(ymd("2023-02-01"), mday = 30) # produce:
+#> [1] "2023-03-02" # Se desborda al siguiente mes
+update(ymd("2023-02-01"), hour = 400) # produce
+#> [1] "2023-02-17 16:00:00 UTC" # Se desborda 16 días
+
+########################
+###
+### 17.3.4 Ejercicios
+###
+########################
+
+# NO REALIZADOS
+
+# En R, cuando restas dos fechas, obtienes un objeto difftime:
+# How old is Hadley?
+h_age <- today() - ymd("1979-10-14")
+h_age # produce:
+#> Time difference of 16840 days
+
+# Esta salida es un poco ambigua, así que se puede usar las funciones
+# de lubridate para ser precisos y explícitos:
+as.duration(h_age) # esta función muestra la salida en segundos 
+# y años:
+#> [1] "1454976000s (~46.11 years)"
+
+# Las duraciones incluyen una serie de funciones prácticas:
+dseconds(15) # produce:
+#> [1] "15s"
+dminutes(10) # produce:
+#> [1] "600s (~10 minutes)"
+dhours(c(12, 24)) # produce:
+#> [1] "43200s (~12 hours)" "86400s (~1 days)"
+ddays(0:5) # produce:
+#> [1] "0s"                "86400s (~1 days)"  "172800s (~2 days)"
+#> [4] "259200s (~3 days)" "345600s (~4 days)" "432000s (~5 days)"
+dweeks(3) # produce:
+#> [1] "1814400s (~3 weeks)"
+dyears(1) # produce:
+#> [1] "31557600s (~1 years)"
+# NOTA: el nombre de las funciones hace referencia a cómo debe
+# interpretar, la función, su argumento numérico.
+
+# Es posible sumar y mucltiplicar duraciones
+2 * dyears(1) # produce:
+#> [1] "63115200s (~2 years)"
+dyears(1) + dweeks(12) + dhours(15) # produce:
+#> [1] "38869200s (~1.23 years)"
+
+# Es posible sumar y restar duraciones a los días y viceversa:
+tomorrow <- today() + ddays(1)
+tomorrow # produce: [1] "2025-11-23"
+last_year <- today() - dyears(1)
+last_year # produce: [1] "2024-11-21 18:00:00 UTC"
+
+# Sin embargo, a veces puede haber resultados inesperados:
+one_am <- ymd_hms("2026-03-08 01:00:00", tz = "America/New_York")
+#
+one_am
+#> [1] "2026-03-08 01:00:00 EST"
+one_am + ddays(1)
+#> [1] "2026-03-09 02:00:00 EDT"
+# NOTA: Se suma un día y además una hora (lo que es inesperado),
+# además cambió la zona horaria. Esto pasa porque R trabaja con 
+# segundos, además el 8 de marzo tiene sólo 23 horas (sorprendente!)
+#  así que si añadimos los segundos de un día completo,  obtenemos
+# una hora diferente
+
+# Lubridate proporciona períodos que son intervalos de tiempo
+# sin una duración fija  en segundos: en cambio funcionan con unidades
+# de tiempo "humanas" como días y meses, lo que es más intuitivo
+one_am # produce:
+#> [1] "2026-03-08 01:00:00 EST"
+one_am + days(1) # produce:
+#> [1] "2026-03-09 01:00:00 EDT"
+
+# Los períodos también se pueden crear con una serie de funciones 
+# constructoras sencillas
+hours(c(12, 24)) # produce:
+#> [1] "12H 0M 0S" "24H 0M 0S"
+days(7)
+#> [1] "7d 0H 0M 0S"
+months(1:6)
+#> [1] "1m 0d 0H 0M 0S" "2m 0d 0H 0M 0S" "3m 0d 0H 0M 0S" "4m 0d 0H 0M 0S"
+#> [5] "5m 0d 0H 0M 0S" "6m 0d 0H 0M 0S"
+
+# Es posible sumar y multiplicar periódos 
+10 * (months(6) + days(1)) # produce:
+#> [1] "60m 10d 0H 0M 0S"
+days(50) + hours(25) + minutes(2) # produce:
+#> [1] "50d 25H 2M 0S"
+
+# Es posible añadir periodos a las fechas (y es más probable 
+# predecir su funcionamiento)
+# A leap year
+ymd("2024-01-01") + dyears(1) # produce:
+#> [1] "2024-12-31 06:00:00 UTC"
+ymd("2024-01-01") + years(1) # produce:
+#> [1] "2025-01-01" # Esto es lo esperado
+#
+one_am # produce: [1] "2026-03-08 01:00:00 EST"
+# Daylight saving time
+one_am + ddays(1)
+#> [1] "2026-03-09 02:00:00 EDT"
+one_am + days(1)
+#> [1] "2026-03-09 01:00:00 EDT" # Esto es lo eserado
+
