@@ -430,3 +430,146 @@ one_am + ddays(1)
 one_am + days(1)
 #> [1] "2026-03-09 01:00:00 EDT" # Esto es lo eserado
 
+# Algunos aviones parece que llegaron antes de haber partido de
+# la ciudad de Nueva York (lo que es imposible)
+flights_dt |> 
+  filter(arr_time < dep_time) # produce:
+#> # A tibble: 10,633 × 9
+#>   origin dest  dep_delay arr_delay dep_time            sched_dep_time     
+#>   <chr>  <chr>     <dbl>     <dbl> <dttm>              <dttm>             
+#> 1 EWR    BQN           9        -4 2013-01-01 19:29:00 2013-01-01 19:20:00
+#> 2 JFK    DFW          59        NA 2013-01-01 19:39:00 2013-01-01 18:40:00
+#> 3 EWR    TPA          -2         9 2013-01-01 20:58:00 2013-01-01 21:00:00
+#> 4 EWR    SJU          -6       -12 2013-01-01 21:02:00 2013-01-01 21:08:00
+#> 5 EWR    SFO          11       -14 2013-01-01 21:08:00 2013-01-01 20:57:00
+#> 6 LGA    FLL         -10        -2 2013-01-01 21:20:00 2013-01-01 21:30:00
+#> # ℹ 10,627 more rows
+#> # ℹ 3 more variables: arr_time <dttm>, sched_arr_time <dttm>, …
+# NOTA: Son vuelos nocturnos que llegaron al día siguiente pero
+# usaron la misma fecha de salida. Es posible solucionar esto añadiendo
+# un día a la hora de llegada con days(1) O days(TRUE)
+days(TRUE) # produce: [1] "1d 0H 0M 0S"
+days(FALSE) # produce: [1] "0S" 
+flights_dt <- flights_dt |> 
+  mutate(
+    overnight = arr_time < dep_time,
+    arr_time = arr_time + days(overnight),
+    sched_arr_time = sched_arr_time + days(overnight)
+  ) |>
+  select(overnight, arr_time, dep_time, sched_arr_time)
+flights_dt  # produce:
+# A tibble: 328,063 × 4
+#  overnight arr_time            dep_time            sched_arr_time     
+#  <lgl>     <dttm>              <dttm>              <dttm>             
+#1 FALSE     2013-01-01 08:30:00 2013-01-01 05:17:00 2013-01-01 08:19:00
+#2 FALSE     2013-01-01 08:50:00 2013-01-01 05:33:00 2013-01-01 08:30:00
+#3 FALSE     2013-01-01 09:23:00 2013-01-01 05:42:00 2013-01-01 08:50:00
+#4 FALSE     2013-01-01 10:04:00 2013-01-01 05:44:00 2013-01-01 10:22:00
+#
+# Ahora todos nuestros vuelos obedecen las leyes de la física.
+flights_dt |> 
+  filter(arr_time < dep_time)  # produce:
+#> # A tibble: 0 × 10
+#> # ℹ 10 variables: origin <chr>, dest <chr>, dep_delay <dbl>,
+#> #   arr_delay <dbl>, dep_time <dttm>, sched_dep_time <dttm>, …
+
+years(1) # produce: [1] "1y 0m 0d 0H 0M 0S"
+days(1) # produce: [1] "1d 0H 0M 0S"
+#
+years(1) / days(1) # produce: [1] 365.25
+years(1) / days(365) # produce:  [1] 1.000685
+
+# Un intervalo es un par de fechas y horas de inicio y fin. Se crea 
+# un intervalo escribiendo: start %--% end
+y2023 <- ymd("2023-01-01") %--% ymd("2024-01-01")
+y2024 <- ymd("2024-01-01") %--% ymd("2025-01-01")
+#
+y2023 # produce:
+#> [1] 2023-01-01 UTC--2024-01-01 UTC
+y2024 # produce:
+#> [1] 2024-01-01 UTC--2025-01-01 UTC
+
+# Luego se podría usar days() para descubrir cuántos días tiene
+# cada año:
+y2023 / days(1) # produce:
+#> [1] 365
+y2024 / days(1) # produce:
+#> [1] 366
+
+########################
+###
+### 14.4.4 Ejercicios
+###
+########################
+
+# NO REALIZADOS
+
+
+
+
+
+# Zona horaria actual
+Sys.timezone() # produce:
+#> [1] "UTC"
+
+# Muestra la cantidad de zonas horarias disponibles
+length(OlsonNames())
+#> [1] 611
+# Muestra nombres de zonas horarias
+head(OlsonNames())
+#> [1] "Africa/Abidjan"     "Africa/Accra"       "Africa/Addis_Ababa"
+#> [4] "Africa/Algiers"     "Africa/Asmara"      "Africa/Asmera"
+OlsonNames() # produce:
+#[1] "Africa/Abidjan"                  
+#[2] "Africa/Accra"                    
+#[3] "Africa/Addis_Ababa"              
+#[4] "Africa/Algiers"
+
+#  la zona horaria es un atributo de la fecha y hora que solo 
+# controla la impresión. Por ejemplo, estos tres objetos 
+# representan el mismo instante en el tiempo:
+x1 <- ymd_hms("2024-06-01 12:00:00", tz = "America/New_York")
+x1 # produce:
+#> [1] "2024-06-01 12:00:00 EDT"
+#
+x2 <- ymd_hms("2024-06-01 18:00:00", tz = "Europe/Copenhagen")
+x2 # produce:
+#> [1] "2024-06-01 18:00:00 CEST"
+# 
+x3 <- ymd_hms("2024-06-02 04:00:00", tz = "Pacific/Auckland")
+x3 # produce:
+#> [1] "2024-06-02 04:00:00 NZST"
+#
+# Cómo saber que son la misma hora? Usando la resta
+x1 - x2 # produce:
+#> Time difference of 0 secs
+x1 - x3 # produce:
+#> Time difference of 0 secs
+# NOTA: lubridate por defecto usa "UTC" (Tiempo Universal Coordinado)
+
+# Las operaciones que combinan fechas y horas a menudo omiten la 
+# zona horaria. En ese caso, las fechas y horas se mostrarán en la 
+# zona horaria del primer elemento.
+x4 <- c(x1, x2, x3)
+x4 # produce:
+#> [1] "2024-06-01 12:00:00 EDT" "2024-06-01 12:00:00 EDT"
+#> [3] "2024-06-01 12:00:00 EDT"
+
+# Así se puede cambiar una zona horaria:
+x4a <- with_tz(x4, tzone = "Australia/Lord_Howe")
+x4a # produce:
+#> [1] "2024-06-02 02:30:00 +1030" "2024-06-02 02:30:00 +1030"
+#> [3] "2024-06-02 02:30:00 +1030"
+x4a - x4 # produce:
+#> Time differences in secs
+#> [1] 0 0 0
+
+# Así se modifica un instante de tiempo con zona horaria incorrecta
+# y se necesita corregirlo:
+x4b <- force_tz(x4, tzone = "Australia/Lord_Howe")
+x4b # produce:
+#> [1] "2024-06-01 12:00:00 +1030" "2024-06-01 12:00:00 +1030"
+#> [3] "2024-06-01 12:00:00 +1030"
+x4b - x4  # produce:
+#> Time differences in hours
+#> [1] -14.5 -14.5 -14.5
