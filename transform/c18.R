@@ -202,3 +202,99 @@ missing_planes |>
 # información registrada.
 # Los carriers grandes como WN, F9 o DL casi no tienen tailnums 
 # faltantes.
+
+
+
+# Conjunto de datos que contienen información de salud de las 
+# personas 
+health <- tibble(
+  name   = c("Ikaia", "Oletta", "Leriah", "Dashay", "Tresaun"),
+  smoker = factor(c("no", "no", "no", "no", "no"), levels = c("yes", "no")),
+  age    = c(34, 88, 75, 47, 56),
+)
+# contar el número de fumadores con dplyr::count():
+health |> count(smoker)
+#> # A tibble: 1 × 2
+#>   smoker     n
+#>   <fct>  <int>
+#> 1 no         5
+# Este conjunto de datos contiene sólo no fumadores. Sin embargo
+# en los niveles del factor sí hay fumadores y para que se muestren,
+# se debe usar .drop = FALSE
+health |> count(smoker, .drop = FALSE) # produce:
+#> # A tibble: 2 × 2
+#>   smoker     n
+#>   <fct>  <int>
+#> 1 yes        0
+#> 2 no         5
+
+# Mostrar una barra con la frecuencia de fumadores. Pero se mostrarán
+# sólo los no fumadores:
+ggplot(health, aes(x = smoker)) +
+  geom_bar() +
+  scale_x_discrete()
+# Mostrar una barra con la frecuencia de fumadores. Se mostrarán
+# fumadores y no fumadores gracias a drop = FALSE:
+ggplot(health, aes(x = smoker)) +
+  geom_bar() +
+  scale_x_discrete(drop = FALSE)
+
+# Agrupar por fumador sin mostrar nivel yes
+health |> 
+  group_by(smoker) |> 
+  summarize(
+    n = n(),
+    mean_age = mean(age),
+    min_age = min(age),
+    max_age = max(age),
+    sd_age = sd(age)
+  ) # produce:
+# A tibble: 1 × 6
+#smoker     n mean_age min_age max_age sd_age
+#    <fct>  <int>    <dbl>   <dbl>   <dbl>  <dbl>
+#  1 no         5       60      34      88   21.6
+#
+# Agrupar por fumador mostrando los niveles yes y no gracias a
+# .drop = FALSE
+health |> 
+  group_by(smoker, .drop = FALSE) |> 
+  summarize(
+    n = n(),
+    mean_age = mean(age),
+    min_age = min(age),
+    max_age = max(age),
+    sd_age = sd(age)
+  ) # produce:
+#  smoker     n mean_age min_age max_age sd_age
+#  <fct>  <int>    <dbl>   <dbl>   <dbl>  <dbl>
+#1 yes        0      NaN     Inf    -Inf   NA  
+#2 no         5       60      34      88   21.6
+# NOTA: Existe una distinción importante entre los vectores vacíos
+# de longitud cero y los valores faltantes de longitud 1:
+# A vector containing two missing values
+x1 <- c(NA, NA)
+length(x1) # produce:
+#> [1] 2
+#
+# A vector containing nothing
+x2 <- numeric()
+length(x2)
+#> [1] 0
+#
+# Para un caso como este se podríam convertir las faltas implícitas
+# en explícitas con complete():
+health |> 
+  group_by(smoker) |> 
+  summarize(
+    n = n(),
+    mean_age = mean(age),
+    min_age = min(age),
+    max_age = max(age),
+    sd_age = sd(age)
+  ) |> 
+  complete(smoker)
+#> # A tibble: 2 × 6
+#>   smoker     n mean_age min_age max_age sd_age
+#>   <fct>  <int>    <dbl>   <dbl>   <dbl>  <dbl>
+#> 1 yes       NA       NA      NA      NA   NA  
+#> 2 no         5       60      34      88   21.6
