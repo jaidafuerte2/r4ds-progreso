@@ -148,3 +148,156 @@ big_diamonds # produce:
 #> 5  1.5  Very Good G     VVS2    15013
 #> 6  1.73 Very Good G     VS1     15014
 #> # ℹ 1,649 more rows
+
+# Incorporar flights y planes a la base de datos
+dbplyr::copy_nycflights13(con) # produce:
+#> Creating table: airlines
+#> Creating table: airports
+#> Creating table: flights
+#> Creating table: planes
+#> Creating table: weather
+#
+# Lo primero es que hay que usar tbl para crear un objeto que represente
+# una tabla de base de datos:
+flights <- tbl(con, "flights")
+planes <- tbl(con, "planes")
+
+# En sql hay 3 sentencias comunes: CREATE, INSERT Y SELECT. Pero puede 
+# ser que para este contexto sea importante sobre todo SELECT porque
+# es la sentencia con la que se hacen consultas. En ciencia de datos
+# prodbablemente no se necesite usar CREATE ni INSERT.
+# También hay 5 cláusulas importantes en sql: SELECT, FROM, WHERE,
+# ORDER BY y GROUP BY. Así las cosas, cada consulta debe tener
+# SELECT y FROM y la consulta más simple es SELECT * FROM table , lo
+# que permite seleccionar todas las columnas de una tabla.
+# Así se mostraría en SQL una consulta traducida con la función
+# show_query():
+flights |> show_query()
+#> <SQL>
+#> SELECT *
+#> FROM flights
+planes |> show_query()
+#> <SQL>
+#> SELECT *
+#> FROM planes
+
+# WHERE controla que filas se incluyen y ORDER BY como se ordenan
+flights |> 
+  filter(dest == "IAH") |> 
+  arrange(dep_delay) |>
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> WHERE (dest = 'IAH')
+#> ORDER BY dep_delay
+
+# GROUP BY convierte la consulta en un resumen, lo que provoca que 
+# se produzca la agregación
+flights |> 
+  group_by(dest) |> 
+  summarize(dep_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  show_query()
+#> <SQL>
+#> SELECT dest, AVG(dep_delay) AS dep_delay
+#> FROM flights
+#> GROUP BY dest
+
+# SELECT sql es similar select de r
+planes |> 
+  select(tailnum, type, manufacturer, model, year) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT tailnum, "type", manufacturer, model, "year" # Usan comillas
+#> # porque son palabras reservadas
+#> FROM planes
+#
+# SELECT de sql  es similar a rename de R
+planes |> 
+  select(tailnum, type, manufacturer, model, year) |> 
+  rename(year_built = year) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT tailnum, "type", manufacturer, model, "year" AS year_built
+#> FROM planes
+#
+# SELECT de sql es similar a relocate de R
+planes |> 
+  select(tailnum, type, manufacturer, model, year) |> 
+  relocate(manufacturer, model, .before = type) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT tailnum, manufacturer, model, "type", "year"
+#> FROM planes
+
+# SELECT de sql también es similar a mutate() de R
+flights |> 
+  mutate(
+    speed = distance / (air_time / 60)
+  ) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*, distance / (air_time / 60.0) AS speed
+#> FROM flights
+
+# GROUP BY de sql es similar a broup_by() de R y SELECT de sql 
+# es similar a summarize de R
+diamonds_db |> 
+  group_by(cut) |> 
+  summarize(
+    n = n(),
+    avg_price = mean(price, na.rm = TRUE)
+  ) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT cut, COUNT(*) AS n, AVG(price) AS avg_price
+#> FROM diamonds
+#> GROUP BY cut
+
+# WHERE de sql es similar a filter() de R
+flights |> 
+  filter(dest == "IAH" | dest == "HOU") |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> WHERE (dest = 'IAH' OR dest = 'HOU')
+#
+flights |> 
+  filter(arr_delay > 0 & arr_delay < 20) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> WHERE (arr_delay > 0.0 AND arr_delay < 20.0)
+
+# IN de sql es similar a %in% de R:
+flights |> 
+  filter(dest %in% c("IAH", "HOU")) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> WHERE (dest IN ('IAH', 'HOU'))
+
+# NULL de sql es similar NA de R
+flights |> 
+  filter(!is.na(dep_delay)) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> WHERE (NOT((dep_delay IS NULL)))
+
+# HAVING de sql es similar a filter() de R cuando filter() se usa 
+# junto a summarize():
+diamonds_db |> 
+  group_by(cut) |> 
+  summarize(n = n()) |> 
+  filter(n > 100) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT cut, COUNT(*) AS n
+#> FROM diamonds
+#> GROUP BY cut
+#> HAVING (COUNT(*) > 100.0)
