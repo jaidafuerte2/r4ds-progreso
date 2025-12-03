@@ -9,6 +9,7 @@ library(DBI)
 library(dbplyr)
 library(tidyverse)
 library(duckdb)
+library(dplyr)
 
 # Para conectar r a una base de datos debo usar la función 
 # DBI::dbConnect(). El primer argumento selecciona el  sistema de 
@@ -301,3 +302,172 @@ diamonds_db |>
 #> FROM diamonds
 #> GROUP BY cut
 #> HAVING (COUNT(*) > 100.0)
+
+# ORDER BY de sql es similar a arrange() de R:
+flights |> 
+  arrange(year, month, day, desc(dep_delay)) |> 
+  show_query() # produce: 
+#> <SQL>
+#> SELECT flights.*
+#> FROM flights
+#> ORDER BY "year", "month", "day", dep_delay DESC
+# NOTA: desc() de R se traduce a DESC de sql
+
+# Una subconsulta es una consulta dentro de una consulta a una tabla:
+flights |> 
+  mutate(
+    year1 = year + 1,
+    year2 = year1 + 1
+  ) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT q01.*, year1 + 1.0 AS year2
+#> FROM (
+#>   SELECT flights.*, "year" + 1.0 AS year1
+#>   FROM flights
+#> ) q01
+# NOTA: En este caso una consulta calcula year1 y la otra consulta
+# calcula year2 a partir de year1
+
+# También se crean subconsultas cuando se llama a filter():
+flights |> 
+  mutate(year1 = year + 1) |> 
+  filter(year1 == 2014) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT q01.*
+#> FROM (
+#>   SELECT flights.*, "year" + 1.0 AS year1
+#>   FROM flights
+#> ) q01
+#> WHERE (year1 = 2014.0)
+
+# Las uniones de dbplyr son similares a las uniones de sql
+flights |> 
+  left_join(planes |> rename(year_built = year), join_by(tailnum)) |> 
+  show_query() # produce:
+#> <SQL>
+#> SELECT
+#>   flights.*,
+#>   planes."year" AS year_built,
+#>   "type",
+#>   manufacturer,
+#>   model,
+#>   engines,
+#>   seats,
+#>   speed,
+#>   engine
+#> FROM flights
+#> LEFT JOIN planes
+#>   ON (flights.tailnum = planes.tailnum)
+
+########################
+###
+### 21.5.10 Ejercicios
+###
+########################
+
+
+
+summarize_query <- function(df, ...) {
+  df |> 
+    summarize(...) |> 
+    show_query()
+}
+mutate_query <- function(df, ...) {
+  df |> 
+    mutate(..., .keep = "none") |> 
+    show_query()
+}
+
+# Traducir mean() y median() de R a sql:
+flights |> 
+  group_by(year, month, day) |>  
+  summarize_query(
+    mean = mean(arr_delay, na.rm = TRUE),
+    median = median(arr_delay, na.rm = TRUE)
+  ) # produce:
+#> `summarise()` has grouped output by "year" and "month". You can override
+#> using the `.groups` argument.
+#> <SQL>
+#> SELECT
+#>   "year",
+#>   "month",
+#>   "day",
+#>   AVG(arr_delay) AS mean,
+#>   MEDIAN(arr_delay) AS median
+#> FROM flights
+#> GROUP BY "year", "month", "day"
+
+# La traducción de funciones de resumen se complica cuando van dentro 
+# de una función mutate() porque sql debe añadir OVER:
+flights |> 
+  group_by(year, month, day) |>  
+  mutate_query(
+    mean = mean(arr_delay, na.rm = TRUE),
+  ) # produce:
+#> <SQL>
+#> SELECT
+#>   "year",
+#>   "month",
+#>   "day",
+#>   AVG(arr_delay) OVER (PARTITION BY "year", "month", "day") AS mean
+#> FROM flights
+
+# Traducir las funciones de ventana lead() y lag() de R a sql:
+flights |> 
+  group_by(dest) |>  
+  arrange(time_hour) |> 
+  mutate_query(
+    lead = lead(arr_delay),
+    lag = lag(arr_delay)
+  ) # produce:
+#> <SQL>
+#> SELECT
+#>   dest,
+#>   LEAD(arr_delay, 1, NULL) OVER (PARTITION BY dest ORDER BY time_hour) AS lead,
+#>   LAG(arr_delay, 1, NULL) OVER (PARTITION BY dest ORDER BY time_hour) AS lag
+#> FROM flights
+#> ORDER BY time_hour
+
+# CASE WHEN de sql es similar a if_else() de R
+flights |> 
+  mutate_query(
+    description = if_else(arr_delay > 0, "delayed", "on-time")
+  ) # produce:
+#> <SQL>
+#> SELECT CASE WHEN (arr_delay > 0.0) THEN 'delayed' WHEN NOT (arr_delay > 0.0) THEN 'on-time' END AS description
+#> FROM flights
+flights |> 
+  mutate_query(
+    description = 
+      case_when(
+        arr_delay < -5 ~ "early", 
+        arr_delay < 5 ~ "on-time",
+        arr_delay >= 5 ~ "late"
+      )
+  ) # produce:
+#> <SQL>
+#> SELECT CASE
+#> WHEN (arr_delay < -5.0) THEN 'early'
+#> WHEN (arr_delay < 5.0) THEN 'on-time'
+#> WHEN (arr_delay >= 5.0) THEN 'late'
+#> END AS description
+#> FROM flights
+
+# CASE WHEN de sql también es similar a cut() de R:
+flights |> 
+  mutate_query(
+    description =  cut(
+      arr_delay, 
+      breaks = c(-Inf, -5, 5, Inf), 
+      labels = c("early", "on-time", "late")
+    )
+  ) # produce:
+#> <SQL>
+#> SELECT CASE
+#> WHEN (arr_delay <= -5.0) THEN 'early'
+#> WHEN (arr_delay <= 5.0) THEN 'on-time'
+#> WHEN (arr_delay > 5.0) THEN 'late'
+#> END AS description
+#> FROM flights
