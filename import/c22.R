@@ -107,4 +107,136 @@ seattle_csv |>
 # que generen más de 10mil archivos. También se debería particionar
 # filtrando variables (sólo las más importantes)
 
+# Para particionar una tabla primero se debe agrupar porque estos
+# grupos definirán como se parte la tabla con group_by() 
+# Luego se guardan las particiones en un directorio con un path
+# que proveemos:
+pq_path <- "data/seattle-library-checkouts"
+#
+seattle_csv |>
+  group_by(CheckoutYear) |>
+  write_dataset(path = pq_path, format = "parquet")
+#
+# Mostrar las particiones que se acaban de producir
+tibble(
+  files = list.files(pq_path, recursive = TRUE),
+  size_MB = file.size(file.path(pq_path, files)) / 1024^2
+)
+#> # A tibble: 18 × 2
+#>   files                            size_MB
+#>   <chr>                              <dbl>
+#> 1 CheckoutYear=2005/part-0.parquet    109.
+#> 2 CheckoutYear=2006/part-0.parquet    164.
+#> 3 CheckoutYear=2007/part-0.parquet    178.
+#> 4 CheckoutYear=2008/part-0.parquet    195.
+#> 5 CheckoutYear=2009/part-0.parquet    214.
+#> 6 CheckoutYear=2010/part-0.parquet    222.
+#> # ℹ 12 more rows
+# NOTA: El archivo de 9gb se reescribió en 18 archivos de parquet
+
+# Leer con open_dataset() los archivos parquet que se crearon, pero
+# asignándole un directorio:
+seattle_pq <- open_dataset(pq_path)
+# 
+# NOTA: Esto creó un data set seattle_pq con el que se puede usar 
+# dplyr. Por ejemplo se puede contar el número de libros prestados 
+# cada mes durante los últimos 5 años
+query <- seattle_pq |> 
+  filter(CheckoutYear >= 2018, MaterialType == "BOOK") |>
+  group_by(CheckoutYear, CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(CheckoutYear, CheckoutMonth)
+
+# Consultar la tabla query que se generó a partir de eattle_pq
+query
+#> FileSystemDataset (query)
+#> CheckoutYear: int32
+#> CheckoutMonth: int64
+#> TotalCheckouts: int64
+#> 
+#> * Grouped by CheckoutYear
+#> * Sorted by CheckoutYear [asc], CheckoutMonth [asc]
+#> See $.data for the source Arrow object
+#> 
+# NOTA: query genera solo la primera fila, para obtener los resultados 
+# se debe llamar a collect()
+query |> collect()
+#> # A tibble: 58 × 3
+#> # Groups:   CheckoutYear [5]
+#>   CheckoutYear CheckoutMonth TotalCheckouts
+#>          <int>         <int>          <int>
+#> 1         2018             1         355101
+#> 2         2018             2         309813
+#> 3         2018             3         344487
+#> 4         2018             4         330988
+#> 5         2018             5         318049
+#> 6         2018             6         341825
+#> # ℹ 52 more rows
+
+# No todas las funciones de R están disponibles para arrow. 
+# Para saber que funciones de dplyr() están disponibles para arrow
+# se debe escribir lo siguiente:
+?acero
+
+# Los archivos parquet se gestionan mucho más rápido que los archivos
+# .CSV
+# 
+# Aquí se observa cuanto tarda R en calcular el número de libros 
+# prestados cada mes en 2021, cuando los datos se almacenan en un 
+# único archivo .csv:
+seattle_csv |> 
+  filter(CheckoutYear == 2021, MaterialType == "BOOK") |>
+  group_by(CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutMonth)) |>
+  collect() |> 
+  system.time()
+#>    user  system elapsed 
+#>  11.951   1.297  11.387
+#
+# Aquí se observa cuanto tarda R en calcular el número de libros 
+# prestados cada mes en 2021, cuando los datos se almacenan en 
+# varios archivos parquet
+seattle_pq |> 
+  filter(CheckoutYear == 2021, MaterialType == "BOOK") |>
+  group_by(CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutMonth)) |>
+  collect() |> 
+  system.time()
+#>    user  system elapsed 
+#>   0.263   0.058   0.063
+# NOTA: La aceleración es de 100 veces en el rendimiento.
+
+# Otra ventaja de parquet y arrow es que se pueden transformar en 
+# una base de datos DuckDB gracias a arrow::to_duckdb()
+seattle_pq |> 
+  to_duckdb() |>
+  filter(CheckoutYear >= 2018, MaterialType == "BOOK") |>
+  group_by(CheckoutYear) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutYear)) |>
+  collect()
+#> Warning: Missing values are always removed in SQL aggregation functions.
+#> Use `na.rm = TRUE` to silence this warning
+#> This warning is displayed once every 8 hours.
+#> # A tibble: 5 × 2
+#>   CheckoutYear TotalCheckouts
+#>          <int>          <dbl>
+#> 1         2022        2431502
+#> 2         2021        2266438
+#> 3         2020        1241999
+#> 4         2019        3931688
+#> 5         2018        3987569
+
+
+########################
+###
+### 22.5.3 Ejercicios
+###
+########################
+
+# NO REALIZADOS
+
+
 
