@@ -438,3 +438,283 @@ titles
 #> 5  1074 Lord Captain of the Iron Fleet                      
 #> 6  1074 Master of the Iron Victory                          
 #> # ℹ 46 more rows
+
+# Mostrar tibble de dos columnas que contiene cinco nombres de 
+# ciudades y los resultados de usar la API de geocodificación de 
+# google
+gmaps_cities
+#> # A tibble: 5 × 2
+#>   city       json            
+#>   <chr>      <list>          
+#> 1 Houston    <named list [2]>
+#> 2 Washington <named list [2]>
+#> 3 New York   <named list [2]>
+#> 4 Chicago    <named list [2]>
+#> 5 Arlington  <named list [2]>
+# NOTA: jsones una columna de lista con nombres internos, por lo 
+# que comenzamos con un unnest_wider():
+gmaps_cities |> 
+  unnest_wider(json) # produce:
+#> # A tibble: 5 × 3
+#>   city       results    status
+#>   <chr>      <list>     <chr> 
+#> 1 Houston    <list [1]> OK    
+#> 2 Washington <list [2]> OK    
+#> 3 New York   <list [1]> OK    
+#> 4 Chicago    <list [1]> OK    
+#> 5 Arlington  <list [2]> OK
+
+gmaps_cities |> 
+  unnest_wider(json) |> 
+  select(-status) |> 
+  unnest_longer(results)
+#> # A tibble: 7 × 2
+#>   city       results         
+#>   <chr>      <list>          
+#> 1 Houston    <named list [5]>
+#> 2 Washington <named list [5]>
+#> 3 Washington <named list [5]>
+#> 4 New York   <named list [5]>
+#> 5 Chicago    <named list [5]>
+#> 6 Arlington  <named list [5]>
+#> # ℹ 1 more row
+# NOTA: results también no es una lista nombrada, así que usaremos
+# unnest_longer()
+gmaps_cities |> 
+  unnest_wider(json) |> 
+  select(-status) |> 
+  unnest_longer(results)
+#> # A tibble: 7 × 2
+#>   city       results         
+#>   <chr>      <list>          
+#> 1 Houston    <named list [5]>
+#> 2 Washington <named list [5]>
+#> 3 Washington <named list [5]>
+#> 4 New York   <named list [5]>
+#> 5 Chicago    <named list [5]>
+#> 6 Arlington  <named list [5]>
+#> # ℹ 1 more row
+# NOTA: Ahora results es una lista nombres por lo que se usará 
+#  unnest_wider()
+locations <- gmaps_cities |> 
+  unnest_wider(json) |> 
+  select(-status) |> 
+  unnest_longer(results) |> 
+  unnest_wider(results)
+locations
+#> # A tibble: 7 × 6
+#>   city       address_components formatted_address   geometry        
+#>   <chr>      <list>             <chr>               <list>          
+#> 1 Houston    <list [4]>         Houston, TX, USA    <named list [4]>
+#> 2 Washington <list [2]>         Washington, USA     <named list [4]>
+#> 3 Washington <list [4]>         Washington, DC, USA <named list [4]>
+#> 4 New York   <list [3]>         New York, NY, USA   <named list [4]>
+#> 5 Chicago    <list [4]>         Chicago, IL, USA    <named list [4]>
+#> 6 Arlington  <list [4]>         Arlington, TX, USA  <named list [4]>
+#> # ℹ 1 more row
+#> # ℹ 2 more variables: place_id <chr>, types <list>
+
+# Determinar qué hay en geometry
+locations |> 
+  select(city, formatted_address, geometry) |> 
+  unnest_wider(geometry)
+#> # A tibble: 7 × 6
+#>   city       formatted_address   bounds           location     location_type
+#>   <chr>      <chr>               <list>           <list>       <chr>        
+#> 1 Houston    Houston, TX, USA    <named list [2]> <named list> APPROXIMATE  
+#> 2 Washington Washington, USA     <named list [2]> <named list> APPROXIMATE  
+#> 3 Washington Washington, DC, USA <named list [2]> <named list> APPROXIMATE  
+#> 4 New York   New York, NY, USA   <named list [2]> <named list> APPROXIMATE  
+#> 5 Chicago    Chicago, IL, USA    <named list [2]> <named list> APPROXIMATE  
+#> 6 Arlington  Arlington, TX, USA  <named list [2]> <named list> APPROXIMATE  
+#> # ℹ 1 more row
+#> # ℹ 1 more variable: viewport <list>
+
+# Ver qué hay en location:
+locations |> 
+  select(city, formatted_address, geometry) |> 
+  unnest_wider(geometry) |> 
+  unnest_wider(location)
+#> # A tibble: 7 × 7
+#>   city       formatted_address   bounds             lat    lng location_type
+#>   <chr>      <chr>               <list>           <dbl>  <dbl> <chr>        
+#> 1 Houston    Houston, TX, USA    <named list [2]>  29.8  -95.4 APPROXIMATE  
+#> 2 Washington Washington, USA     <named list [2]>  47.8 -121.  APPROXIMATE  
+#> 3 Washington Washington, DC, USA <named list [2]>  38.9  -77.0 APPROXIMATE  
+#> 4 New York   New York, NY, USA   <named list [2]>  40.7  -74.0 APPROXIMATE  
+#> 5 Chicago    Chicago, IL, USA    <named list [2]>  41.9  -87.6 APPROXIMATE  
+#> 6 Arlington  Arlington, TX, USA  <named list [2]>  32.7  -97.1 APPROXIMATE  
+#> # ℹ 1 more row
+#> # ℹ 1 more variable: viewport <list>
+
+# Para extraer los límites se necesitan algunos pasos más:
+locations |> 
+  select(city, formatted_address, geometry) |> 
+  unnest_wider(geometry) |> 
+  # focus on the variables of interest
+  select(!location:viewport) |>
+  unnest_wider(bounds)
+#> # A tibble: 7 × 4
+#>   city       formatted_address   northeast        southwest       
+#>   <chr>      <chr>               <list>           <list>          
+#> 1 Houston    Houston, TX, USA    <named list [2]> <named list [2]>
+#> 2 Washington Washington, USA     <named list [2]> <named list [2]>
+#> 3 Washington Washington, DC, USA <named list [2]> <named list [2]>
+#> 4 New York   New York, NY, USA   <named list [2]> <named list [2]>
+#> 5 Chicago    Chicago, IL, USA    <named list [2]> <named list [2]>
+#> 6 Arlington  Arlington, TX, USA  <named list [2]> <named list [2]>
+#> # ℹ 1 more row
+
+# NOTA: Luego renombramos southwesty northeast(las esquinas del 
+# rectángulo) para poder usar los names_sep para crear nombres cortos 
+# pero evocadores
+locations |> 
+  select(city, formatted_address, geometry) |> 
+  unnest_wider(geometry) |> 
+  select(!location:viewport) |>
+  unnest_wider(bounds) |> 
+  rename(ne = northeast, sw = southwest) |> 
+  unnest_wider(c(ne, sw), names_sep = "_") 
+#> # A tibble: 7 × 6
+#>   city       formatted_address   ne_lat ne_lng sw_lat sw_lng
+#>   <chr>      <chr>                <dbl>  <dbl>  <dbl>  <dbl>
+#> 1 Houston    Houston, TX, USA      30.1  -95.0   29.5  -95.8
+#> 2 Washington Washington, USA       49.0 -117.    45.5 -125. 
+#> 3 Washington Washington, DC, USA   39.0  -76.9   38.8  -77.1
+#> 4 New York   New York, NY, USA     40.9  -73.7   40.5  -74.3
+#> 5 Chicago    Chicago, IL, USA      42.0  -87.5   41.6  -87.9
+#> 6 Arlington  Arlington, TX, USA    32.8  -97.0   32.6  -97.2
+#> # ℹ 1 more row
+
+# Una vez que hayas descubierto la ruta para llegar a los componentes
+# que interesan , se pueden extraer directamente usando la función de
+# tidyr hoist
+locations |> 
+  select(city, formatted_address, geometry) |> 
+  hoist(
+    geometry,
+    ne_lat = c("bounds", "northeast", "lat"),
+    sw_lat = c("bounds", "southwest", "lat"),
+    ne_lng = c("bounds", "northeast", "lng"),
+    sw_lng = c("bounds", "southwest", "lng"),
+  ) # produce:
+# A tibble: 7 × 7
+#    city       formatted_address   ne_lat sw_lat ne_lng sw_lng geometry    
+#    <chr>      <chr>                <dbl>  <dbl>  <dbl>  <dbl> <list>      
+#  1 Houston    Houston, TX, USA      30.1   29.5  -95.0  -95.8 <named list>
+#  2 Washington Washington, USA       49.0   45.5 -117.  -125.  <named list>
+#  3 Washington Washington, DC, USA   39.0   38.8  -76.9  -77.1 <named list>
+#  4 New York   New York, NY, USA     40.9   40.5  -73.7  -74.3 <named list>
+
+########################
+###
+### 23.4.4 Ejercicios
+###
+########################
+
+# NO REALIZADOS
+
+# El path del archivo json dentro del paquete
+gh_users_json() # produce:
+#> [1] "/home/runner/work/_temp/Library/repurrrsive/extdata/gh_users.json"
+
+# Leerlo con read_json()
+gh_users2 <- read_json(gh_users_json())
+gh_users2 # produce: Una salida super larga
+
+# Verificar que es lo mismo que la data que se estaba usando antes
+identical(gh_users, gh_users2) # produce:
+#> [1] TRUE
+
+# Aquí hay tres conjuntos de datos JSON sencillos: primero un 
+# número, luego algunos números en un array y luego ese array en 
+# un objeto:
+str(parse_json('1'))
+#>  int 1
+#>  Array: Un array es una lista con elementos sin nombre
+str(parse_json('[1, 2, 3]'))
+#> List of 3
+#>  $ : int 1
+#>  $ : int 2
+#>  $ : int 3
+#>  Objeto: Un objeto es una lista con elementos nombrados
+str(parse_json('{"x": [1, 2, 3]}'))
+#> List of 1
+#>  $ x:List of 3
+#>   ..$ : int 1
+#>   ..$ : int 2
+#>   ..$ : int 3
+
+# Crear rectángulos con tibble(json) para que cada elemento se
+# convierta en una fila
+# Crear un objeto:
+json <- '[
+  {"name": "John", "age": 34},
+  {"name": "Susan", "age": 27}
+]'
+# Crear una tibble con el objeto json
+df <- tibble(json = parse_json(json))
+df # produce:
+#> # A tibble: 2 × 1
+#>   json            
+#>   <list>          
+#> 1 <named list [2]>
+#> 2 <named list [2]>
+# Desanidar el objeto (que es una lista anidada, por eso se usa
+# unnest_wider() ) 
+df |> 
+  unnest_wider(json) # produce:
+#> # A tibble: 2 × 2
+#>   name    age
+#>   <chr> <int>
+#> 1 John     34
+#> 2 Susan    27
+
+# Puede ser que un objeto conste de elementos nombrados únicos
+# que tal vez no son exactamente iguales a elementos nombrados varios
+# por lo que se tienen que asignar a una lista:
+json <- '{
+  "status": "OK", 
+  "results": [
+    {"name": "John", "age": 34},
+    {"name": "Susan", "age": 27}
+ ]
+}
+'
+# Se crea una tibble listando al array
+df <- tibble(json = list(parse_json(json)))
+df # produce:
+#> # A tibble: 1 × 1
+#>   json            
+#>   <list>          
+#> 1 <named list [2]>
+# Se desanida
+df |> 
+  unnest_wider(json) |> 
+  unnest_longer(results) |> 
+  unnest_wider(results)
+#> # A tibble: 2 × 3
+#>   status name    age
+#>   <chr>  <chr> <int>
+#> 1 OK     John     34
+#> 2 OK     Susan    27
+
+# Esta es una alternativa para acceder a los datos directamente 
+# apuntando a la parte que interesa sin necesidad de listar:
+df <- tibble(results = parse_json(json)$results)
+df |> 
+  unnest_wider(results) # produce:
+#> # A tibble: 2 × 2
+#>   name    age
+#>   <chr> <int>
+#> 1 John     34
+#> 2 Susan    27
+
+########################
+###
+### 23.5.4 Ejercicios
+###
+########################
+
+# NO REALIZADOS
+
