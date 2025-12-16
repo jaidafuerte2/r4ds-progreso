@@ -253,3 +253,36 @@ long |>
 
 # NO REALIZADOS
 
+
+
+data2019 <- readxl::read_excel("data/y2019.xlsx")
+data2020 <- readxl::read_excel("data/y2020.xlsx")
+data2021 <- readxl::read_excel("data/y2021.xlsx")
+data2022 <- readxl::read_excel("data/y2022.xlsx")
+
+# Leer un directorio lleno de hojas de cálculo:
+data2019 <- readxl::read_excel("data/y2019.xlsx")
+data2020 <- readxl::read_excel("data/y2020.xlsx")
+data2021 <- readxl::read_excel("data/y2021.xlsx")
+data2022 <- readxl::read_excel("data/y2022.xlsx")
+
+# Usar dplyr::bind_rows() para juntar todas las tablas
+data <- bind_rows(data2019, data2020, data2021, data2022)
+
+getwd() # produce: "/cloud/project"
+
+# Listar todos los archivos de excel con list.files() . El primer
+# argumento es el path donde están los archivos, el segundo argumento
+# es una expresión regular para filtrar los nombres de los archivos.
+# Y full.names determina si el nombre del directorio debe incluirse 
+# en la salida.
+paths <- list.files("r4ds-progreso/data/gapminder", 
+                    pattern = "[.]xlsx$", full.names = TRUE)
+paths # produce:
+#>  [1] "data/gapminder/1952.xlsx" "data/gapminder/1957.xlsx"
+#>  [3] "data/gapminder/1962.xlsx" "data/gapminder/1967.xlsx"
+#>  [5] "data/gapminder/1972.xlsx" "data/gapminder/1977.xlsx"
+#>  [7] "data/gapminder/1982.xlsx" "data/gapminder/1987.xlsx"
+#>  [9] "data/gapminder/1992.xlsx" "data/gapminder/1997.xlsx"
+#> [11] "data/gapminder/2002.xlsx" "data/gapminder/2007.xlsx"
+
