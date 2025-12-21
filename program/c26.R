@@ -464,3 +464,27 @@ paths |>
 #> 5 gapminder 1952  xlsx  Argentina   Americas     62.5 17876956     5911.
 #> 6 gapminder 1952  xlsx  Australia   Oceania      69.1  8691212    10040.
 #> # ℹ 1,698 more rows
+
+
+gapminder <- paths |> 
+  set_names(basename) |> 
+  map(readxl::read_excel) |> 
+  list_rbind(names_to = "year") |> 
+  mutate(year = parse_number(year))
+# Guardar marco de datos
+write_csv(gapminder, "gapminder.csv")
+# NOTA: el archivo gapminder.csv se guardará en el directorio
+# actual de trabajo
+
+# Cargar todos los archivos
+files <- paths |> 
+  map(readxl::read_excel) 
+files # produce:
+# A tibble: 142 × 5
+#  country     continent lifeExp       pop gdpPercap
+#  <chr>       <chr>       <dbl>     <dbl>     <dbl>
+#1 Afghanistan Asia         43.8  31889923      975.
+#2 Albania     Europe       76.4   3600523     5937.
+#3 Algeria     Africa       72.3  33333216     6223.
+#4 Angola      Africa       42.7  12420476     4797.
+
