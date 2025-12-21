@@ -286,3 +286,181 @@ paths # produce:
 #>  [9] "data/gapminder/1992.xlsx" "data/gapminder/1997.xlsx"
 #> [11] "data/gapminder/2002.xlsx" "data/gapminder/2007.xlsx"
 
+# Una forma de incluir a todas las tablas en un sólo objeto es
+# ponerlas a todas en una lista
+files <- list(
+  readxl::read_excel("r4ds-progreso/data/gapminder/1952.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1957.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1962.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1967.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1972.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1977.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1982.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1987.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1992.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/1997.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/2002.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/2007.xlsx"),
+  readxl::read_excel("r4ds-progreso/data/gapminder/2007.xlsx")
+)
+files[[3]] # produce:
+#> # A tibble: 142 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         32.0 10267083      853.
+#> 2 Albania     Europe       64.8  1728137     2313.
+#> 3 Algeria     Africa       48.3 11000948     2551.
+#> 4 Angola      Africa       34    4826015     4269.
+#> 5 Argentina   Americas     65.1 21283783     7133.
+#> 6 Australia   Oceania      70.9 10794968    12217.
+#> # ℹ 136 more rows
+
+# Usar map para poder listar los 12 marcos de datos en una lista
+files <- purrr::map(paths, readxl::read_excel)
+length(files) # produce:
+#> [1] 12
+#
+files[[1]] # produce:
+#> # A tibble: 142 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         28.8  8425333      779.
+#> 2 Albania     Europe       55.2  1282697     1601.
+#> 3 Algeria     Africa       43.1  9279525     2449.
+#> 4 Angola      Africa       30.0  4232095     3521.
+#> 5 Argentina   Americas     62.5 17876956     5911.
+#> 6 Australia   Oceania      69.1  8691212    10040.
+#> # ℹ 136 more rows
+
+# Usar list_rbind para combinar esa lista de marco de datos en un
+# solo marco de datos:
+purrr::list_rbind(files) # produce:
+#> # A tibble: 1,704 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         28.8  8425333      779.
+#> 2 Albania     Europe       55.2  1282697     1601.
+#> 3 Algeria     Africa       43.1  9279525     2449.
+#> 4 Angola      Africa       30.0  4232095     3521.
+#> 5 Argentina   Americas     62.5 17876956     5911.
+#> 6 Australia   Oceania      69.1  8691212    10040.
+#> # ℹ 1,698 more rows
+
+# Realizar los dos pasos anteriores a la vez con una tubería:
+paths |> 
+  purrr::map(readxl::read_excel) |> 
+  purrr::list_rbind() # produce:
+# A tibble: 1,704 × 5                                                  
+#  country     continent lifeExp      pop gdpPercap
+#  <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#1 Afghanistan Asia         28.8  8425333      779.
+#2 Albania     Europe       55.2  1282697     1601.
+#3 Algeria     Africa       43.1  9279525     2449.
+#4 Angola      Africa       30.0  4232095     3521.
+
+# Echar un vistazo a las primeras filas de los datos con n_max = 1
+paths |> 
+  purrr::map(\(path) readxl::read_excel(path, n_max = 1)) |> 
+  purrr::list_rbind()
+#> # A tibble: 12 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         28.8  8425333      779.
+#> 2 Afghanistan Asia         30.3  9240934      821.
+#> 3 Afghanistan Asia         32.0 10267083      853.
+#> 4 Afghanistan Asia         34.0 11537966      836.
+#> 5 Afghanistan Asia         36.1 13079460      740.
+#> 6 Afghanistan Asia         38.4 14880372      786.
+#> # ℹ 6 more rows
+# NOTA: Algo interesante es que no hay la columna año, a pesar de que
+# cada archivo se lo llama por su año respectivo
+
+# Asignar un nombre al vector de rutas con set_names() y extraer
+# solo el nombre del archivo de la ruta completa:
+paths |> purrr::set_names(basename) 
+#>                  1952.xlsx                  1957.xlsx 
+#> "data/gapminder/1952.xlsx" "data/gapminder/1957.xlsx" 
+#>                  1962.xlsx                  1967.xlsx 
+#> "data/gapminder/1962.xlsx" "data/gapminder/1967.xlsx" 
+#>                  1972.xlsx                  1977.xlsx 
+#> "data/gapminder/1972.xlsx" "data/gapminder/1977.xlsx" 
+#>                  1982.xlsx                  1987.xlsx 
+#> "data/gapminder/1982.xlsx" "data/gapminder/1987.xlsx" 
+#>                  1992.xlsx                  1997.xlsx 
+#> "data/gapminder/1992.xlsx" "data/gapminder/1997.xlsx" 
+#>                  2002.xlsx                  2007.xlsx 
+#> "data/gapminder/2002.xlsx" "data/gapminder/2007.xlsx"
+
+#files <- list(
+#  "1952.xlsx" = readxl::read_excel("data/gapminder/1952.xlsx"),
+#  "1957.xlsx" = readxl::read_excel("data/gapminder/1957.xlsx"),
+#  "1962.xlsx" = readxl::read_excel("data/gapminder/1962.xlsx"),
+#  ...,
+#  "2007.xlsx" = readxl::read_excel("data/gapminder/2007.xlsx")
+#) # Este código se puede abreviar así: 
+files <- paths |> 
+  purrr::set_names(basename) |> 
+  purrr::map(readxl::read_excel)
+files # produce:
+#$`1952.xlsx`
+# A tibble: 142 × 5
+#  country     continent lifeExp      pop gdpPercap
+#  <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#1 Afghanistan Asia         28.8  8425333      779.
+#2 Albania     Europe       55.2  1282697     1601.
+#3 Algeria     Africa       43.1  9279525     2449.
+#4 Angola      Africa       30.0  4232095     3521.
+# Y así con todos los años.
+
+# Es posible usar corchetes para extraer elementos por nombre:
+files[["1962.xlsx"]] # produce:
+#> # A tibble: 142 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         32.0 10267083      853.
+#> 2 Albania     Europe       64.8  1728137     2313.
+#> 3 Algeria     Africa       48.3 11000948     2551.
+#> 4 Angola      Africa       34    4826015     4269.
+#> 5 Argentina   Americas     65.1 21283783     7133.
+#> 6 Australia   Oceania      70.9 10794968    12217.
+#> # ℹ 136 more rows
+
+# Crear una nueva tabla con una nueva columna year
+paths |> 
+  set_names(basename) |> 
+  purrr::map(readxl::read_excel) |> 
+  # Guardar los nombres de los archivos en una nueva columna llamada
+  # year
+  purrr::list_rbind(names_to = "year") |>
+  # parse_number(year) extrae el número de la cadena
+  mutate(year = readr::parse_number(year)) # produce:
+#> # A tibble: 1,704 × 6
+#>    year country     continent lifeExp      pop gdpPercap
+#>   <dbl> <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1  1952 Afghanistan Asia         28.8  8425333      779.
+#> 2  1952 Albania     Europe       55.2  1282697     1601.
+#> 3  1952 Algeria     Africa       43.1  9279525     2449.
+#> 4  1952 Angola      Africa       30.0  4232095     3521.
+#> 5  1952 Argentina   Americas     62.5 17876956     5911.
+#> 6  1952 Australia   Oceania      69.1  8691212    10040.
+#> # ℹ 1,698 more rows
+
+# También es posible usar set_names() sin argumentos junto con
+# separate_wider_delim() para poder usar partes importantes del
+# path del archivo de la tabla para incluirlo en la tabla:
+paths |> 
+  set_names() |> 
+  map(readxl::read_excel) |> 
+  list_rbind(names_to = "year") |> 
+  separate_wider_delim(year, delim = "/", names = c(NA, "dir", "file")) |> 
+  separate_wider_delim(file, delim = ".", names = c("file", "ext"))
+#> # A tibble: 1,704 × 8
+#>   dir       file  ext   country     continent lifeExp      pop gdpPercap
+#>   <chr>     <chr> <chr> <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 gapminder 1952  xlsx  Afghanistan Asia         28.8  8425333      779.
+#> 2 gapminder 1952  xlsx  Albania     Europe       55.2  1282697     1601.
+#> 3 gapminder 1952  xlsx  Algeria     Africa       43.1  9279525     2449.
+#> 4 gapminder 1952  xlsx  Angola      Africa       30.0  4232095     3521.
+#> 5 gapminder 1952  xlsx  Argentina   Americas     62.5 17876956     5911.
+#> 6 gapminder 1952  xlsx  Australia   Oceania      69.1  8691212    10040.
+#> # ℹ 1,698 more rows
