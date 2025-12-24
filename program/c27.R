@@ -316,3 +316,106 @@ str(l$a) # produce:
 
 # NO REALIZADOS
 
+df <- tibble(a = 1, b = 2, c = "a", d = "b", e = 4)
+df # produce:
+# A tibble: 1 × 5
+#      a     b c     d         e
+#  <dbl> <dbl> <chr> <chr> <dbl>
+#1     1     2 a     b         4
+# Encontrar las columnas numéricas
+num_cols <- sapply(df, is.numeric)
+num_cols # produce:
+#>     a     b     c     d     e 
+#>  TRUE  TRUE FALSE FALSE  TRUE
+#
+# Y ahora transformar cada columna con lapply() y luego reemplazar los
+# valores originales
+df[, num_cols] <- lapply(df[, num_cols, drop = FALSE], \(x) x * 2)
+df[, num_cols] # produce:
+# A tibble: 1 × 3
+#      a     b     e
+#  <dbl> <dbl> <dbl>
+#1     1     2     4
+df # produce:
+#> # A tibble: 1 × 5
+#>       a     b c     d         e
+#>   <dbl> <dbl> <chr> <chr> <dbl>
+#> 1     2     4 a     b         8
+
+# vapply() es similar a sapply pero acepta un argumento extra que
+# especifica el tipo que se espera para sus valores
+vapply(df, is.numeric, logical(1)) # produce:
+#>     a     b     c     d     e 
+#>  TRUE  TRUE FALSE FALSE  TRUE
+
+# tapply() calcula un único resumen agrupado
+diamonds |> 
+  group_by(cut) |> 
+  summarize(price = mean(price)) # produce:
+#> # A tibble: 5 × 2
+#>   cut       price
+#>   <ord>     <dbl>
+#> 1 Fair      4359.
+#> 2 Good      3929.
+#> 3 Very Good 3982.
+#> 4 Premium   4584.
+#> 5 Ideal     3458.
+#
+tapply(diamonds$price, diamonds$cut, mean) # produce:
+#>      Fair      Good Very Good   Premium     Ideal 
+#>  4358.758  3928.864  3981.760  4584.258  3457.542
+
+# Leer todos los archivos de excel en un directorio
+paths <- dir("r4ds-progreso/data/gapminder", pattern = "\\.xlsx$", full.names = TRUE)
+files <- map(paths, readxl::read_excel)
+files # produce:
+#[[1]]
+#NULL
+#
+#[[2]]
+#NULL
+#...
+
+# Crear una lista con la misma longitud que paths
+files <- vector("list", length(paths))
+files # produce:
+#[[1]]
+#NULL
+#
+#[[2]]
+#NULL
+#...
+# Generar un índice para cada elemento de rutas con set_along()
+seq_along(paths) # produce:
+#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12
+
+# Los ínidices son importantes porque nos permiten vincular cada
+# posición en la entrada con la posición correspondiente en la salida
+for (i in seq_along(paths)) {
+  files[[i]] <- readxl::read_excel(paths[[i]])
+}
+# Para combinar la lista de tibbles en un solo tibble se puede usar 
+# do.call()+ rbind():
+do.call(rbind, files) # produce:
+#> # A tibble: 1,704 × 5
+#>   country     continent lifeExp      pop gdpPercap
+#>   <chr>       <chr>       <dbl>    <dbl>     <dbl>
+#> 1 Afghanistan Asia         28.8  8425333      779.
+#> 2 Albania     Europe       55.2  1282697     1601.
+#> 3 Algeria     Africa       43.1  9279525     2449.
+#> 4 Angola      Africa       30.0  4232095     3521.
+#> 5 Argentina   Americas     62.5 17876956     5911.
+#> 6 Australia   Oceania      69.1  8691212    10040.
+#> # ℹ 1,698 more rows
+
+# Otro enfoque es construir el marco de datos en dos piezas:
+out <- NULL
+for (path in paths) {
+  out <- rbind(out, readxl::read_excel(path))
+}
+
+# Crear un histograma sin ggplot
+hist(diamonds$carat)
+
+# Crear un diagrama de dispersión sin ggplot
+plot(diamonds$carat, diamonds$price)
