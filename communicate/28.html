@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2022-09-12">
 
-<title>Diamond sizes</title>
+<title>My Document</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,7 +103,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Diamond sizes</h1>
+<h1 class="title">My Document</h1>
 </div>
 
 
@@ -126,7 +126,6 @@ div.csl-indent {
 </header>
 
 
-<p>We have data about 53940 diamonds. Only 126 are larger than 2.5 carats. The distribution of the remainder is shown below:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -209,8 +208,8 @@ div.csl-indent {
 # ℹ 53,804 more rows</code></pre>
 </div>
 </div>
-<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p><span class="citation" data-cites="wickham2019">(<a href="#ref-wickham2019" role="doc-biblioref">Wickham et al. 2019</a>)</span></p>
 <hr>
 </section>
@@ -254,7 +253,7 @@ div.csl-indent {
 <p><a href="http://example.com">linked phrase</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="28_files/figure-html/plot-smaller-diamonds-1.png" class="img-fluid figure-img" alt="Quarto logo and the word quarto spelled in small case letters"></p>
+<p><img src="28_files/figure-html/plot-smaller-diamonds-1.png" class="img-fluid figure-img" style="width:70.0%" alt="Quarto logo and the word quarto spelled in small case letters"></p>
 <figcaption>optional caption text</figcaption>
 </figure>
 </div>
@@ -292,11 +291,180 @@ div.csl-indent {
 <li><p>Universidad de Cádiz[^6]: Título de Master Executive en Administración de Empresas. Año <strong>2019</strong></p></li>
 </ul>
 <hr>
+<p>Es bueno usar la etiqueta label para llevar la trazabilidad de los fragmentos de código. Para separar palabras es mejor usar guiones que guiones bajos. Se puede usar echo: false , para que se muestre el resultado de un código pero no el código Se puede usar message: false para que en el resultado no se muestren mensajes de advertencia fig-show: hide -&gt; oculta los gráficos. Todas estas opciones van seguidas de los caracteres “#|”</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Por ejemplo, en el siguiente fragmento, el resultado no se imprime porque eval se establece en false:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Si no se necesita ver el código, sino solo los resultados y la narrativa, podría configurar echo: false a nivel de documento o globalmente. Esto ocultará el código por defecto:</p>
+<p>title: “My report” execute: echo: false</p>
+<p>Al escribir libros y tutoriales se puede configurar el documento con opciones globales knitr. Así:</p>
+<p>title: “Tutorial” knitr: opts_chunk: comment: “#&gt;” collapse: true</p>
+<p>Debería mostrar una salidad más o menos así: Disponemos de datos sobre 53.940 diamantes. Solo 126 superan los 2,5 quilates. La distribución del resto se muestra a continuación:</p>
+<p>Para estos casos puede ser necesario format() para establecer el número digits para evitar una precisión excesiva y big.mark facilita la lectura:</p>
+<p>comma &lt;- function(x) format(x, digits = 2, big.mark = “,”)</p>
+<p>comma(3452345)</p>
+<p>#&gt; [1] “3,452,345”</p>
+<p>comma(.12358124331)</p>
+<p>#&gt; [1] “0.12”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/bird1.png" class="img-fluid figure-img"></p>
+<figcaption>bird</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-right">
+<figure class="figure">
+<p><img src="images/bird1.png" class="img-fluid quarto-figure quarto-figure-right figure-img" style="width:200.0%" alt="A drawing of an elephant."></p>
+</figure>
+</div>
+<p>Así se puede incluir una tabla en quarto</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2</code></pre>
+</div>
+</div>
+<p>Así se incluye un tabla con formato en quarto</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mpg</th>
+<th style="text-align: right;">cyl</th>
+<th style="text-align: right;">disp</th>
+<th style="text-align: right;">hp</th>
+<th style="text-align: right;">drat</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">qsec</th>
+<th style="text-align: right;">vs</th>
+<th style="text-align: right;">am</th>
+<th style="text-align: right;">gear</th>
+<th style="text-align: right;">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mazda RX4</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.620</td>
+<td style="text-align: right;">16.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mazda RX4 Wag</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.875</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datsun 710</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">2.320</td>
+<td style="text-align: right;">18.61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hornet 4 Drive</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">3.215</td>
+<td style="text-align: right;">19.44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hornet Sportabout</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">3.440</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>En caso de que haya cálculos que tardan demasiado tiempo, puede ser conveniente almacenar este cálculo en la caché a nivel del documento, así:</p>
+<p>También se puede habilitar el almacenamiento en caché a nivel de fragmento específico:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code for lengthy computation...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ejemplos de citas:</p>
+<p>Separate multiple citations with a <code>;</code>: Blah blah <span class="citation" data-cites="smith04 doe99">(<a href="#ref-smith04" role="doc-biblioref"><strong>smith04?</strong></a>; <a href="#ref-doe99" role="doc-biblioref"><strong>doe99?</strong></a>)</span>.</p>
+<p>You can add arbitrary comments inside the square brackets: Blah blah <span class="citation" data-cites="doe99 smith04">(see <a href="#ref-doe99" role="doc-biblioref"><strong>doe99?</strong></a>; also <a href="#ref-smith04" role="doc-biblioref"><strong>smith04?</strong></a>, ch.&nbsp;1)</span>.</p>
+<p>Remove the square brackets to create an in-text citation: <span class="citation" data-cites="smith04">(<a href="#ref-smith04" role="doc-biblioref"><strong>smith04?</strong></a>)</span> says blah, or <span class="citation" data-cites="smith04">(<a href="#ref-smith04" role="doc-biblioref"><strong>smith04?</strong></a>)</span> says blah.</p>
+<p>Add a <code>-</code> before the citation to suppress the author’s name: Smith says blah <span class="citation" data-cites="smith04">(<a href="#ref-smith04" role="doc-biblioref"><strong>smith04?</strong></a>)</span>.</p>
+<p>Es habitual terminar el archivo con un “# Bibliografía” o algo parecido</p>
+</section>
+<section id="bibliografía" class="level1 unnumbered">
+
 
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliografía</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-wickham2019" class="csl-entry" role="listitem">
 Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the Tidyverse.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
@@ -304,8 +472,7 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy McGowan, Roma
 
 <ol>
 <li id="fn1"><p>Universidad Ecuatoriana<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Universidad Ecuatoriana<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Universidad Española<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Universidad Española<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

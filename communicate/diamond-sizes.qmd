@@ -14,9 +14,7 @@ smaller <- diamonds |>
   filter(carat <= 2.5)
 ```
 
-We have data about `r nrow(diamonds)` diamonds.
-Only `r nrow(diamonds) - nrow(smaller)` are larger than 2.5 carats.
-The distribution of the remainder is shown below:
+We have data about `r nrow(diamonds)` diamonds. Only `r nrow(diamonds) - nrow(smaller)` are larger than 2.5 carats. The distribution of the remainder is shown below:
 
 ```{r}
 #| label: plot-smaller-diamonds
@@ -26,14 +24,17 @@ smaller |>
   ggplot(aes(x = carat)) + 
   geom_freqpoly(binwidth = 0.01)
 ```
+
 Mientras mayor es el peso, hay menos cantidad de diamantes.
 
-Es bueno usar la etiqueta label para llevar la trazabilidad de los
-fragmentos de código. Para separar palabras es mejor usar guiones que
-guiones bajos.
-Se puede usar echo: false , para que se muestre el resultado de un código pero no el código
-Se puede usar message: false para que en el resultado no se muestren mensajes de advertencia
+![![](images/ave1.png){width="353"}](images/clipboard-3045337418.png){width="358"}
+
+Mostrar la tabla diamond en el documento quarto pero sólo las 5 primeras filas
 ```{r}
-#| label: simple-addition
-1 + 1
+diamonds[1:5, ]
+```
+
+Mostrar la tabla diamond pero con formato en el documento quarto pero sólo las 5 primeras filas
+```{r}
+knitr::kable(diamonds[1:5, ], )
 ```
