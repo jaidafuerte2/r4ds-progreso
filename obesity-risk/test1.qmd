@@ -1,0 +1,10 @@
+---
+title: "algo"
+format: html
+editor: visual
+---
+
+```{r}
+source("load_data.R")
+```
+

@@ -1,0 +1,34 @@
+project:
+  type: website
+
+website:
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - section: "Basics"
+        href: basics-summary.qmd
+        contents:
+          - text: "Introduction"
+            href: introduction.qmd
+          - text: "Basics knitr"
+            href: basics-knitr.qmd
+          - basics-jupyter.qmd
+      - section: "Layout"
+        contents:
+          - layout.qmd
+          - layout-knitr.qmd
+          - layout-jupyter.qmd
+      - section: advanced.qmd
+        contents:
+          - raw-code.qmd
+          - custom-theme.qmd
+      - acknowledgment.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

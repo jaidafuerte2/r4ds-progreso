@@ -1,0 +1,17 @@
+project:
+  type: website
+
+website:
+  title: "Obesity Risk – Exploratory Analysis"
+  sidebar:
+    style: "docked"
+    contents:
+      - index.qmd
+      - analysis/imc.qmd
+      - analysis/activity.qmd
+      - analysis/diet.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
