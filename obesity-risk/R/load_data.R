@@ -1,9 +1,10 @@
 library(readr)
 library(dplyr)
+library(tidyverse)
 
 # Abrir la base de datos con readr.read_csv() 
-obesity <- read_csv("r4ds-progreso/obesity-risk/obesity_level.csv")
-View(obesity)
+#obesity <- read_csv("r4ds-progreso/obesity-risk/obesity_level.csv")
+#View(obesity)
 
 # Crear la variable imc y calcular el índice de masa corporal con
 # dply.mutate()
@@ -11,7 +12,7 @@ obesity <- obesity %>%
   mutate(
     imc = Weight / (Height ^ 2 )
   )
-View(obesity)
+#View(obesity)
 
 # Reclasificar el tipo de obesidad pues no coincide con la clasificación
 # de la OMS
@@ -69,3 +70,9 @@ obesity <- obesity %>%
     alcohol_consumption             = CALC,
     transportation_mode             = MTRANS
   )
+#View(obesity)
+
+#write_csv(
+#  obesity,
+#  "obesity.csv"
+#)

@@ -1,26 +1,29 @@
 ---
-title: "index"
+title: "Práctica Previa al borrador de análisis del Obesity Risk"
 format: html
 editor: visual
 ---
 
-## Quarto
+![Portada](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle"}
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## ¿Qué es esto?
 
-## Running Code
+Esto es sólo una práctica de quarto y R con algunas tranformaciones del [obesity risk data set de kaggle](https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset) .
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## ¿Qué hare?
 
-```{r}
-1 + 1
-```
+Sólo poner en funcionamiento los archivos .qmd .yml y .R desde una perspectiva útil desde el punto de vista de empezar a usar [quarto](https://quarto.org/) como un blog de notas.
 
-You can add options to executable code like this
+## Específicamente ¿Qué haré?
 
-```{r}
-#| echo: false
-2 * 2
-```
+Crearé un documento de [quarto](https://quarto.org/) en forma de web, practicando lo aprendido en los 8 primeros capítulos de [r4ds](https://r4ds.hadley.nz/) con el [obesity risk de kaggle](https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset).
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## ¿Cuál es el objetivo?
+
+- Practicar quarto y la creación básica de una web con sidebar de contenidos.
+
+- Practicar R y la creación de gráficos con el obesity risk data set de kaggle.
+
+- Practicar en quarto pub el despliegue de una web con quarto.
+
+- Adquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle

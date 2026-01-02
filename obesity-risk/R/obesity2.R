@@ -1,7 +1,8 @@
-#source("r4ds-progreso/obesity-risk/load_data.R")
+source("r4ds-progreso/obesity-risk/R/load_data.R")
 #View(obesity)
-
-
+getwd()
+# Diagrama de dispersión qué relaciona el imc con la edad tomando
+# en cuenta el tipo de obesidad
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age, color = tipo_obesidad)
@@ -9,6 +10,8 @@ ggplot(
   geom_point() + 
   geom_smooth(method = "lm")
 
+# Diagrama de dispersión qué relaciona el imc con la edad tomando
+# en cuenta el tipo de obesidad; también tiene etiquetas 
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age)
@@ -34,7 +37,7 @@ ggplot(obesity, aes(x = Age)) +
 ggplot(obesity, aes(x = Age)) +
   geom_density()
 
-# Diagrama de caja de Edad y tipode obesidad
+# Diagrama de caja de Edad y tipo de obesidad
 ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
   geom_boxplot()
 
@@ -56,7 +59,7 @@ ggplot(obesity, aes(x = Age, y = imc)) +
 ggplot(obesity, aes(x = imc, y = Age)) +
   geom_point(aes(color = tipo_obesidad, shape = Gender))
 
-# Facetar 3 las vriables imc, Age y tipo de obesidad
+# Facetar por género las variables imc, Age y tipo de obesidad
 ggplot(obesity, aes(x = imc, y = Age)) +
   geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +
   facet_wrap(~Gender)

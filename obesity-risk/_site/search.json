@@ -1,0 +1,609 @@
+[
+  {
+    "objectID": "test1.html",
+    "href": "test1.html",
+    "title": "algo",
+    "section": "",
+    "text": "ggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar() \n\n\n\n\n\n\n\n\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)"
+  },
+  {
+    "objectID": "analysis/test1.html",
+    "href": "analysis/test1.html",
+    "title": "Prueba 1",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "",
+    "text": "Portada",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
+    ]
+  },
+  {
+    "objectID": "index.html#qué-es-esto",
+    "href": "index.html#qué-es-esto",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "¿Qué es esto?",
+    "text": "¿Qué es esto?\nEsto es sólo una práctica de quarto y R con algunas tranformaciones del obesity risk data set de kaggle .",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
+    ]
+  },
+  {
+    "objectID": "index.html#qué-hare",
+    "href": "index.html#qué-hare",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "¿Qué hare?",
+    "text": "¿Qué hare?\nSólo poner en funcionamiento los archivos .qmd .yml y .R desde una perspectiva útil desde el punto de vista de empezar a usar quarto como un blog de notas.",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
+    ]
+  },
+  {
+    "objectID": "index.html#específicamente-qué-haré",
+    "href": "index.html#específicamente-qué-haré",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "Específicamente ¿Qué haré?",
+    "text": "Específicamente ¿Qué haré?\nCrearé un documento de quarto en forma de web, practicando lo aprendido en los 8 primeros capítulos de r4ds con el obesity risk de kaggle.",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
+    ]
+  },
+  {
+    "objectID": "index.html#cuál-es-el-objetivo",
+    "href": "index.html#cuál-es-el-objetivo",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "¿Cuál es el objetivo?",
+    "text": "¿Cuál es el objetivo?\n\nPracticar quarto y la creación básica de una web con sidebar de contenidos.\nPracticar R y la creación de gráficos con el obesity risk data set de kaggle.\nPracticar en quarto pub el despliegue de una web con quarto.\nAdquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#diagrama-de-dispersión",
+    "href": "analysis/test1.html#diagrama-de-dispersión",
+    "title": "Prueba 1",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#diagrama-de-dispersión-con-etiquetas",
+    "href": "analysis/test1.html#diagrama-de-dispersión-con-etiquetas",
+    "title": "Prueba 1",
+    "section": "Diagrama de dispersión con etiquetas",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#gráfico-de-barras",
+    "href": "analysis/test1.html#gráfico-de-barras",
+    "title": "Prueba 1",
+    "section": "Gráfico de barras",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#histograma",
+    "href": "analysis/test1.html#histograma",
+    "title": "Prueba 1",
+    "section": "Histograma",
+    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#gráfico-de-densidad",
+    "href": "analysis/test1.html#gráfico-de-densidad",
+    "title": "Prueba 1",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#diagrama-de-caja",
+    "href": "analysis/test1.html#diagrama-de-caja",
+    "title": "Prueba 1",
+    "section": "Diagrama de caja",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#gráfico-de-densidad-1",
+    "href": "analysis/test1.html#gráfico-de-densidad-1",
+    "title": "Prueba 1",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "href": "analysis/test1.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "title": "Prueba 1",
+    "section": "Gráfico de densidad con relleno y opacidad",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#relacionar-más-de-3-variables",
+    "href": "analysis/test1.html#relacionar-más-de-3-variables",
+    "title": "Prueba 1",
+    "section": "Relacionar más de 3 variables",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#facetas",
+    "href": "analysis/test1.html#facetas",
+    "title": "Prueba 1",
+    "section": "Facetas",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Prueba 1"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html",
+    "href": "analysis/test2.html",
+    "title": "Prueba 2",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#diagrama-de-dispersión",
+    "href": "analysis/test2.html#diagrama-de-dispersión",
+    "title": "Prueba 2",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#diagrama-de-dispersión-con-etiquetas",
+    "href": "analysis/test2.html#diagrama-de-dispersión-con-etiquetas",
+    "title": "Prueba 2",
+    "section": "Diagrama de dispersión con etiquetas",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#gráfico-de-barras",
+    "href": "analysis/test2.html#gráfico-de-barras",
+    "title": "Prueba 2",
+    "section": "Gráfico de barras",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#histograma",
+    "href": "analysis/test2.html#histograma",
+    "title": "Prueba 2",
+    "section": "Histograma",
+    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#gráfico-de-densidad",
+    "href": "analysis/test2.html#gráfico-de-densidad",
+    "title": "Prueba 2",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#diagrama-de-caja",
+    "href": "analysis/test2.html#diagrama-de-caja",
+    "title": "Prueba 2",
+    "section": "Diagrama de caja",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#gráfico-de-densidad-1",
+    "href": "analysis/test2.html#gráfico-de-densidad-1",
+    "title": "Prueba 2",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "href": "analysis/test2.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "title": "Prueba 2",
+    "section": "Gráfico de densidad con relleno y opacidad",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#relacionar-más-de-3-variables",
+    "href": "analysis/test2.html#relacionar-más-de-3-variables",
+    "title": "Prueba 2",
+    "section": "Relacionar más de 3 variables",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#facetas",
+    "href": "analysis/test2.html#facetas",
+    "title": "Prueba 2",
+    "section": "Facetas",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Prueba 2"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html",
+    "href": "analysis/test3.html",
+    "title": "Prueba 3",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#diagrama-de-dispersión",
+    "href": "analysis/test3.html#diagrama-de-dispersión",
+    "title": "Prueba 3",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#diagrama-de-dispersión-con-etiquetas",
+    "href": "analysis/test3.html#diagrama-de-dispersión-con-etiquetas",
+    "title": "Prueba 3",
+    "section": "Diagrama de dispersión con etiquetas",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#gráfico-de-barras",
+    "href": "analysis/test3.html#gráfico-de-barras",
+    "title": "Prueba 3",
+    "section": "Gráfico de barras",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#histograma",
+    "href": "analysis/test3.html#histograma",
+    "title": "Prueba 3",
+    "section": "Histograma",
+    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#gráfico-de-densidad",
+    "href": "analysis/test3.html#gráfico-de-densidad",
+    "title": "Prueba 3",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#diagrama-de-caja",
+    "href": "analysis/test3.html#diagrama-de-caja",
+    "title": "Prueba 3",
+    "section": "Diagrama de caja",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#gráfico-de-densidad-1",
+    "href": "analysis/test3.html#gráfico-de-densidad-1",
+    "title": "Prueba 3",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "href": "analysis/test3.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "title": "Prueba 3",
+    "section": "Gráfico de densidad con relleno y opacidad",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#relacionar-más-de-3-variables",
+    "href": "analysis/test3.html#relacionar-más-de-3-variables",
+    "title": "Prueba 3",
+    "section": "Relacionar más de 3 variables",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#facetas",
+    "href": "analysis/test3.html#facetas",
+    "title": "Prueba 3",
+    "section": "Facetas",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html",
+    "href": "analysis/test4.html",
+    "title": "Prueba 4",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#diagrama-de-dispersión",
+    "href": "analysis/test4.html#diagrama-de-dispersión",
+    "title": "Prueba 4",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#diagrama-de-dispersión-con-etiquetas",
+    "href": "analysis/test4.html#diagrama-de-dispersión-con-etiquetas",
+    "title": "Prueba 4",
+    "section": "Diagrama de dispersión con etiquetas",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#gráfico-de-barras",
+    "href": "analysis/test4.html#gráfico-de-barras",
+    "title": "Prueba 4",
+    "section": "Gráfico de barras",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#histograma",
+    "href": "analysis/test4.html#histograma",
+    "title": "Prueba 4",
+    "section": "Histograma",
+    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#gráfico-de-densidad",
+    "href": "analysis/test4.html#gráfico-de-densidad",
+    "title": "Prueba 4",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#diagrama-de-caja",
+    "href": "analysis/test4.html#diagrama-de-caja",
+    "title": "Prueba 4",
+    "section": "Diagrama de caja",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#gráfico-de-densidad-1",
+    "href": "analysis/test4.html#gráfico-de-densidad-1",
+    "title": "Prueba 4",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "href": "analysis/test4.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "title": "Prueba 4",
+    "section": "Gráfico de densidad con relleno y opacidad",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#relacionar-más-de-3-variables",
+    "href": "analysis/test4.html#relacionar-más-de-3-variables",
+    "title": "Prueba 4",
+    "section": "Relacionar más de 3 variables",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test4.html#facetas",
+    "href": "analysis/test4.html#facetas",
+    "title": "Prueba 4",
+    "section": "Facetas",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Prueba 4"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html",
+    "href": "analysis/test5.html",
+    "title": "Prueba 5",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#diagrama-de-dispersión",
+    "href": "analysis/test5.html#diagrama-de-dispersión",
+    "title": "Prueba 5",
+    "section": "",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#diagrama-de-dispersión-con-etiquetas",
+    "href": "analysis/test5.html#diagrama-de-dispersión-con-etiquetas",
+    "title": "Prueba 5",
+    "section": "Diagrama de dispersión con etiquetas",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#gráfico-de-barras",
+    "href": "analysis/test5.html#gráfico-de-barras",
+    "title": "Prueba 5",
+    "section": "Gráfico de barras",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#histograma",
+    "href": "analysis/test5.html#histograma",
+    "title": "Prueba 5",
+    "section": "Histograma",
+    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#gráfico-de-densidad",
+    "href": "analysis/test5.html#gráfico-de-densidad",
+    "title": "Prueba 5",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#diagrama-de-caja",
+    "href": "analysis/test5.html#diagrama-de-caja",
+    "title": "Prueba 5",
+    "section": "Diagrama de caja",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#gráfico-de-densidad-1",
+    "href": "analysis/test5.html#gráfico-de-densidad-1",
+    "title": "Prueba 5",
+    "section": "Gráfico de densidad",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "href": "analysis/test5.html#gráfico-de-densidad-con-relleno-y-opacidad",
+    "title": "Prueba 5",
+    "section": "Gráfico de densidad con relleno y opacidad",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#relacionar-más-de-3-variables",
+    "href": "analysis/test5.html#relacionar-más-de-3-variables",
+    "title": "Prueba 5",
+    "section": "Relacionar más de 3 variables",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#facetas",
+    "href": "analysis/test5.html#facetas",
+    "title": "Prueba 5",
+    "section": "Facetas",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Prueba 5"
+    ]
+  }
+]
