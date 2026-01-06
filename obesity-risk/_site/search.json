@@ -61,7 +61,7 @@
     "href": "index.html#cuál-es-el-objetivo",
     "title": "Práctica Previa al borrador de análisis del Obesity Risk",
     "section": "¿Cuál es el objetivo?",
-    "text": "¿Cuál es el objetivo?\n\nPracticar quarto y la creación básica de una web con sidebar de contenidos.\nPracticar R y la creación de gráficos con el obesity risk data set de kaggle.\nPracticar en quarto pub el despliegue de una web con quarto.\nAdquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle",
+    "text": "¿Cuál es el objetivo?\n\nPracticar quarto y la creación básica de una web con sidebar de contenidos.\nPracticar R y la creación de gráficos con el obesity risk data set de kaggle.\nPracticar en quarto pub1 el despliegue de una web con quarto.\nAdquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle.",
     "crumbs": [
       "Práctica Previa al borrador de análisis del Obesity Risk"
     ]
@@ -171,7 +171,7 @@
     "href": "analysis/test2.html",
     "title": "Prueba 2",
     "section": "",
-    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\n# message: false evita que aparezcan mensajes de advertencia\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")",
     "crumbs": [
       "Prueba 2"
     ]
@@ -181,7 +181,7 @@
     "href": "analysis/test2.html#diagrama-de-dispersión",
     "title": "Prueba 2",
     "section": "",
-    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\n# message: false evita que aparezcan mensajes de advertencia\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")",
     "crumbs": [
       "Prueba 2"
     ]
@@ -191,7 +191,7 @@
     "href": "analysis/test2.html#diagrama-de-dispersión-con-etiquetas",
     "title": "Prueba 2",
     "section": "Diagrama de dispersión con etiquetas",
-    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas",
     "crumbs": [
       "Prueba 2"
     ]
@@ -201,7 +201,7 @@
     "href": "analysis/test2.html#gráfico-de-barras",
     "title": "Prueba 2",
     "section": "Gráfico de barras",
-    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\n# eval: false impide que se evalúe el  código\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
     "crumbs": [
       "Prueba 2"
     ]
@@ -271,7 +271,7 @@
     "href": "analysis/test2.html#facetas",
     "title": "Prueba 2",
     "section": "Facetas",
-    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)\n\n\n\n\n\n\n\n\nNOTA IMPORTANTE: El atajo para insertar un bloque de código de r es: ctrl+alt+i . El atajo para ejecutar un chunk es ctrl+mayús+intro",
     "crumbs": [
       "Prueba 2"
     ]
@@ -281,7 +281,7 @@
     "href": "analysis/test3.html",
     "title": "Prueba 3",
     "section": "",
-    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\n\n\n\n\nDiagrama de dispersión",
     "crumbs": [
       "Prueba 3"
     ]
@@ -291,7 +291,7 @@
     "href": "analysis/test3.html#diagrama-de-dispersión",
     "title": "Prueba 3",
     "section": "",
-    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() + \n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad\n\n\n\n\n\nDiagrama de dispersión",
     "crumbs": [
       "Prueba 3"
     ]
@@ -301,7 +301,7 @@
     "href": "analysis/test3.html#diagrama-de-dispersión-con-etiquetas",
     "title": "Prueba 3",
     "section": "Diagrama de dispersión con etiquetas",
-    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + \n  geom_smooth(method = \"lm\") +\n  labs (\n    title = \"Edad e IMC\",\n    subtitle = \"Edad según IMC\",\n    x = \"IMC (Kg/m^2)\", y = \"Edad en años\",\n    color = \"Tipo de obesidad\", shape = \"Tipo de obesidad\" \n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "text": "Diagrama de dispersión con etiquetas\nDiagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas",
     "crumbs": [
       "Prueba 3"
     ]
@@ -311,7 +311,7 @@
     "href": "analysis/test3.html#gráfico-de-barras",
     "title": "Prueba 3",
     "section": "Gráfico de barras",
-    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   \n  geom_bar()",
+    "text": "Gráfico de barras\nGráfico de barras para tipo de obesidad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -321,7 +321,7 @@
     "href": "analysis/test3.html#histograma",
     "title": "Prueba 3",
     "section": "Histograma",
-    "text": "Histograma\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1)",
+    "text": "Histograma\nHistograma de edad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -331,7 +331,7 @@
     "href": "analysis/test3.html#gráfico-de-densidad",
     "title": "Prueba 3",
     "section": "Gráfico de densidad",
-    "text": "Gráfico de densidad\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density()",
+    "text": "Gráfico de densidad\nGráfico de densidad de edad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -341,7 +341,7 @@
     "href": "analysis/test3.html#diagrama-de-caja",
     "title": "Prueba 3",
     "section": "Diagrama de caja",
-    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot()",
+    "text": "Diagrama de caja\nDiagrama de caja de Edad y tipo de obesidad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -351,7 +351,7 @@
     "href": "analysis/test3.html#gráfico-de-densidad-1",
     "title": "Prueba 3",
     "section": "Gráfico de densidad",
-    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)",
+    "text": "Gráfico de densidad\nGráfico de densidad de Edad y tipo de obesidad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -361,7 +361,7 @@
     "href": "analysis/test3.html#gráfico-de-densidad-con-relleno-y-opacidad",
     "title": "Prueba 3",
     "section": "Gráfico de densidad con relleno y opacidad",
-    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "text": "Gráfico de densidad con relleno y opacidad\nGráfico de densidad de Edad y tipo de obesidad con relleno y opacidad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -371,7 +371,7 @@
     "href": "analysis/test3.html#relacionar-más-de-3-variables",
     "title": "Prueba 3",
     "section": "Relacionar más de 3 variables",
-    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))",
+    "text": "Relacionar más de 3 variables\nRelacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión",
     "crumbs": [
       "Prueba 3"
     ]
@@ -381,7 +381,7 @@
     "href": "analysis/test3.html#facetas",
     "title": "Prueba 3",
     "section": "Facetas",
-    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad",
     "crumbs": [
       "Prueba 3"
     ]
@@ -604,6 +604,36 @@
     "text": "Facetas\nFacetar por género las variables imc, Age y tipo de obesidad\n\nggplot(obesity, aes(x = imc, y = Age)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
     "crumbs": [
       "Prueba 5"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#tablas-sin-formato",
+    "href": "analysis/test3.html#tablas-sin-formato",
+    "title": "Prueba 3",
+    "section": "Tablas sin formato",
+    "text": "Tablas sin formato\nTabla sin formato del obesity risk de kaggle mostrando 5 filas\n\n\n# A tibble: 5 × 20\n     id Gender   Age Height Weight family_history_with_…¹ frequent_high_calori…²\n  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;\n1     0 Male    24.4   1.70   81.7                      1                      1\n2     1 Female  18     1.56   57                        1                      1\n3     2 Female  18     1.71   50.2                      1                      1\n4     3 Female  21.0   1.71  131.                       1                      1\n5     4 Male    31.6   1.91   93.8                      1                      1\n# ℹ abbreviated names: ¹​family_history_with_overweight,\n#   ²​frequent_high_calorie_food\n# ℹ 13 more variables: vegetable_consumption_frequency &lt;dbl&gt;,\n#   number_main_meals &lt;dbl&gt;, food_between_meals &lt;chr&gt;, SMOKE &lt;dbl&gt;,\n#   daily_water_consumption &lt;dbl&gt;, caloric_beverages_consumption &lt;dbl&gt;,\n#   physical_activity_frequency &lt;dbl&gt;, technology_use_time &lt;dbl&gt;,\n#   alcohol_consumption &lt;chr&gt;, transportation_mode &lt;chr&gt;, `0be1dad` &lt;chr&gt;, …",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#tablas-con-formato",
+    "href": "analysis/test3.html#tablas-con-formato",
+    "title": "Prueba 3",
+    "section": "Tablas con formato",
+    "text": "Tablas con formato\nTabla con formato del obesity risk de kaggle mostrando 5 filas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nid\nGender\nAge\nHeight\nWeight\nfamily_history_with_overweight\nfrequent_high_calorie_food\nvegetable_consumption_frequency\nnumber_main_meals\nfood_between_meals\nSMOKE\ndaily_water_consumption\ncaloric_beverages_consumption\nphysical_activity_frequency\ntechnology_use_time\nalcohol_consumption\ntransportation_mode\n0be1dad\nimc\ntipo_obesidad\n\n\n\n\n0\nMale\n24.44301\n1.699998\n81.66995\n1\n1\n2.000000\n2.983297\nSometimes\n0\n2.763573\n0\n0.000000\n0.976473\nSometimes\nPublic_Transportation\nOverweight_Level_II\n28.25956\nSobrepeso\n\n\n1\nFemale\n18.00000\n1.560000\n57.00000\n1\n1\n2.000000\n3.000000\nFrequently\n0\n2.000000\n0\n1.000000\n1.000000\n0\nAutomobile\n0rmal_Weight\n23.42209\nPeso normal\n\n\n2\nFemale\n18.00000\n1.711460\n50.16575\n1\n1\n1.880534\n1.411685\nSometimes\n0\n1.910378\n0\n0.866045\n1.673584\n0\nPublic_Transportation\nInsufficient_Weight\n17.12671\nDesnutrición\n\n\n3\nFemale\n20.95274\n1.710730\n131.27485\n1\n1\n3.000000\n3.000000\nSometimes\n0\n1.674061\n0\n1.467863\n0.780199\nSometimes\nPublic_Transportation\nObesity_Type_III\n44.85580\nObesidad grado 3\n\n\n4\nMale\n31.64108\n1.914186\n93.79806\n1\n1\n2.679664\n1.971472\nSometimes\n0\n1.979848\n0\n1.967973\n0.931721\nSometimes\nPublic_Transportation\nOverweight_Level_II\n25.59915\nSobrepeso",
+    "crumbs": [
+      "Prueba 3"
+    ]
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "Práctica Previa al borrador de análisis del Obesity Risk",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nhttps://quartopub.com/↩︎",
+    "crumbs": [
+      "Práctica Previa al borrador de análisis del Obesity Risk"
     ]
   }
 ]

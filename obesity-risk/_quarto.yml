@@ -3,6 +3,7 @@ project:
 
 website:
   title: "Obesity Risk – Exploratory Analysis"
+  favicon: favicon.ico
   sidebar:
     style: "docked"
     contents:
@@ -12,6 +13,16 @@ website:
       - analysis/test3.qmd
       - analysis/test4.qmd
       - analysis/test5.qmd
+  
+  page-footer: 
+    left: "Copyright 2026, Jaime V." 
+    right: 
+      - icon: github
+        href: https://github.com/
+      - icon: twitter 
+        href: https://twitter.com/  
+
+
 
 format:
   html:

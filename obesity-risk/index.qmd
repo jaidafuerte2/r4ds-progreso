@@ -2,9 +2,10 @@
 title: "Práctica Previa al borrador de análisis del Obesity Risk"
 format: html
 editor: visual
+bibliography: references.bib
 ---
 
-![Portada](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle"}
+![Portada](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle" width=70%}
 
 ## ¿Qué es esto?
 
@@ -20,10 +21,12 @@ Crearé un documento de [quarto](https://quarto.org/) en forma de web, practican
 
 ## ¿Cuál es el objetivo?
 
-- Practicar quarto y la creación básica de una web con sidebar de contenidos.
+-   Practicar quarto y la creación básica de una web con sidebar de contenidos.
 
-- Practicar R y la creación de gráficos con el obesity risk data set de kaggle.
+-   Practicar R y la creación de gráficos con el obesity risk data set de kaggle.
 
-- Practicar en quarto pub el despliegue de una web con quarto.
+-   Practicar en quarto pub[^1] el despliegue de una web con quarto.
 
-- Adquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle
+-   Adquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle.
+
+[^1]: <https://quartopub.com/>

@@ -2,6 +2,10 @@
 title: "Prueba 3"
 format: html
 editor: visual
+image: "test3.png"
+execute:
+  echo: false
+  warning: false
 ---
 
 ```{r}
@@ -18,8 +22,9 @@ source("../R/load_data.R")
 Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 5
+#| fig-width: 6
+#| fig-asp: 0.618
+#| fig-cap: "Diagrama de dispersión"
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age, color = tipo_obesidad)
@@ -33,6 +38,8 @@ ggplot(
 Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas
 
 ```{r}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age)
@@ -53,7 +60,7 @@ Gráfico de barras para tipo de obesidad
 
 ```{r}
 #| fig-width: 7
-#| fig-height: 5
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   
   geom_bar() 
 ```
@@ -63,6 +70,8 @@ ggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +
 Histograma de edad
 
 ```{r}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = Age)) +
   geom_histogram(binwidth = 1)
 ```
@@ -72,6 +81,8 @@ ggplot(obesity, aes(x = Age)) +
 Gráfico de densidad de edad
 
 ```{R}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = Age)) +
   geom_density()
 ```
@@ -81,6 +92,8 @@ ggplot(obesity, aes(x = Age)) +
 Diagrama de caja de Edad y tipo de obesidad
 
 ```{R}
+#| fig-width: 7
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
   geom_boxplot()
 ```
@@ -90,6 +103,8 @@ ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
 Gráfico de densidad de Edad y tipo de obesidad
 
 ```{R}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = Age, color = tipo_obesidad)) +
   geom_density(linewidth = 0.75)
 ```
@@ -99,6 +114,8 @@ ggplot(obesity, aes(x = Age, color = tipo_obesidad)) +
 Gráfico de densidad de Edad y tipo de obesidad con relleno y opacidad
 
 ```{R}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = Age, color = tipo_obesidad, 
                     fill = tipo_obesidad)) +
   geom_density(alpha = 0.5)
@@ -109,6 +126,8 @@ ggplot(obesity, aes(x = Age, color = tipo_obesidad,
 Relacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión
 
 ```{R}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = imc, y = Age)) +
   geom_point(aes(color = tipo_obesidad, shape = Gender))
 ```
@@ -118,7 +137,26 @@ ggplot(obesity, aes(x = imc, y = Age)) +
 Facetar por género las variables imc, Age y tipo de obesidad
 
 ```{R}
+#| fig-width: 6
+#| fig-asp: 0.618
 ggplot(obesity, aes(x = imc, y = Age)) +
   geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +
   facet_wrap(~Gender)
 ```
+
+## Tablas sin formato
+
+Tabla sin formato del obesity risk de kaggle mostrando 5 filas
+
+```{r}
+obesity[1:5, ]
+```
+
+## Tablas con formato
+
+Tabla con formato del obesity risk de kaggle mostrando 5 filas
+
+```{r}
+knitr::kable(obesity[1:5, ], )
+```
+

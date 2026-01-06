@@ -20,6 +20,8 @@ source("../R/load_data.R")
 ```{r}
 #| fig-width: 7
 #| fig-height: 5
+#| message: false
+# message: false evita que aparezcan mensajes de advertencia
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age, color = tipo_obesidad)
@@ -33,6 +35,11 @@ ggplot(
 *Diagrama de dispersión* qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas
 
 ```{r}
+#| label: diagrama-dispersión-imc-edad
+#| echo: false 
+#| warning: false
+# echo: false evita que aparezca el código
+# warning: false evita que aparezcan mensajes de advertencia
 ggplot(
   data = obesity,
   mapping = aes(x = imc, y = Age)
@@ -54,6 +61,8 @@ ggplot(
 ```{r}
 #| fig-width: 7
 #| fig-height: 5
+#| eval: false
+# eval: false impide que se evalúe el  código
 ggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   
   geom_bar() 
 ```
@@ -122,3 +131,5 @@ ggplot(obesity, aes(x = imc, y = Age)) +
   geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +
   facet_wrap(~Gender)
 ```
+
+**NOTA IMPORTANTE:** El atajo para insertar un bloque de código de r es: ctrl+alt+i . El atajo para ejecutar un chunk es ctrl+mayús+intro
