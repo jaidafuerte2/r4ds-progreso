@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -75,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2211bc1cc08a49250acc0f2388776108.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -144,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inicio</span></a>
+ <span class="menu-text">Práctica Previa al borrador de análisis del Obesity Risk</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -187,16 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#diagrama-de-dispersión" id="toc-diagrama-de-dispersión" class="nav-link active" data-scroll-target="#diagrama-de-dispersión">Diagrama de dispersión</a></li>
-  <li><a href="#diagrama-de-dispersión-con-etiquetas" id="toc-diagrama-de-dispersión-con-etiquetas" class="nav-link" data-scroll-target="#diagrama-de-dispersión-con-etiquetas">Diagrama de dispersión con etiquetas</a></li>
-  <li><a href="#gráfico-de-barras" id="toc-gráfico-de-barras" class="nav-link" data-scroll-target="#gráfico-de-barras">Gráfico de barras</a></li>
-  <li><a href="#histograma" id="toc-histograma" class="nav-link" data-scroll-target="#histograma">Histograma</a></li>
-  <li><a href="#gráfico-de-densidad" id="toc-gráfico-de-densidad" class="nav-link" data-scroll-target="#gráfico-de-densidad">Gráfico de densidad</a></li>
-  <li><a href="#diagrama-de-caja" id="toc-diagrama-de-caja" class="nav-link" data-scroll-target="#diagrama-de-caja">Diagrama de caja</a></li>
-  <li><a href="#gráfico-de-densidad-1" id="toc-gráfico-de-densidad-1" class="nav-link" data-scroll-target="#gráfico-de-densidad-1">Gráfico de densidad</a></li>
-  <li><a href="#gráfico-de-densidad-con-relleno-y-opacidad" id="toc-gráfico-de-densidad-con-relleno-y-opacidad" class="nav-link" data-scroll-target="#gráfico-de-densidad-con-relleno-y-opacidad">Gráfico de densidad con relleno y opacidad</a></li>
-  <li><a href="#relacionar-más-de-3-variables" id="toc-relacionar-más-de-3-variables" class="nav-link" data-scroll-target="#relacionar-más-de-3-variables">Relacionar más de 3 variables</a></li>
-  <li><a href="#facetas" id="toc-facetas" class="nav-link" data-scroll-target="#facetas">Facetas</a></li>
+  <li><a href="#imprimir-base-de-datos-con-formato" id="toc-imprimir-base-de-datos-con-formato" class="nav-link active" data-scroll-target="#imprimir-base-de-datos-con-formato">Imprimir base de datos con formato</a></li>
   </ul>
 </nav>
     </div>
@@ -222,175 +214,332 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="diagrama-de-dispersión" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-dispersión">Diagrama de dispersión</h2>
-<p>Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad</p>
+<section id="imprimir-base-de-datos-con-formato" class="level2">
+<h2 class="anchored" data-anchor-id="imprimir-base-de-datos-con-formato">Imprimir base de datos con formato</h2>
+<p>Imprimir el obesity risk data set con formato pero solo las 10 primeras filas</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> obesity,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age, <span class="at">color =</span> tipo_obesidad)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 1%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">Gender</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">Height</th>
+<th style="text-align: right;">Weight</th>
+<th style="text-align: right;">family_history_with_overweight</th>
+<th style="text-align: right;">frequent_high_calorie_food</th>
+<th style="text-align: right;">vegetable_consumption_frequency</th>
+<th style="text-align: right;">number_main_meals</th>
+<th style="text-align: left;">food_between_meals</th>
+<th style="text-align: right;">SMOKE</th>
+<th style="text-align: right;">daily_water_consumption</th>
+<th style="text-align: right;">caloric_beverages_consumption</th>
+<th style="text-align: right;">physical_activity_frequency</th>
+<th style="text-align: right;">technology_use_time</th>
+<th style="text-align: left;">alcohol_consumption</th>
+<th style="text-align: left;">transportation_mode</th>
+<th style="text-align: left;">0be1dad</th>
+<th style="text-align: right;">imc</th>
+<th style="text-align: left;">tipo_obesidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">24.44301</td>
+<td style="text-align: right;">1.699998</td>
+<td style="text-align: right;">81.66995</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">2.983297</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.763573</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.976473</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Overweight_Level_II</td>
+<td style="text-align: right;">28.25956</td>
+<td style="text-align: left;">Sobrepeso</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">18.00000</td>
+<td style="text-align: right;">1.560000</td>
+<td style="text-align: right;">57.00000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Automobile</td>
+<td style="text-align: left;">0rmal_Weight</td>
+<td style="text-align: right;">23.42209</td>
+<td style="text-align: left;">Peso normal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">18.00000</td>
+<td style="text-align: right;">1.711460</td>
+<td style="text-align: right;">50.16575</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.880534</td>
+<td style="text-align: right;">1.411685</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.910378</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.866045</td>
+<td style="text-align: right;">1.673584</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Insufficient_Weight</td>
+<td style="text-align: right;">17.12671</td>
+<td style="text-align: left;">Desnutrición</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">20.95274</td>
+<td style="text-align: right;">1.710730</td>
+<td style="text-align: right;">131.27485</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.674061</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.467863</td>
+<td style="text-align: right;">0.780199</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Obesity_Type_III</td>
+<td style="text-align: right;">44.85580</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">31.64108</td>
+<td style="text-align: right;">1.914186</td>
+<td style="text-align: right;">93.79806</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.679664</td>
+<td style="text-align: right;">1.971472</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.979848</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.967973</td>
+<td style="text-align: right;">0.931721</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Overweight_Level_II</td>
+<td style="text-align: right;">25.59915</td>
+<td style="text-align: left;">Sobrepeso</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">18.12825</td>
+<td style="text-align: right;">1.748524</td>
+<td style="text-align: right;">51.55259</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.919751</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.137550</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.930033</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Insufficient_Weight</td>
+<td style="text-align: right;">16.86193</td>
+<td style="text-align: left;">Desnutrición</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">29.88302</td>
+<td style="text-align: right;">1.754711</td>
+<td style="text-align: right;">112.72500</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.991240</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.696948</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Automobile</td>
+<td style="text-align: left;">Obesity_Type_II</td>
+<td style="text-align: right;">36.61079</td>
+<td style="text-align: left;">Obesidad grado 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">29.89147</td>
+<td style="text-align: right;">1.750150</td>
+<td style="text-align: right;">118.20656</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.397468</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.598655</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Automobile</td>
+<td style="text-align: left;">Obesity_Type_II</td>
+<td style="text-align: right;">38.59145</td>
+<td style="text-align: left;">Obesidad grado 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">17.00000</td>
+<td style="text-align: right;">1.700000</td>
+<td style="text-align: right;">70.00000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Overweight_Level_I</td>
+<td style="text-align: right;">24.22145</td>
+<td style="text-align: left;">Peso normal</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">26.00000</td>
+<td style="text-align: right;">1.638836</td>
+<td style="text-align: right;">111.27565</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.632253</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.218645</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Obesity_Type_III</td>
+<td style="text-align: right;">41.43135</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-</section>
-<section id="diagrama-de-dispersión-con-etiquetas" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-dispersión-con-etiquetas">Diagrama de dispersión con etiquetas</h2>
-<p>Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> obesity,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> tipo_obesidad)) <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Edad e IMC"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Edad según IMC"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"IMC (Kg/m^2)"</span>, <span class="at">y =</span> <span class="st">"Edad en años"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Tipo de obesidad"</span>, <span class="at">shape =</span> <span class="st">"Tipo de obesidad"</span> </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"Male"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10,336 × 20
+      id Gender   Age Height Weight family_history_with_overweight
+   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                          &lt;dbl&gt;
+ 1     0 Male    24.4   1.70   81.7                              1
+ 2     4 Male    31.6   1.91   93.8                              1
+ 3     5 Male    18.1   1.75   51.6                              1
+ 4     6 Male    29.9   1.75  113.                               1
+ 5     7 Male    29.9   1.75  118.                               1
+ 6     8 Male    17     1.7    70                                0
+ 7    11 Male    22     1.7    70                                1
+ 8    12 Male    18     1.81  108.                               1
+ 9    15 Male    28.4   1.71  103.                               1
+10    18 Male    22     1.7    80                                1
+# ℹ 10,326 more rows
+# ℹ 14 more variables: frequent_high_calorie_food &lt;dbl&gt;,
+#   vegetable_consumption_frequency &lt;dbl&gt;, number_main_meals &lt;dbl&gt;,
+#   food_between_meals &lt;chr&gt;, SMOKE &lt;dbl&gt;, daily_water_consumption &lt;dbl&gt;,
+#   caloric_beverages_consumption &lt;dbl&gt;, physical_activity_frequency &lt;dbl&gt;,
+#   technology_use_time &lt;dbl&gt;, alcohol_consumption &lt;chr&gt;,
+#   transportation_mode &lt;chr&gt;, `0be1dad` &lt;chr&gt;, imc &lt;dbl&gt;, …</code></pre>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-barras" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-barras">Gráfico de barras</h2>
-<p>Gráfico de barras para tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(tipo_obesidad))) <span class="sc">+</span>   </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="histograma" class="level2">
-<h2 class="anchored" data-anchor-id="histograma">Histograma</h2>
-<p>Histograma de edad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-densidad" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad">Gráfico de densidad</h2>
-<p>Gráfico de densidad de edad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="diagrama-de-caja" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-caja">Diagrama de caja</h2>
-<p>Diagrama de caja de Edad y tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> tipo_obesidad, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-densidad-1" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad-1">Gráfico de densidad</h2>
-<p>Gráfico de densidad de Edad y tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-densidad-con-relleno-y-opacidad" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad-con-relleno-y-opacidad">Gráfico de densidad con relleno y opacidad</h2>
-<p>Gráfico de densidad de Edad y tipo de obesidad con relleno y opacidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> tipo_obesidad, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="relacionar-más-de-3-variables" class="level2">
-<h2 class="anchored" data-anchor-id="relacionar-más-de-3-variables">Relacionar más de 3 variables</h2>
-<p>Relacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="facetas" class="level2">
-<h2 class="anchored" data-anchor-id="facetas">Facetas</h2>
-<p>Facetar por género las variables imc, Age y tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"Female"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10,422 × 20
+      id Gender   Age Height Weight family_history_with_overweight
+   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                          &lt;dbl&gt;
+ 1     1 Female  18     1.56   57                                1
+ 2     2 Female  18     1.71   50.2                              1
+ 3     3 Female  21.0   1.71  131.                               1
+ 4     9 Female  26     1.64  111.                               1
+ 5    10 Female  20     1.65   65                                1
+ 6    13 Female  21.4   1.73  132.                               1
+ 7    14 Female  20     1.57   49                                0
+ 8    16 Female  34     1.7    80                                1
+ 9    17 Female  18     1.56   50                                0
+10    20 Female  22     1.67   80                                1
+# ℹ 10,412 more rows
+# ℹ 14 more variables: frequent_high_calorie_food &lt;dbl&gt;,
+#   vegetable_consumption_frequency &lt;dbl&gt;, number_main_meals &lt;dbl&gt;,
+#   food_between_meals &lt;chr&gt;, SMOKE &lt;dbl&gt;, daily_water_consumption &lt;dbl&gt;,
+#   caloric_beverages_consumption &lt;dbl&gt;, physical_activity_frequency &lt;dbl&gt;,
+#   technology_use_time &lt;dbl&gt;, alcohol_consumption &lt;chr&gt;,
+#   transportation_mode &lt;chr&gt;, `0be1dad` &lt;chr&gt;, imc &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 
@@ -799,6 +948,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2026, Jaime V.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

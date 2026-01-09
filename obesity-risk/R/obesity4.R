@@ -68,19 +68,32 @@ ggplot(
 obesity |>
   select(Gender, Age, imc, tipo_obesidad)
 
-obesity |> 
+obesity_by_gender_type_mean_age_imc <- obesity |> 
   group_by(Gender, tipo_obesidad) |> 
   summarize(
-    avg_imc = mean(imc, na.rm = TRUE)
-  ) # produce:
-# A tibble: 12 × 3
+    avg_imc = mean(imc, na.rm = TRUE),
+    avg_age = mean(Age, na.rm = TRUE)
+  )
+obesity_by_gender_type_mean_age_imc # produce:
+# A tibble: 12 × 4
 # Groups:   Gender [2]
-#  Gender tipo_obesidad    avg_imc
-#  <chr>  <fct>              <dbl>
-#1 Female Desnutrición        17.3
-#2 Female Peso normal         21.8
-#3 Female Sobrepeso           27.1
-#4 Female Obesidad grado 1    32.0
+#  Gender tipo_obesidad    avg_imc avg_age
+#  <chr>  <fct>              <dbl>   <dbl>
+#1 Female Desnutrición        17.3    19.7
+#2 Female Peso normal         21.8    20.9
+#3 Female Sobrepeso           27.1    24.9
+#4 Female Obesidad grado 1    32.0    27.6
+#5 Female Obesidad grado 2    38.5    26.0
+#6 Female Obesidad grado 3    42.8    23.7
+#7 Male   Desnutrición        17.2    18.7
+#8 Male   Peso normal         22.4    21.1
+#9 Male   Sobrepeso           27.3    24.2
+#10 Male   Obesidad grado 1    32.8    24.3
+#11 Male   Obesidad grado 2    37.0    27.6
+#12 Male   Obesidad grado 3    41.7    27.4
+
+obesity_by_gender_type_mean_age_imc 
+
 
 obesity |> 
   group_by(Gender, tipo_obesidad) |> 
@@ -104,9 +117,30 @@ obesity |>
 #11 Male   Obesidad grado 2  2799
 #12 Male   Obesidad grado 3   107
 
-obesity |>
-  filter(Gender == "Male" && tipo_obesidad == "Obesidad grado 3")
-
+# Conocer la cantidad de personas con obesidad grado 3 según su
+# genero
 obesity |>
   filter(tipo_obesidad == "Obesidad grado 3") |>
-  filter(Gender == "Male")
+  group_by(Gender) |>
+  summarize(
+    n_imc = n()
+  ) # produce:
+# A tibble: 2 × 2
+#  Gender n_imc
+#  <chr>  <int>
+#1 Female  3146
+#2 Male     107
+
+# Conocer la cantidad de personas por género
+obesity |> 
+  group_by(Gender) |>
+  summarize(
+    n_gender = n()
+  ) # produce:
+# A tibble: 2 × 2
+#  Gender n_gender
+#  <chr>     <int>
+#1 Female    10422
+#2 Male      10336
+
+

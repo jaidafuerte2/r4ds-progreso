@@ -70,6 +70,17 @@ obesity <- obesity %>%
     alcohol_consumption             = CALC,
     transportation_mode             = MTRANS
   )
+
+# Cambiar la variable family_history_with_overweight de double a factor
+obesity <- obesity %>%
+  mutate(
+    family_history_with_overweight = factor(
+      family_history_with_overweight,
+      levels = c(0, 1),
+      labels = c("No", "Sí")
+    )
+  )
+
 #View(obesity)
 
 #write_csv(
