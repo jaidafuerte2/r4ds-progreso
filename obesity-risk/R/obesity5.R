@@ -389,3 +389,56 @@ ggplot(obesity_by_gender_tipo_physical,
   facet_wrap(~Gender)
 # NOTA: Aquí es muy notorio que las mujeres más obesas sí hacen 
 # mucho ejercicio. PILAS
+
+################################
+##
+## Tiempo de Uso de Tecnología 
+##
+################################
+
+# Conocer el tipo de valores que tiene la variable tiempo de uso de 
+# tecnología
+unique(obesity$technology_use_time) # produce:
+#[1] 0.976473 1.000000 1.673584 0.780199 0.931721 0.696948 0.000000
+#[8] 0.218645 0.553311 0.947884 2.000000 0.930836 0.619012 0.081156
+#[15] 1.258881 0.079334 0.250502 0.232858 0.453649 0.831412 0.704978
+#[22] 0.929356 0.868788 0.097760 0.425473 0.773807 1.544357 1.239038
+#[29] 0.479221 0.631217 0.301909 0.625350 0.453404 0.579541 0.939726
+
+class(obesity$technology_use_time) # produce:
+# numeric
+
+ggplot(obesity, aes(x = Gender, y = technology_use_time)) +
+  geom_boxplot()
+
+ggplot(obesity, aes(x = technology_use_time, color = Gender)) +
+  geom_density()
+
+###########################
+##
+## Consumo de Alcohol
+##
+###########################
+
+# Conocer el tipo de valores que tiene la variable de consumo de 
+# alcohol
+unique(obesity$alcohol_consumption) # produce:
+#[1] "Sometimes"  "0"          "Frequently"
+
+class(obesity$alcohol_consumption) # produce:
+#"factor"
+
+# Gráfico de barras apiladas relacionando género con consumo de
+# alcohol
+ggplot(obesity, aes(x = Gender, fill = alcohol_consumption)) +
+  geom_bar(position = "fill") +
+  labs(y = "proportions")
+# NOTA: Parece ser que hay más mujeres bebedoras sociales y más
+# hombres que nunca toman 
+
+# Gráfico de densidad que relaciona el imc con el consumo de 
+# alcohol y facetado por género
+ggplot(obesity, aes(x = imc, color = alcohol_consumption)) +
+  geom_density(linewidth = 0.75) +
+  facet_wrap(~Gender)
+

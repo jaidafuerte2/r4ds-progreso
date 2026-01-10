@@ -125,6 +125,19 @@ obesity <- obesity %>%
       labels = c("No", "Si")
     )
   )
+
+# Covertir la variable consumo de alcohol en factor:
+obesity <- obesity %>%
+  mutate(
+    alcohol_consumption = factor(
+      alcohol_consumption,
+      levels = c(
+        "Sometimes",
+        "0",
+        "Frequently"
+      )
+    )
+  )
 #View(obesity)
 
 #write_csv(
