@@ -72,15 +72,59 @@ obesity <- obesity %>%
   )
 
 # Cambiar la variable family_history_with_overweight de double a factor
+# y cambiar los valores de número a categorías
 obesity <- obesity %>%
   mutate(
     family_history_with_overweight = factor(
       family_history_with_overweight,
       levels = c(0, 1),
-      labels = c("No", "Sí")
+      labels = c("No", "Si")
     )
   )
 
+obesity <- obesity %>%
+  mutate(
+    frequent_high_calorie_food = factor(
+      frequent_high_calorie_food,
+      levels = c(0, 1),
+      labels = c("No", "Si")
+    )
+  )
+
+# Covertir food_between_meals en factor:
+obesity <- obesity %>%
+  mutate(
+    food_between_meals = factor(
+      food_between_meals,
+      levels = c(
+        "Sometimes",
+        "Frequently",
+        "0",
+        "Always"
+      )
+    )
+  )
+
+# Convertir a la variable SMOKE en un factor con categorías Si y No
+obesity <- obesity %>%
+  mutate(
+    SMOKE = factor(
+      SMOKE,
+      levels = c(0, 1),
+      labels = c("No", "Si")
+    )
+  )
+
+# Convertir a la variable consumo de bebidas calóricas en un factor 
+# con categorías Si y No
+obesity <- obesity %>%
+  mutate(
+    caloric_beverages_consumption = factor(
+      caloric_beverages_consumption,
+      levels = c(0, 1),
+      labels = c("No", "Si")
+    )
+  )
 #View(obesity)
 
 #write_csv(
