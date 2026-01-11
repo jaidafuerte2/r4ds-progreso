@@ -21,9 +21,9 @@ Imprimir el obesity risk data set con formato pero solo las 10 primeras filas
 knitr::kable(obesity[1:10,])
 ```
 
+## Imprimir la base de datos al revés
+
+Imprimir el obesity risk data set en la dirección contraria
 ```{r}
-obesity |>
-  filter(Gender == "Male")
-obesity |>
-  filter(Gender == "Female")
+glimpse(obesity)
 ```

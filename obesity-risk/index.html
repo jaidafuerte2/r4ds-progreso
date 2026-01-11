@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Prueba 4 – Obesity Risk – Exploratory Analysis</title>
+<title>Práctica Previa al borrador de análisis del Obesity Risk – Obesity Risk – Exploratory Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,63 +20,28 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../favicon.ico" rel="icon">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -117,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../analysis/test4.html">Prueba 4</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Práctica Previa al borrador de análisis del Obesity Risk</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,7 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Obesity Risk – Exploratory Analysis</a> 
+      <a href="./">Obesity Risk – Exploratory Analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -144,37 +109,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Práctica Previa al borrador de análisis del Obesity Risk</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../analysis/test1.html" class="sidebar-item-text sidebar-link">
+  <a href="./analysis/test1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prueba 1</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../analysis/test2.html" class="sidebar-item-text sidebar-link">
+  <a href="./analysis/test2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prueba 2</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../analysis/test3.html" class="sidebar-item-text sidebar-link">
+  <a href="./analysis/test3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prueba 3</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../analysis/test4.html" class="sidebar-item-text sidebar-link active">
+  <a href="./analysis/test4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prueba 4</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../analysis/test5.html" class="sidebar-item-text sidebar-link">
+  <a href="./analysis/test5.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prueba 5</span></a>
   </div>
 </li>
@@ -188,8 +153,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#imprimir-base-de-datos-con-formato" id="toc-imprimir-base-de-datos-con-formato" class="nav-link active" data-scroll-target="#imprimir-base-de-datos-con-formato">Imprimir base de datos con formato</a></li>
-  <li><a href="#imprimir-la-base-de-datos-al-revés" id="toc-imprimir-la-base-de-datos-al-revés" class="nav-link" data-scroll-target="#imprimir-la-base-de-datos-al-revés">Imprimir la base de datos al revés</a></li>
+  <li><a href="#qué-es-esto" id="toc-qué-es-esto" class="nav-link active" data-scroll-target="#qué-es-esto">¿Qué es esto?</a></li>
+  <li><a href="#qué-hare" id="toc-qué-hare" class="nav-link" data-scroll-target="#qué-hare">¿Qué hare?</a></li>
+  <li><a href="#específicamente-qué-haré" id="toc-específicamente-qué-haré" class="nav-link" data-scroll-target="#específicamente-qué-haré">Específicamente ¿Qué haré?</a></li>
+  <li><a href="#cuál-es-el-objetivo" id="toc-cuál-es-el-objetivo" class="nav-link" data-scroll-target="#cuál-es-el-objetivo">¿Cuál es el objetivo?</a></li>
   </ul>
 </nav>
     </div>
@@ -198,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Prueba 4</h1>
+<h1 class="title">Práctica Previa al borrador de análisis del Obesity Risk</h1>
 </div>
 
 
@@ -215,320 +182,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="imprimir-base-de-datos-con-formato" class="level2">
-<h2 class="anchored" data-anchor-id="imprimir-base-de-datos-con-formato">Imprimir base de datos con formato</h2>
-<p>Imprimir el obesity risk data set con formato pero solo las 10 primeras filas</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 0%">
-<col style="width: 1%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 8%">
-<col style="width: 7%">
-<col style="width: 8%">
-<col style="width: 4%">
-<col style="width: 5%">
-<col style="width: 1%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 7%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 6%">
-<col style="width: 5%">
-<col style="width: 2%">
-<col style="width: 4%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id</th>
-<th style="text-align: left;">Gender</th>
-<th style="text-align: right;">Age</th>
-<th style="text-align: right;">Height</th>
-<th style="text-align: right;">Weight</th>
-<th style="text-align: left;">family_history_with_overweight</th>
-<th style="text-align: left;">frequent_high_calorie_food</th>
-<th style="text-align: right;">vegetable_consumption_frequency</th>
-<th style="text-align: right;">number_main_meals</th>
-<th style="text-align: left;">food_between_meals</th>
-<th style="text-align: left;">SMOKE</th>
-<th style="text-align: right;">daily_water_consumption</th>
-<th style="text-align: left;">caloric_beverages_consumption</th>
-<th style="text-align: right;">physical_activity_frequency</th>
-<th style="text-align: right;">technology_use_time</th>
-<th style="text-align: left;">alcohol_consumption</th>
-<th style="text-align: left;">transportation_mode</th>
-<th style="text-align: left;">0be1dad</th>
-<th style="text-align: right;">imc</th>
-<th style="text-align: left;">tipo_obesidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">24.44301</td>
-<td style="text-align: right;">1.699998</td>
-<td style="text-align: right;">81.66995</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: right;">2.983297</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.763573</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">0.000000</td>
-<td style="text-align: right;">0.976473</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Overweight_Level_II</td>
-<td style="text-align: right;">28.25956</td>
-<td style="text-align: left;">Sobrepeso</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: right;">18.00000</td>
-<td style="text-align: right;">1.560000</td>
-<td style="text-align: right;">57.00000</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Frequently</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.000000</td>
-<td style="text-align: right;">1.000000</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">Automobile</td>
-<td style="text-align: left;">0rmal_Weight</td>
-<td style="text-align: right;">23.42209</td>
-<td style="text-align: left;">Peso normal</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: right;">18.00000</td>
-<td style="text-align: right;">1.711460</td>
-<td style="text-align: right;">50.16575</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">1.880534</td>
-<td style="text-align: right;">1.411685</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.910378</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">0.866045</td>
-<td style="text-align: right;">1.673584</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Insufficient_Weight</td>
-<td style="text-align: right;">17.12671</td>
-<td style="text-align: left;">Desnutrición</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: right;">20.95274</td>
-<td style="text-align: right;">1.710730</td>
-<td style="text-align: right;">131.27485</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.674061</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.467863</td>
-<td style="text-align: right;">0.780199</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Obesity_Type_III</td>
-<td style="text-align: right;">44.85580</td>
-<td style="text-align: left;">Obesidad grado 3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">31.64108</td>
-<td style="text-align: right;">1.914186</td>
-<td style="text-align: right;">93.79806</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">2.679664</td>
-<td style="text-align: right;">1.971472</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.979848</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.967973</td>
-<td style="text-align: right;">0.931721</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Overweight_Level_II</td>
-<td style="text-align: right;">25.59915</td>
-<td style="text-align: left;">Sobrepeso</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">18.12825</td>
-<td style="text-align: right;">1.748524</td>
-<td style="text-align: right;">51.55259</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">2.919751</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.137550</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">1.930033</td>
-<td style="text-align: right;">1.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Insufficient_Weight</td>
-<td style="text-align: right;">16.86193</td>
-<td style="text-align: left;">Desnutrición</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">29.88302</td>
-<td style="text-align: right;">1.754711</td>
-<td style="text-align: right;">112.72500</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">1.991240</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">0.000000</td>
-<td style="text-align: right;">0.696948</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Automobile</td>
-<td style="text-align: left;">Obesity_Type_II</td>
-<td style="text-align: right;">36.61079</td>
-<td style="text-align: left;">Obesidad grado 2</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">29.89147</td>
-<td style="text-align: right;">1.750150</td>
-<td style="text-align: right;">118.20656</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">1.397468</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">0.598655</td>
-<td style="text-align: right;">0.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Automobile</td>
-<td style="text-align: left;">Obesity_Type_II</td>
-<td style="text-align: right;">38.59145</td>
-<td style="text-align: left;">Obesidad grado 2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: right;">17.00000</td>
-<td style="text-align: right;">1.700000</td>
-<td style="text-align: right;">70.00000</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">2.000000</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">1.000000</td>
-<td style="text-align: right;">1.000000</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Overweight_Level_I</td>
-<td style="text-align: right;">24.22145</td>
-<td style="text-align: left;">Peso normal</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: right;">26.00000</td>
-<td style="text-align: right;">1.638836</td>
-<td style="text-align: right;">111.27565</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: left;">Si</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: right;">3.000000</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">2.632253</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: right;">0.000000</td>
-<td style="text-align: right;">0.218645</td>
-<td style="text-align: left;">Sometimes</td>
-<td style="text-align: left;">Public_Transportation</td>
-<td style="text-align: left;">Obesity_Type_III</td>
-<td style="text-align: right;">41.43135</td>
-<td style="text-align: left;">Obesidad grado 3</td>
-</tr>
-</tbody>
-</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="files/images/portada.jpg" class="img-fluid figure-img" style="width:70.0%" alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle"></p>
+<figcaption>Portada</figcaption>
+</figure>
 </div>
-</div>
+<section id="qué-es-esto" class="level2">
+<h2 class="anchored" data-anchor-id="qué-es-esto">¿Qué es esto?</h2>
+<p>Esto es sólo una práctica de quarto y R con algunas tranformaciones del <a href="https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset">obesity risk data set de kaggle</a> .</p>
 </section>
-<section id="imprimir-la-base-de-datos-al-revés" class="level2">
-<h2 class="anchored" data-anchor-id="imprimir-la-base-de-datos-al-revés">Imprimir la base de datos al revés</h2>
-<p>Imprimir el obesity risk data set en la dirección contraria</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(obesity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 20,758
-Columns: 20
-$ id                              &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …
-$ Gender                          &lt;chr&gt; "Male", "Female", "Female", "Female", …
-$ Age                             &lt;dbl&gt; 24.44301, 18.00000, 18.00000, 20.95274…
-$ Height                          &lt;dbl&gt; 1.699998, 1.560000, 1.711460, 1.710730…
-$ Weight                          &lt;dbl&gt; 81.66995, 57.00000, 50.16575, 131.2748…
-$ family_history_with_overweight  &lt;fct&gt; Si, Si, Si, Si, Si, Si, Si, Si, No, Si…
-$ frequent_high_calorie_food      &lt;fct&gt; Si, Si, Si, Si, Si, Si, Si, Si, Si, Si…
-$ vegetable_consumption_frequency &lt;dbl&gt; 2.000000, 2.000000, 1.880534, 3.000000…
-$ number_main_meals               &lt;dbl&gt; 2.983297, 3.000000, 1.411685, 3.000000…
-$ food_between_meals              &lt;fct&gt; Sometimes, Frequently, Sometimes, Some…
-$ SMOKE                           &lt;fct&gt; No, No, No, No, No, No, No, No, No, No…
-$ daily_water_consumption         &lt;dbl&gt; 2.763573, 2.000000, 1.910378, 1.674061…
-$ caloric_beverages_consumption   &lt;fct&gt; No, No, No, No, No, No, No, No, Si, No…
-$ physical_activity_frequency     &lt;dbl&gt; 0.000000, 1.000000, 0.866045, 1.467863…
-$ technology_use_time             &lt;dbl&gt; 0.976473, 1.000000, 1.673584, 0.780199…
-$ alcohol_consumption             &lt;fct&gt; Sometimes, 0, 0, Sometimes, Sometimes,…
-$ transportation_mode             &lt;fct&gt; Public_Transportation, Automobile, Pub…
-$ `0be1dad`                       &lt;chr&gt; "Overweight_Level_II", "0rmal_Weight",…
-$ imc                             &lt;dbl&gt; 28.25956, 23.42209, 17.12671, 44.85580…
-$ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrición, …</code></pre>
-</div>
-</div>
+<section id="qué-hare" class="level2">
+<h2 class="anchored" data-anchor-id="qué-hare">¿Qué hare?</h2>
+<p>Sólo poner en funcionamiento los archivos .qmd .yml y .R desde una perspectiva útil desde el punto de vista de empezar a usar <a href="https://quarto.org/">quarto</a> como un blog de notas.</p>
+</section>
+<section id="específicamente-qué-haré" class="level2">
+<h2 class="anchored" data-anchor-id="específicamente-qué-haré">Específicamente ¿Qué haré?</h2>
+<p>Crearé un documento de <a href="https://quarto.org/">quarto</a> en forma de web, practicando lo aprendido en los 8 primeros capítulos de <a href="https://r4ds.hadley.nz/">r4ds</a> con el <a href="https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset">obesity risk de kaggle</a>.</p>
+</section>
+<section id="cuál-es-el-objetivo" class="level2">
+<h2 class="anchored" data-anchor-id="cuál-es-el-objetivo">¿Cuál es el objetivo?</h2>
+<ul>
+<li><p>Practicar quarto y la creación básica de una web con sidebar de contenidos.</p></li>
+<li><p>Practicar R y la creación de gráficos con el obesity risk data set de kaggle.</p></li>
+<li><p>Practicar en quarto pub<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> el despliegue de una web con quarto.</p></li>
+<li><p>Adquirir experiencia para crear un blog de apariencia profesional con el obesity risk de kaggle.</p></li>
+</ul>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://quartopub.com/" class="uri">https://quartopub.com/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

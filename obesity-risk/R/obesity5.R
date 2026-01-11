@@ -442,3 +442,93 @@ ggplot(obesity, aes(x = imc, color = alcohol_consumption)) +
   geom_density(linewidth = 0.75) +
   facet_wrap(~Gender)
 
+#############################
+##
+## Medio de Transporte
+##
+#############################
+
+# Conocer el tipo de valores que toma la variable medio de transporte
+unique(obesity$transportation_mode) # produce:
+#[1] "Public_Transportation" "Automobile"           
+#[3] "Walking"               "Motorbike"            
+#[5] "Bike"                 
+
+# Conocer el tipo de la variable medio de transporte
+class(obesity$transportation_mode)  # produce:
+# "factor"
+
+# Primer acercamiento a medio de transporte
+obesity |> count(transportation_mode) # produce:
+#    transportation_mode     n
+#1            Automobile  3534
+#2                  Bike    32
+#3             Motorbike    38
+#4 Public_Transportation 16687
+#5               Walking   467
+
+# Gráfico de barras que relaciona género con medio de trasporte
+ggplot(obesity,  aes(x = Gender, fill = transportation_mode)) +
+  geom_bar(position = "fill") +
+  labs(y = "proportion")
+
+# Gráfico de densidad que relaciona el imc con el medio de transporte
+# y faceta por género
+ggplot(obesity, aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) +
+  facet_wrap(~Gender)
+
+# Grafico de densidad que relaciona imc con medio de transporte en
+# Hombres
+obesity |>
+  filter(Gender == "Male") |>
+  ggplot(aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) 
+# NOTA: Se observa una gran densidad de Bicicleta en peso normal y
+# una densidad moderada de caminar en el mismo segmento
+
+# Gráfico de densidad que relaciona imc y medio de transporte 
+# filtrado por género femenino
+obesity |>
+  filter(Gender == "Female") |>
+  ggplot(aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) 
+# NOTA: En peso normal la densidad de caminar, ciclear y usar moto
+# es alta y similar. En sobrepeso y obesidad ggrado 1 es mayor el
+# uso de automovil y en obesidad mórbida es mayor el transporte 
+# público
+
+# Agrupar por género y medio de transporte y resumir por imc
+obestiy_by_gender_transport_sum_imc <- obesity |>
+  group_by(Gender, transportation_mode) |>
+  summarize(
+    avg_imc = mean(imc, na.rm = TRUE),
+    med_imc = median(imc, na.rm = TRUE)
+  ) 
+obestiy_by_gender_transport_sum_imc # produce:
+# A tibble: 10 × 3
+# Groups:   Gender [2]
+#  Gender transportation_mode   avg_imc
+#  <chr>  <fct>                   <dbl>
+#1 Female Public_Transportation    31.5
+#2 Female Automobile               28.3
+#3 Female Walking                  22.2
+#4 Female Motorbike                24.7
+#5 Female Bike                     23.0
+#6 Male   Public_Transportation    29.3
+#7 Male   Automobile               30.7
+#8 Male   Walking                  24.3
+#9 Male   Motorbike                25.8
+#10 Male   Bike                     24.9
+
+# Diagrama de caja que relaciona el medio de transporte con avg_imc
+# por género
+ggplot(obestiy_by_gender_transport_sum_imc, 
+       aes(x = transportation_mode, y = avg_imc)) +
+  geom_boxplot(aes(color = Gender))
+# NOTA: Este es el gráfico que mejor se adapta. Aunque sólo tiene
+# un valory se ve una raya, no una caja, nos orienta para ver las 
+# diferencias de imc según los medios de transporte y por género.
+# El problema en estos casos es que con un sólo valor (por cada 
+# género, facetar es imposible)
+

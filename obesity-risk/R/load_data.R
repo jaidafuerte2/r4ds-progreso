@@ -126,6 +126,20 @@ obesity <- obesity %>%
     )
   )
 
+# Covertir la variable medio de transporte en factor:
+obesity <- obesity %>%
+  mutate(
+    transportation_mode = factor(
+      transportation_mode,
+      levels = c(
+        "Public_Transportation",
+        "Automobile",
+        "Walking",
+        "Motorbike",
+        "Bike"
+      )
+    )
+  )
 # Covertir la variable consumo de alcohol en factor:
 obesity <- obesity %>%
   mutate(
@@ -138,8 +152,8 @@ obesity <- obesity %>%
       )
     )
   )
-#View(obesity)
 
+#View(obesity)
 #write_csv(
 #  obesity,
 #  "obesity.csv"
