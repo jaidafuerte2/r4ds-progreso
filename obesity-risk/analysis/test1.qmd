@@ -85,7 +85,7 @@ ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
   geom_boxplot()
 ```
 
-## Gráfico de densidad 
+## Gráfico de densidad
 
 Gráfico de densidad de Edad y tipo de obesidad
 
@@ -104,7 +104,7 @@ ggplot(obesity, aes(x = Age, color = tipo_obesidad,
   geom_density(alpha = 0.5)
 ```
 
-## Relacionar más de 3 variables 
+## Relacionar más de 3 variables
 
 Relacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión
 

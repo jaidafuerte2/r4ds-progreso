@@ -57,6 +57,11 @@ ggplot(obesity, aes(x = Gender,
                     fill = family_history_with_overweight)) +
   geom_bar(position = "fill")
 
+ggplot(obesity, aes(x = family_history_with_overweight, 
+                    color = Gender)) +
+  geom_density(linewidth = 0.75) +
+  facet_wrap(~Gender)
+
 ################################
 ##
 ## 2.- Consumo de comida calórica
@@ -83,6 +88,8 @@ ggplot(obesity, aes(x = Gender, fill = frequent_high_calorie_food)) +
 ggplot(obesity, aes(x = Gender, fill = frequent_high_calorie_food)) +
   geom_bar(position = "fill")
 
+
+  
 ####################################
 ##
 ## 3.- Consumo de Vegetales

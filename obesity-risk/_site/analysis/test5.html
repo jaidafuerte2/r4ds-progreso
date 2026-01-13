@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -75,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2211bc1cc08a49250acc0f2388776108.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -144,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inicio</span></a>
+ <span class="menu-text">Práctica Previa al borrador de análisis del Obesity Risk</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -187,16 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#diagrama-de-dispersión" id="toc-diagrama-de-dispersión" class="nav-link active" data-scroll-target="#diagrama-de-dispersión">Diagrama de dispersión</a></li>
-  <li><a href="#diagrama-de-dispersión-con-etiquetas" id="toc-diagrama-de-dispersión-con-etiquetas" class="nav-link" data-scroll-target="#diagrama-de-dispersión-con-etiquetas">Diagrama de dispersión con etiquetas</a></li>
-  <li><a href="#gráfico-de-barras" id="toc-gráfico-de-barras" class="nav-link" data-scroll-target="#gráfico-de-barras">Gráfico de barras</a></li>
-  <li><a href="#histograma" id="toc-histograma" class="nav-link" data-scroll-target="#histograma">Histograma</a></li>
-  <li><a href="#gráfico-de-densidad" id="toc-gráfico-de-densidad" class="nav-link" data-scroll-target="#gráfico-de-densidad">Gráfico de densidad</a></li>
-  <li><a href="#diagrama-de-caja" id="toc-diagrama-de-caja" class="nav-link" data-scroll-target="#diagrama-de-caja">Diagrama de caja</a></li>
-  <li><a href="#gráfico-de-densidad-1" id="toc-gráfico-de-densidad-1" class="nav-link" data-scroll-target="#gráfico-de-densidad-1">Gráfico de densidad</a></li>
-  <li><a href="#gráfico-de-densidad-con-relleno-y-opacidad" id="toc-gráfico-de-densidad-con-relleno-y-opacidad" class="nav-link" data-scroll-target="#gráfico-de-densidad-con-relleno-y-opacidad">Gráfico de densidad con relleno y opacidad</a></li>
-  <li><a href="#relacionar-más-de-3-variables" id="toc-relacionar-más-de-3-variables" class="nav-link" data-scroll-target="#relacionar-más-de-3-variables">Relacionar más de 3 variables</a></li>
-  <li><a href="#facetas" id="toc-facetas" class="nav-link" data-scroll-target="#facetas">Facetas</a></li>
+  <li><a href="#género-y-consumo-de-vegetales" id="toc-género-y-consumo-de-vegetales" class="nav-link active" data-scroll-target="#género-y-consumo-de-vegetales">Género y Consumo de Vegetales</a></li>
   </ul>
 </nav>
     </div>
@@ -222,173 +214,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="diagrama-de-dispersión" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-dispersión">Diagrama de dispersión</h2>
-<p>Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad</p>
+<section id="género-y-consumo-de-vegetales" class="level2">
+<h2 class="anchored" data-anchor-id="género-y-consumo-de-vegetales">Género y Consumo de Vegetales</h2>
+<p>Conocer el tipo de valores de la frecuencia de consumo de vegetales</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> obesity,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age, <span class="at">color =</span> tipo_obesidad)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>vegetable_consumption_frequency)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2.000000 1.880534 3.000000 2.679664 2.919751 1.991240 1.397468 2.636719
+ [9] 1.000000 1.392665</code></pre>
 </div>
+</div>
+<p>Conocer el tipo de la variable consumo de vegetales</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>vegetable_consumption_frequency)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>Diagrama de caja que relaciona género con frecuencia de consumo de vegetales</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> vegetable_consumption_frequency)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="diagrama-de-dispersión-con-etiquetas" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-dispersión-con-etiquetas">Diagrama de dispersión con etiquetas</h2>
-<p>Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas</p>
+<p>Diagrama de densidad que relaciona el consumo de vegetales con el género</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> obesity,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> tipo_obesidad)) <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Edad e IMC"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Edad según IMC"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"IMC (Kg/m^2)"</span>, <span class="at">y =</span> <span class="st">"Edad en años"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Tipo de obesidad"</span>, <span class="at">shape =</span> <span class="st">"Tipo de obesidad"</span> </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="gráfico-de-barras" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-barras">Gráfico de barras</h2>
-<p>Gráfico de barras para tipo de obesidad</p>
+<p>NOTA: Aquí parece haber diferencias marcadas porque parece que lasmujeres comen más vegetales que los hombres.</p>
+<p>Diagrama de dispersión que relaciona imc con frecuencia de consumo de vegetales por género</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(tipo_obesidad))) <span class="sc">+</span>   </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> obesity,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, <span class="at">y =</span> imc,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> Gender)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="histograma" class="level2">
-<h2 class="anchored" data-anchor-id="histograma">Histograma</h2>
-<p>Histograma de edad</p>
+<p>Facetar por consumo de vegetales e imc en relación facetado por género</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, <span class="at">y =</span> imc)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="gráfico-de-densidad" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad">Gráfico de densidad</h2>
-<p>Gráfico de densidad de edad</p>
+<p>NOTA: Parece que sí comen más vegetales los hombres y tienen un imc mayor</p>
+<p>Facetar por consumo de vegetales e imc en relación y facetado por tipo de obesidad</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, <span class="at">y =</span> imc)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="diagrama-de-caja" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-caja">Diagrama de caja</h2>
-<p>Diagrama de caja de Edad y tipo de obesidad</p>
+<p>NOTA: Este facetado es muy importante porque muestra que en general los hombres llegan a tener mayor imc que las mujeres a pesar de que si comen muchos vegetales. Sin embargo las mujeres más obesas si comen muchos vegetales también. Parecería que los vegetales no les defiende contra la obesidad ni a hombres ni a mujeres</p>
+<p>Agrupar por género y tipo de obesidad y resumir imc y consumo de vegetales</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> tipo_obesidad, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>obesity_by_gender_tipo <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender, tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_vegetable =</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>(vegetable_consumption_frequency, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_imc =</span> <span class="fu">mean</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>obesity_by_gender_tipo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   Gender tipo_obesidad    avg_vegetable avg_imc
+   &lt;chr&gt;  &lt;fct&gt;                    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Female Desnutrición              2.58    17.3
+ 2 Female Peso normal               2.42    21.8
+ 3 Female Sobrepeso                 2.30    27.1
+ 4 Female Obesidad grado 1          2.15    32.0
+ 5 Female Obesidad grado 2          2.95    38.5
+ 6 Female Obesidad grado 3          3.00    42.8
+ 7 Male   Desnutrición              2.29    17.2
+ 8 Male   Peso normal               2.31    22.4
+ 9 Male   Sobrepeso                 2.20    27.3
+10 Male   Obesidad grado 1          2.21    32.8
+11 Male   Obesidad grado 2          2.39    37.0
+12 Male   Obesidad grado 3          2.40    41.7</code></pre>
+</div>
+</div>
+<p>NOTA: Esta tabla es muy interesante porque muestra que las mujeres y los hombres que más vegetales comen son los más obesos</p>
+<p>Diagrama de dispersión que relaciona imc con frecuencia de consumo de vegetales, por tipo de obesidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_by_gender_tipo, <span class="fu">aes</span>(<span class="at">x =</span> avg_imc, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">y =</span> avg_vegetable)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-densidad-1" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad-1">Gráfico de densidad</h2>
-<p>Gráfico de densidad de Edad y tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="gráfico-de-densidad-con-relleno-y-opacidad" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-densidad-con-relleno-y-opacidad">Gráfico de densidad con relleno y opacidad</h2>
-<p>Gráfico de densidad de Edad y tipo de obesidad con relleno y opacidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> tipo_obesidad, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="relacionar-más-de-3-variables" class="level2">
-<h2 class="anchored" data-anchor-id="relacionar-más-de-3-variables">Relacionar más de 3 variables</h2>
-<p>Relacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="facetas" class="level2">
-<h2 class="anchored" data-anchor-id="facetas">Facetas</h2>
-<p>Facetar por género las variables imc, Age y tipo de obesidad</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> tipo_obesidad)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="test5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -799,6 +751,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2026, Jaime V.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

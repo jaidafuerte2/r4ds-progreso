@@ -13,112 +13,114 @@ obesity <- read_csv("../data/obesity_level.csv")
 source("../R/load_data.R")
 ```
 
-## Diagrama de dispersión
+## Género y Consumo de Vegetales
 
-Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad
-
-```{r}
-#| fig-width: 7
-#| fig-height: 5
-ggplot(
-  data = obesity,
-  mapping = aes(x = imc, y = Age, color = tipo_obesidad)
-) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-```
-
-## Diagrama de dispersión con etiquetas
-
-Diagrama de dispersión qué relaciona el imc con la edad tomando en cuenta el tipo de obesidad; también tiene etiquetas
+Conocer el tipo de valores de la frecuencia de consumo de vegetales
 
 ```{r}
-ggplot(
-  data = obesity,
-  mapping = aes(x = imc, y = Age)
-) +
-  geom_point(mapping = aes(color = tipo_obesidad, shape = tipo_obesidad)) + 
-  geom_smooth(method = "lm") +
-  labs (
-    title = "Edad e IMC",
-    subtitle = "Edad según IMC",
-    x = "IMC (Kg/m^2)", y = "Edad en años",
-    color = "Tipo de obesidad", shape = "Tipo de obesidad" 
-  )
+unique(obesity$vegetable_consumption_frequency)[1:10]
 ```
 
-## Gráfico de barras
-
-Gráfico de barras para tipo de obesidad
+Conocer el tipo de la variable consumo de vegetales
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 5
-ggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +   
-  geom_bar() 
+class(obesity$vegetable_consumption_frequency)
 ```
 
-## Histograma
 
-Histograma de edad
+Diagrama de caja que relaciona género con frecuencia de consumo de vegetales
 
 ```{r}
-ggplot(obesity, aes(x = Age)) +
-  geom_histogram(binwidth = 1)
-```
-
-## Gráfico de densidad
-
-Gráfico de densidad de edad
-
-```{R}
-ggplot(obesity, aes(x = Age)) +
-  geom_density()
-```
-
-## Diagrama de caja
-
-Diagrama de caja de Edad y tipo de obesidad
-
-```{R}
-ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = vegetable_consumption_frequency)) +
   geom_boxplot()
 ```
 
-## Gráfico de densidad
+Diagrama de densidad que relaciona el consumo de vegetales con el género
 
-Gráfico de densidad de Edad y tipo de obesidad
-
-```{R}
-ggplot(obesity, aes(x = Age, color = tipo_obesidad)) +
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = vegetable_consumption_frequency, 
+                    color = Gender)) +
   geom_density(linewidth = 0.75)
 ```
 
-## Gráfico de densidad con relleno y opacidad
+NOTA: Aquí parece haber diferencias marcadas porque parece que lasmujeres comen más vegetales que los hombres.
 
-Gráfico de densidad de Edad y tipo de obesidad con relleno y opacidad
+Diagrama de dispersión que relaciona imc con frecuencia de consumo de vegetales por género
 
-```{R}
-ggplot(obesity, aes(x = Age, color = tipo_obesidad, 
-                    fill = tipo_obesidad)) +
-  geom_density(alpha = 0.5)
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(
+  data = obesity,
+  mapping = aes(x = vegetable_consumption_frequency, y = imc,
+                color = Gender)
+) +
+  geom_point()
 ```
 
-## Relacionar más de 3 variables
+Facetar por consumo de vegetales e imc en relación facetado por género
 
-Relacionar género, Edad con imc y tipo de obesidad con un diagrama de dispersión
-
-```{R}
-ggplot(obesity, aes(x = imc, y = Age)) +
-  geom_point(aes(color = tipo_obesidad, shape = Gender))
-```
-
-## Facetas
-
-Facetar por género las variables imc, Age y tipo de obesidad
-
-```{R}
-ggplot(obesity, aes(x = imc, y = Age)) +
-  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = vegetable_consumption_frequency, y = imc)) +
+  geom_point(aes(color = Gender)) +
   facet_wrap(~Gender)
 ```
+
+NOTA: Parece que sí comen más vegetales los hombres y tienen un imc mayor
+
+Facetar por consumo de vegetales e imc en relación y facetado por tipo de obesidad
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+ggplot(obesity, aes(x = vegetable_consumption_frequency, y = imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+NOTA: Este facetado es muy importante porque muestra que en general los hombres llegan a tener mayor imc que las mujeres a pesar de que si comen muchos vegetales. Sin embargo las mujeres más obesas si comen muchos vegetales también. Parecería que los vegetales no les defiende contra la obesidad ni a hombres ni a mujeres
+
+
+Agrupar por género y tipo de obesidad y resumir imc y consumo de vegetales
+
+```{r}
+obesity_by_gender_tipo <- obesity |>
+  group_by(Gender, tipo_obesidad) |>
+  summarize(
+    avg_vegetable = 
+      mean(vegetable_consumption_frequency, 
+                         na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_by_gender_tipo
+```
+
+NOTA: Esta tabla es muy interesante porque muestra que las mujeres y los hombres que más vegetales comen son los más obesos
+
+Diagrama de dispersión que relaciona imc con frecuencia de consumo de vegetales, por tipo de obesidad
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+  
+ggplot(obesity_by_gender_tipo, aes(x = avg_imc, 
+                                   y = avg_vegetable)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+Diagrama de dispersión que relaciona imc con frecuencia de consumo de vegetales, por tipo de obesidad y facetado por género
+
+```{r}
+ggplot(obesity_by_gender_tipo, aes(x = avg_imc, 
+                                   y = avg_vegetable)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~Gender)
+```
+
+NOTA:  Este gráfico es muy importante porque muestra que las mujeres y los hombres más obesos son los que más vegetales consumen. Entonces no necesariamente comer vegetales ayuda?

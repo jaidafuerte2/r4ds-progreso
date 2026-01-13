@@ -72,7 +72,9 @@ obesity_by_gender_type_mean_age_imc <- obesity |>
   group_by(Gender, tipo_obesidad) |> 
   summarize(
     avg_imc = mean(imc, na.rm = TRUE),
-    avg_age = mean(Age, na.rm = TRUE)
+    avg_age = mean(Age, na.rm = TRUE),
+    .groups = "drop" # importante para que no salga el mensaje de que
+    # se está agrupando obesity
   )
 obesity_by_gender_type_mean_age_imc # produce:
 # A tibble: 12 × 4
@@ -142,5 +144,6 @@ obesity |>
 #  <chr>     <int>
 #1 Female    10422
 #2 Male      10336
+
 
 

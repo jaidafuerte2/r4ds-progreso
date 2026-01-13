@@ -328,19 +328,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 20
      id Gender   Age Height Weight family_history_with_…¹ frequent_high_calori…²
-  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;
-1     0 Male    24.4   1.70   81.7                      1                      1
-2     1 Female  18     1.56   57                        1                      1
-3     2 Female  18     1.71   50.2                      1                      1
-4     3 Female  21.0   1.71  131.                       1                      1
-5     4 Male    31.6   1.91   93.8                      1                      1
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                  &lt;fct&gt;                 
+1     0 Male    24.4   1.70   81.7 Si                     Si                    
+2     1 Female  18     1.56   57   Si                     Si                    
+3     2 Female  18     1.71   50.2 Si                     Si                    
+4     3 Female  21.0   1.71  131.  Si                     Si                    
+5     4 Male    31.6   1.91   93.8 Si                     Si                    
 # ℹ abbreviated names: ¹​family_history_with_overweight,
 #   ²​frequent_high_calorie_food
 # ℹ 13 more variables: vegetable_consumption_frequency &lt;dbl&gt;,
-#   number_main_meals &lt;dbl&gt;, food_between_meals &lt;chr&gt;, SMOKE &lt;dbl&gt;,
-#   daily_water_consumption &lt;dbl&gt;, caloric_beverages_consumption &lt;dbl&gt;,
+#   number_main_meals &lt;dbl&gt;, food_between_meals &lt;fct&gt;, SMOKE &lt;fct&gt;,
+#   daily_water_consumption &lt;dbl&gt;, caloric_beverages_consumption &lt;fct&gt;,
 #   physical_activity_frequency &lt;dbl&gt;, technology_use_time &lt;dbl&gt;,
-#   alcohol_consumption &lt;chr&gt;, transportation_mode &lt;chr&gt;, `0be1dad` &lt;chr&gt;, …</code></pre>
+#   alcohol_consumption &lt;fct&gt;, transportation_mode &lt;fct&gt;, `0be1dad` &lt;chr&gt;, …</code></pre>
 </div>
 </div>
 </section>
@@ -379,14 +379,14 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;">Age</th>
 <th style="text-align: right;">Height</th>
 <th style="text-align: right;">Weight</th>
-<th style="text-align: right;">family_history_with_overweight</th>
-<th style="text-align: right;">frequent_high_calorie_food</th>
+<th style="text-align: left;">family_history_with_overweight</th>
+<th style="text-align: left;">frequent_high_calorie_food</th>
 <th style="text-align: right;">vegetable_consumption_frequency</th>
 <th style="text-align: right;">number_main_meals</th>
 <th style="text-align: left;">food_between_meals</th>
-<th style="text-align: right;">SMOKE</th>
+<th style="text-align: left;">SMOKE</th>
 <th style="text-align: right;">daily_water_consumption</th>
-<th style="text-align: right;">caloric_beverages_consumption</th>
+<th style="text-align: left;">caloric_beverages_consumption</th>
 <th style="text-align: right;">physical_activity_frequency</th>
 <th style="text-align: right;">technology_use_time</th>
 <th style="text-align: left;">alcohol_consumption</th>
@@ -403,14 +403,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">24.44301</td>
 <td style="text-align: right;">1.699998</td>
 <td style="text-align: right;">81.66995</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
 <td style="text-align: right;">2.000000</td>
 <td style="text-align: right;">2.983297</td>
 <td style="text-align: left;">Sometimes</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">2.763573</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">0.000000</td>
 <td style="text-align: right;">0.976473</td>
 <td style="text-align: left;">Sometimes</td>
@@ -425,14 +425,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">18.00000</td>
 <td style="text-align: right;">1.560000</td>
 <td style="text-align: right;">57.00000</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
 <td style="text-align: right;">2.000000</td>
 <td style="text-align: right;">3.000000</td>
 <td style="text-align: left;">Frequently</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">2.000000</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.000000</td>
 <td style="text-align: right;">1.000000</td>
 <td style="text-align: left;">0</td>
@@ -447,14 +447,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">18.00000</td>
 <td style="text-align: right;">1.711460</td>
 <td style="text-align: right;">50.16575</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
 <td style="text-align: right;">1.880534</td>
 <td style="text-align: right;">1.411685</td>
 <td style="text-align: left;">Sometimes</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.910378</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">0.866045</td>
 <td style="text-align: right;">1.673584</td>
 <td style="text-align: left;">0</td>
@@ -469,14 +469,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">20.95274</td>
 <td style="text-align: right;">1.710730</td>
 <td style="text-align: right;">131.27485</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
 <td style="text-align: right;">3.000000</td>
 <td style="text-align: right;">3.000000</td>
 <td style="text-align: left;">Sometimes</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.674061</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.467863</td>
 <td style="text-align: right;">0.780199</td>
 <td style="text-align: left;">Sometimes</td>
@@ -491,14 +491,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">31.64108</td>
 <td style="text-align: right;">1.914186</td>
 <td style="text-align: right;">93.79806</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
 <td style="text-align: right;">2.679664</td>
 <td style="text-align: right;">1.971472</td>
 <td style="text-align: left;">Sometimes</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.979848</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">No</td>
 <td style="text-align: right;">1.967973</td>
 <td style="text-align: right;">0.931721</td>
 <td style="text-align: left;">Sometimes</td>

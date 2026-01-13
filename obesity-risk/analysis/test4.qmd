@@ -18,7 +18,7 @@ source("../R/load_data.R")
 Imprimir el obesity risk data set con formato pero solo las 10 primeras filas
 
 ```{r}
-knitr::kable(obesity[1:10,])
+knitr::kable(obesity[1:4,])
 ```
 
 ## Imprimir la base de datos al revés
@@ -27,3 +27,97 @@ Imprimir el obesity risk data set en la dirección contraria
 ```{r}
 glimpse(obesity)
 ```
+
+## Filtrar
+
+Filtrar por género Male
+
+```{r}
+obesity |>
+  filter(Gender == "Male")
+```
+
+Filtrar por género Female
+
+```{r}
+obesity |>
+  filter(Gender == "Female")
+```
+
+## Contar
+
+Contar por género y tipo de obesidad en orden descendente
+
+```{r}
+obesity |>
+  count(Gender, tipo_obesidad, sort = TRUE)
+```
+
+Contar por género y tipo de obesidad en un formato bonito
+
+```{r}
+obesity_count_gender_tipo <- obesity |>
+  count(Gender, tipo_obesidad)
+knitr::kable(obesity_count_gender_tipo)
+```
+
+## Seleccionar
+
+Seleccionar por género, edad, imc y  tipo de obesidad
+
+```{r}
+obesity |>
+  select(Gender, Age, imc, tipo_obesidad) 
+```
+## Agrupar
+
+Agrupar por género y tipo de obesidad y resumir imc y edad
+
+```{r}
+obesity_by_gender_type_mean_age_imc <- obesity |> 
+  group_by(Gender, tipo_obesidad) |> 
+  summarize(
+    avg_imc = mean(imc, na.rm = TRUE),
+    avg_age = mean(Age, na.rm = TRUE),
+    .groups = "drop" # importante para que no salga el mensaje de que
+    # se está agrupando obesity
+  )
+obesity_by_gender_type_mean_age_imc |> knitr::kable()
+```
+
+Agrupar por género y tipo de obesidad y resumir por cantidad n
+
+```{r}
+obesity |> 
+  group_by(Gender, tipo_obesidad) |> 
+  summarize(
+    n_imc = n(),
+    .groups = "drop"
+  ) |> 
+  knitr::kable()
+```
+
+## Combinar funciones de transformación
+
+Filtrar por tipo de obesidad grado 3, agrupar por género y resumir imc
+
+```{r}
+obesity |>
+  filter(tipo_obesidad == "Obesidad grado 3") |>
+  group_by(Gender) |>
+  summarize(
+    n_imc = n(),
+    .groups = "drop"
+  ) |> knitr::kable()
+```
+
+Agrupar por género y resumir por género
+
+```{r}
+obesity |> 
+  group_by(Gender) |>
+  summarize(
+    n_gender = n()
+  )
+```
+
