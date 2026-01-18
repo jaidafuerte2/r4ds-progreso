@@ -124,3 +124,293 @@ ggplot(obesity_by_gender_tipo, aes(x = avg_imc,
 ```
 
 NOTA:  Este gráfico es muy importante porque muestra que las mujeres y los hombres más obesos son los que más vegetales consumen. Entonces no necesariamente comer vegetales ayuda?
+
+## Género y consumo de agua
+
+Visualizar el *tipo de valores* que tiene la variable consumo de agua
+
+```{r}
+unique(obesity$daily_water_consumption)[1:10]
+```
+
+Conocer el *tipo* de la variable consumo de agua
+
+```{r}
+class(obesity$daily_water_consumption)
+```
+
+*Diagrama de caja* que relaciona el género por consumo diario de agua
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = daily_water_consumption)) +
+  geom_boxplot()
+```
+
+*Gráfico de densidad* que relaciona el consumo diario de agua con el género
+
+```{r}
+#| fig.width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = daily_water_consumption, 
+                    color = Gender)) +
+  geom_density(linewidth = 0.75)
+```
+
+*Diagrama de dispersión* que relaciona imc con consumo de agua por género
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(
+  data = obesity,
+  mapping = aes(x = daily_water_consumption, y = imc,
+                color = Gender)
+) +
+  geom_point()
+```
+
+*Facetar* por consumo de agua e imc en relación y facetado por género
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = daily_water_consumption, y = imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~Gender)
+```
+
+
+*Facetar* por consumo de agua e imc en relación y facetado por tipo de obesidad  
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = daily_water_consumption, y = imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+## Género y Actividad física
+
+Conocer el *tipo de valores* que tiene la variable actividad física
+
+```{r}
+unique(obesity$physical_activity_frequency)[1:10]
+```
+
+Conocer el *tipo de la variable* frecuencia de actividad física
+
+```{r}
+class(obesity$physical_activity_frequency)
+```
+
+*Diagrama de caja* que relaciona la densidad de la frecuencia de actividad física con el género
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = physical_activity_frequency)) +
+  geom_boxplot()
+```
+NOTA: La mediana de actividad física es ligeramente menor en mujeres pero su rango intercuartil inferior al 50% también es bastante menor en las mujeres. Vale la pena investigar
+
+*Gráfico de densidad* que ralciona la actividad física con el género
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = physical_activity_frequency,
+                    color = Gender)) +
+  geom_density()
+```
+
+NOTA: Se observa cláramente que hay más mujeres que no hacen nada de actividad física, posteriormente es mayor la actividad física que hacen los hombres. Vale la pena investigar.
+
+*Diagrama de dispersión* que relaciona actividad física e imc por género y facetado por tipo de obesidad
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = physical_activity_frequency, y = imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+NOTA: Otra vez se ve que las mujeres con obesidad grado 3 hacen mucho más ejercicio que los hombres , mientras que los hombres con obesidad grado 1 y 2 hacen más ejercicio que las mujeres.
+
+*Agrupar* por género y tipo de obesidad y *resumir* la actividad física y el imc
+
+```{r}
+obesity_by_gender_tipo_physical <- obesity |>
+  group_by(Gender, tipo_obesidad) |>
+  summarise(
+    avg_physical_activity = mean(physical_activity_frequency,
+                                 na.rm = TRUE),
+    median_physical_activity = median(physical_activity_frequency,
+                                 na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_by_gender_tipo_physical
+```
+
+*Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_by_gender_tipo_physical, 
+       aes(x = avg_imc, y = avg_physical_activity)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+*Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_by_gender_tipo_physical, 
+       aes(x = avg_imc, y = median_physical_activity)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+*Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad y *facetado* por género
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_by_gender_tipo_physical, 
+       aes(x = avg_imc, y = avg_physical_activity)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~Gender)
+```
+
+*Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad y *facetado* por género
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_by_gender_tipo_physical, 
+       aes(x = avg_imc, y = median_physical_activity)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~Gender)
+```
+
+*Diagrama de caja* que relaciona tipo de obesidad con actividad física
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = tipo_obesidad, 
+                    y = physical_activity_frequency)) +
+  geom_boxplot()
+```
+
+*Agrupar* por tipo de obesidad y *resumir* por actividad física
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    median_physical_activity = median(physical_activity_frequency, 
+                                      na.rm = TRUE),
+    avg_physical_activity = mean(physical_activity_frequency, 
+                                      na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+```{r}
+min(obesity$physical_activity_frequency) # produce: 0
+```
+
+```{r}
+max(obesity$physical_activity_frequency) # produce: 3
+```
+
+## Género y medios de transporte
+
+Conocer el *tipo de valores* que toma la variable medio de transporte
+
+```{r}
+unique(obesity$transportation_mode)
+```
+
+Conocer el *tipo de la variable* medio de transporte
+
+```{r}
+class(obesity$transportation_mode)
+```
+
+# Primer acercamiento a medio de transporte
+
+```{r}
+obesity |> count(transportation_mode)
+```
+
+*Gráfico de barras* que relaciona género con medio de trasporte
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity,  aes(x = Gender, fill = transportation_mode)) +
+  geom_bar(position = "fill") +
+  labs(y = "proportion")
+```
+
+*Gráfico de densidad* que relaciona el imc con el medio de transporte y *facetado* por género
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) +
+  facet_wrap(~Gender)
+```
+
+*Grafico de densidad* que relaciona imc con medio de transporte en *Hombres*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+obesity |>
+  filter(Gender == "Male") |>
+  ggplot(aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) 
+```
+
+Nota: Se observa una gran densidad de Bicicleta en peso normal y una densidad moderada de caminar en el mismo segmento.
+
+*Gráfico de densidad* que relaciona imc y medio de transporte filtrado por género *femenino*
+
+```{r}
+3
+#| fig-width: 6
+#| fig-height: 4
+obesity |>
+  filter(Gender == "Female") |>
+  ggplot(aes(x = imc, color = transportation_mode)) +
+  geom_density(linewidth = 0.75) 
+```
+
+NOTA: En peso normal la densidad de caminar, ciclear y usar moto es alta y similar. En sobrepeso y obesidad ggrado 1 es mayor el uso de automovil y en obesidad mórbida es mayor el transporte público
+
+*Agrupar* por género y medio de transporte y *resumir* por imc
+
+```{r}
+obesity_by_gender_transport_sum_imc <- obesity |>
+  group_by(Gender, transportation_mode) |>
+  summarize(
+    avg_imc = mean(imc, na.rm = TRUE),
+    med_imc = median(imc, na.rm = TRUE)
+  ) 
+obesity_by_gender_transport_sum_imc
+```
+
+Diagrama de caja que relaciona el medio de transporte con avg_imc por género
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_by_gender_transport_sum_imc, 
+       aes(x = transportation_mode, y = avg_imc)) +
+  geom_boxplot(aes(color = Gender))
+```
+
+Nota: Este es el gráfico que mejor se adapta. Aunque sólo tiene un valor y se ve una raya, no una caja, nos orienta para ver las diferencias de imc según los medios de transporte y por género. El problema en estos casos es que con un sólo valor (por cada género, facetar es imposible)

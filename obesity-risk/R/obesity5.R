@@ -262,9 +262,12 @@ unique(obesity$daily_water_consumption) # produce:
 class(obesity$daily_water_consumption) # produce:
 #[1] "numeric"
 
+# Diagrama de caja que relaciona el género por consumo diario de agua
 ggplot(obesity, aes(x = Gender, y = daily_water_consumption)) +
   geom_boxplot()
 
+# Gráfico de densidad que relaciona el consumo diario de agua con el
+# género
 ggplot(obesity, aes(x = daily_water_consumption, 
                     color = Gender)) +
   geom_density(linewidth = 0.75)
@@ -315,6 +318,7 @@ ggplot(obesity, aes(x = Gender, fill = caloric_beverages_consumption)) +
 ##
 ####################################
 
+# Conocer el tipo de valores que tiene la variable actividad física
 unique(obesity$physical_activity_frequency) # produce:
 #[1] 0.0000000 1.0000000 0.8660450 1.4678630 1.9679730 1.9300330
 #[7] 0.5986550 2.0000000 1.4257120 3.0000000 1.9955820 1.0979050
@@ -362,7 +366,10 @@ obesity_by_gender_tipo_physical <- obesity |>
   summarise(
     avg_physical_activity = mean(physical_activity_frequency,
                                  na.rm = TRUE),
-    avg_imc = mean(imc, na.rm = TRUE)
+    median_physical_activity = median(physical_activity_frequency,
+                                      na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    .groups = "drop"
   )
 obesity_by_gender_tipo_physical # produce:
 # A tibble: 12 × 4
@@ -389,6 +396,12 @@ ggplot(obesity_by_gender_tipo_physical,
   geom_point(aes(color = tipo_obesidad))
 
 # Diagrama de dispersión que relaciona imc con actividad física,
+# por tipo de obesidad
+ggplot(obesity_by_gender_tipo_physical, 
+       aes(x = avg_imc, y = median_physical_activity)) +
+  geom_point(aes(color = tipo_obesidad))
+
+# Diagrama de dispersión que relaciona imc con actividad física,
 # por tipo de obesidad y facetado por género
 ggplot(obesity_by_gender_tipo_physical, 
        aes(x = avg_imc, y = avg_physical_activity)) +
@@ -397,9 +410,26 @@ ggplot(obesity_by_gender_tipo_physical,
 # NOTA: Aquí es muy notorio que las mujeres más obesas sí hacen 
 # mucho ejercicio. PILAS
 
+# Diagrama de caja que relaciona tipo de obesidad con actividad física
+ggplot(obesity, aes(x = tipo_obesidad, 
+                    y = physical_activity_frequency)) +
+  geom_boxplot()
+
+# Agrupar por tipo de obesidad y resumir por actividad física
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    median_physical_activity = median(physical_activity_frequency, 
+                                      na.rm = TRUE),
+    avg_physical_activity = mean(physical_activity_frequency, 
+                                      na.rm = TRUE),
+    .groups = "drop"
+  )
+min(obesity$physical_activity_frequency) # produce: 0
+max(obesity$physical_activity_frequency) # produce: 3
 ################################
 ##
-## Tiempo de Uso de Tecnología 
+## 10.- Tiempo de Uso de Tecnología 
 ##
 ################################
 
@@ -423,7 +453,7 @@ ggplot(obesity, aes(x = technology_use_time, color = Gender)) +
 
 ###########################
 ##
-## Consumo de Alcohol
+## 11.- Consumo de Alcohol
 ##
 ###########################
 
@@ -451,7 +481,7 @@ ggplot(obesity, aes(x = imc, color = alcohol_consumption)) +
 
 #############################
 ##
-## Medio de Transporte
+## 12.- Medio de Transporte
 ##
 #############################
 
@@ -506,13 +536,13 @@ obesity |>
 # público
 
 # Agrupar por género y medio de transporte y resumir por imc
-obestiy_by_gender_transport_sum_imc <- obesity |>
+obesity_by_gender_transport_sum_imc <- obesity |>
   group_by(Gender, transportation_mode) |>
   summarize(
     avg_imc = mean(imc, na.rm = TRUE),
     med_imc = median(imc, na.rm = TRUE)
   ) 
-obestiy_by_gender_transport_sum_imc # produce:
+obesity_by_gender_transport_sum_imc # produce:
 # A tibble: 10 × 3
 # Groups:   Gender [2]
 #  Gender transportation_mode   avg_imc

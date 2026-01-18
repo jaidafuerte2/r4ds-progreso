@@ -71,6 +71,18 @@ obesity <- obesity %>%
     transportation_mode             = MTRANS
   )
 
+# Covertir food_between_meals en factor:
+obesity <- obesity %>%
+  mutate(
+    Gender = factor(
+      Gender,
+      levels = c(
+        "Male",
+        "Female"
+      )
+    )
+  )
+
 # Cambiar la variable family_history_with_overweight de double a factor
 # y cambiar los valores de número a categorías
 obesity <- obesity %>%
