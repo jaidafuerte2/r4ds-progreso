@@ -51,6 +51,70 @@ class(obesity$Gender) # produce:
 ggplot(obesity, aes(x = Gender, y = Age)) +
   geom_boxplot()
 
+# mutar la tabla para saber los que son mayores o iguales a 45 años
+obesity_45years <- obesity |>
+  mutate(
+    more_45y = Age >= 45,
+    .before = 1
+  )
+obesity_45years # produce:
+# A tibble: 20,758 × 21
+#  more_45y    id Gender   Age Height Weight family_history_with_overwe…¹
+#  <lgl>    <dbl> <fct>  <dbl>  <dbl>  <dbl> <fct>                       
+#1 FALSE        0 Male    24.4   1.70   81.7 Si                          
+#2 FALSE        1 Female  18     1.56   57   Si                          
+#3 FALSE        2 Female  18     1.71   50.2 Si                          
+#4 FALSE        3 Female  21.0   1.71  131.  Si
+
+# Gráfico de barras que relaciona el género con las personas mayores
+# a cuarenta y cinco años
+ggplot(obesity_45years, aes(x = Gender, fill = more_45y)) +
+  geom_bar()
+
+# Gráfico de densidad que relaciona el imc con las personas mayores
+# a cuarenta y cinco años y  facetado por género
+ggplot(obesity_45years, aes(x = imc, color = more_45y)) +
+  geom_density() +
+  facet_wrap(~Gender)
+
+# Agrupar la tabla de obesidad por tipo de obesidad y personas mayores
+# a 45 años y resumir por imc
+obesity_45_tipo <- obesity_45years |>
+  group_by(tipo_obesidad, more_45y) |>
+  summarize(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Diagrama de caja que relaciona las personas mayores de 45 años con 
+# el índice de masa corporal y facetado por tipo de obesidad
+ggplot(obesity_45_tipo, aes(x = more_45y, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla mutada de obesidad por género y personas mayores a
+# cuarenta y cinco años y resumido por índice de masa corporal
+obesity_45_gender <- obesity_45years |>
+  group_by(more_45y, Gender) |>
+  summarize(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_45_gender # produce:
+
+# Diagrama de caja que relaciona a las personas mayores a 45 años
+# con la mediana del índice de masa corporal
+ggplot(obesity_45_gender, aes(x = more_45y, y = med_imc)) +
+  geom_boxplot()
+# Este gráfico es definitorio. Las personas mayores de 45 años tienen 
+# un imc menor que los menores de 45 años
+
+# Diagrama de caja que relaciona a las personas mayores a 45 años
+# con la mediana del índice de masa corporal y facetada por género
+ggplot(obesity_45_gender, aes(x = more_45y, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~Gender)
+
 ###########################
 ##
 ##   2.- Historia Familiar  
