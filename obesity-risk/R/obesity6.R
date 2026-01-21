@@ -482,3 +482,203 @@ ggplot(obesity_caloric_beverages, aes(x = med_imc,
   facet_wrap(~tipo_obesidad)
 # Es interesante ver que los que no toman bebidas calóricas tienen 
 # un mayor imc.
+
+#############################
+##
+## 9.- Actividad Física
+##
+#############################
+
+# Conocer el tipo de valores de la variable actividad física
+unique(obesity$physical_activity_frequency) # produce:
+#[1] 0.0000000 1.0000000 0.8660450 1.4678630 1.9679730 1.9300330
+#[7] 0.5986550 2.0000000 1.4257120 3.0000000 1.9955820 1.0979050
+#[13] 0.6804640 1.1910200 1.9998360 1.4659310 0.8266600 0.0359280
+#[19] 1.6286370 1.4274130 0.5447840 0.2820630 0.9797010 1.1904650
+
+# Conocer el tipo de la variable actividad física
+class(obesity$physical_activity_frequency) # produce: "numeric"
+
+# Diagrama de dispersión que relaciona la actividad física con la edad
+# y faceta por tipo de obesidad
+ggplot(obesity, aes(x = physical_activity_frequency, y = Age)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  geom_smooth(method = "lm") + # línea de tendencia
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar por tipo de obesidad y resumir por actividad física, índice
+# de masa corporal y edad
+obesity_activity <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_physical = median(physical_activity_frequency, na.rm = TRUE),
+    avg_physical = mean(physical_activity_frequency, na.rm = TRUE),
+    medi_imc = median(imc, na.rm =TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_activity # produce:
+# A tibble: 6 × 4
+#  tipo_obesidad    med_physical medi_imc med_age
+#  <fct>                   <dbl>    <dbl>   <dbl>
+#1 Desnutrición           1          17.4    19  
+#2 Peso normal            1          22.1    21  
+#3 Sobrepeso              1          27.1    22  
+#4 Obesidad grado 1       1          32.5    23  
+#5 Obesidad grado 2       0.891      37.1    26.0
+#6 Obesidad grado 3       0.0297     42.1    26.0
+
+# diagrama de dispersión que relaciona actividad física con edad
+ggplot(obesity_activity, aes(x = med_physical, y = med_age)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  geom_smooth(method = "lm") +
+  facet_wrap(~tipo_obesidad)
+
+############################
+##
+## 10.- Uso de tecnología
+##
+############################
+
+# Conocer el tipo de valores que tiene la variable uso de tecnología
+unique(obesity$technology_use_time) # produce:
+#[1] 0.976473 1.000000 1.673584 0.780199 0.931721 0.696948 0.000000
+#[8] 0.218645 0.553311 0.947884 2.000000 0.930836 0.619012 0.081156
+#[15] 1.258881 0.079334 0.250502 0.232858 0.453649 0.831412 0.704978
+#[22] 0.929356 0.868788 0.097760 0.425473 0.773807 1.544357 1.239038
+
+# Conocer el tipo de la variable uso de tecnología
+class(obesity$technology_use_time) # produce: "numeric"
+
+# Diagrama de dispersión que relaciona el uso de tecnología con la 
+# edad
+ggplot(obesity, aes(x = technology_use_time, y = Age)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  geom_smooth(method = "lm") + # linea de tendencia
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla obesidad por tipo de obesidad y resumir por uso de 
+# tecnología, edad e imc
+obesity_technology <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_tech = median(technology_use_time, na.rm = TRUE),
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    avg_tech = mean(technology_use_time, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_technology # produce:
+# A tibble: 6 × 5
+#  tipo_obesidad    med_tech med_imc med_age avg_tech
+#  <fct>               <dbl>   <dbl>   <dbl>    <dbl>
+#1 Desnutrición        1        17.4    19      0.787
+#2 Peso normal         1        22.1    21      0.646
+#3 Sobrepeso           0.659    27.1    22      0.638
+#4 Obesidad grado 1    0.504    32.5    23      0.670
+#5 Obesidad grado 2    0.414    37.1    26.0    0.482
+#6 Obesidad grado 3    0.552    42.1    26.0    0.531
+
+# Diagrama de dispersión que relaciona el uso de tecnología con edad
+# y colorea y da forma por tipo de obesidad. 
+ggplot(obesity_technology, aes(x = med_tech, y = med_age)) +
+  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +
+  geom_smooth(method = "lm")
+
+
+#############################
+##
+## 11.- Consumo de alcohol
+##
+#############################
+
+# Conocer el tipo de valores de la variable consumo de alcohol
+unique(obesity$alcohol_consumption) # produce:
+# [1] Sometimes  0          Frequently
+
+# Conocer el tipo de la variable consumo de alcohol
+class (obesity$alcohol_consumption) # produce: "factor"
+
+# Diagrama de caja que relaciona el consumo de alcohol con la
+# edad
+ggplot(obesity, aes(x = alcohol_consumption, y = Age)) +
+  geom_boxplot()
+
+# Gráfico de densidad que ralaciona la edad con el consumo de alcohol
+ggplot(obesity, aes(x = Age, color = alcohol_consumption)) +
+  geom_density()
+
+# Agrupar la tabla obesity por consumo de alcohol y resumir por edad
+# e índice de masa corporal
+obesity_alcohol <- obesity |>
+  group_by(alcohol_consumption) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups= "drop"
+  )
+obesity_alcohol # produce:
+# A tibble: 3 × 3
+#   alcohol_consumption med_imc med_age
+#  <fct>                 <dbl>   <dbl>
+#1 Sometimes              32.2    23  
+#2 0                      27.6    21.4
+#3 Frequently             27.0    23 
+
+# Diagrama de dispersión que relaciona la mediana del índice de
+# masa corporal con la mediana de edad y facetada por consumo de 
+# alcohol
+ggplot(obesity_alcohol, aes(x = med_imc, y = med_age)) +
+  geom_point(aes(color = alcohol_consumption)) +
+  facet_wrap(~alcohol_consumption)
+# NOTA: Claramente los que toman a veces tienen más obesidad que los
+# que no toman y los que toman con frecuencia.
+
+#############################
+##
+## 12 .- Medio de transporte
+##
+#############################
+
+# Conocer el tipo de valores que tiene la varible medio de transporte
+unique(obesity$transportation_mode) # produce:
+#[1] Public_Transportation Automobile            Walking              
+#[4] Motorbike             Bike  
+
+# Conocer el tipo de la variable medio de transporte
+class(obesity$transportation_mode) # produce:  "factor"
+
+# Diagrama de caja que relaciona el medio de transporte con la edad
+ggplot(obesity, aes(x = transportation_mode, y = Age)) +
+  geom_boxplot()
+
+# Gráfico de densidad que relaciona la edad con el medio de
+# transporte
+ggplot(obesity, aes(x = Age, color = transportation_mode)) +
+  geom_density()
+
+# Agrupar la tabla obesidad por medio de transporte y resumir por
+# índice de masa corporal y edad
+obesity_transport <- obesity |>
+  group_by(transportation_mode) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "drop"
+  )
+obesity_transport
+# A tibble: 5 × 3
+#  transportation_mode   med_imc med_age
+#  <fct>                   <dbl>   <dbl>
+#1 Public_Transportation    30.0    21.9
+#2 Automobile               29.4    31.5
+#3 Walking                  24.2    19  
+#4 Motorbike                24.5    22.5
+#5 Bike                     24.4    23
+
+# Diagrama de caja que ralaciona el medio de transporte con la mediana
+# del índice de masa coroporal
+ggplot(obesity_transport, aes(x = transportation_mode, 
+                              y = med_imc)) +
+  geom_boxplot()
+  
