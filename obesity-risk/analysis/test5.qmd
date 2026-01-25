@@ -27,7 +27,6 @@ Conocer el tipo de la variable consumo de vegetales
 class(obesity$vegetable_consumption_frequency)
 ```
 
-
 Diagrama de caja que relaciona género con frecuencia de consumo de vegetales
 
 ```{r}
@@ -75,6 +74,7 @@ ggplot(obesity, aes(x = vegetable_consumption_frequency, y = imc)) +
 NOTA: Parece que sí comen más vegetales los hombres y tienen un imc mayor
 
 Facetar por consumo de vegetales e imc en relación y facetado por tipo de obesidad
+
 ```{r}
 #| fig-width: 8
 #| fig-height: 4
@@ -84,7 +84,6 @@ ggplot(obesity, aes(x = vegetable_consumption_frequency, y = imc)) +
 ```
 
 NOTA: Este facetado es muy importante porque muestra que en general los hombres llegan a tener mayor imc que las mujeres a pesar de que si comen muchos vegetales. Sin embargo las mujeres más obesas si comen muchos vegetales también. Parecería que los vegetales no les defiende contra la obesidad ni a hombres ni a mujeres
-
 
 Agrupar por género y tipo de obesidad y resumir imc y consumo de vegetales
 
@@ -123,7 +122,7 @@ ggplot(obesity_by_gender_tipo, aes(x = avg_imc,
   facet_wrap(~Gender)
 ```
 
-NOTA:  Este gráfico es muy importante porque muestra que las mujeres y los hombres más obesos son los que más vegetales consumen. Entonces no necesariamente comer vegetales ayuda?
+NOTA: Este gráfico es muy importante porque muestra que las mujeres y los hombres más obesos son los que más vegetales consumen. Entonces no necesariamente comer vegetales ayuda?
 
 ## Género y consumo de agua
 
@@ -181,8 +180,7 @@ ggplot(obesity, aes(x = daily_water_consumption, y = imc)) +
   facet_wrap(~Gender)
 ```
 
-
-*Facetar* por consumo de agua e imc en relación y facetado por tipo de obesidad  
+*Facetar* por consumo de agua e imc en relación y facetado por tipo de obesidad
 
 ```{r}
 #| fig-width: 6
@@ -214,6 +212,7 @@ class(obesity$physical_activity_frequency)
 ggplot(obesity, aes(x = Gender, y = physical_activity_frequency)) +
   geom_boxplot()
 ```
+
 NOTA: La mediana de actividad física es ligeramente menor en mujeres pero su rango intercuartil inferior al 50% también es bastante menor en las mujeres. Vale la pena investigar
 
 *Gráfico de densidad* que ralciona la actividad física con el género
@@ -229,6 +228,7 @@ ggplot(obesity, aes(x = physical_activity_frequency,
 NOTA: Se observa cláramente que hay más mujeres que no hacen nada de actividad física, posteriormente es mayor la actividad física que hacen los hombres. Vale la pena investigar.
 
 *Diagrama de dispersión* que relaciona actividad física e imc por género y facetado por tipo de obesidad
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -256,6 +256,7 @@ obesity_by_gender_tipo_physical
 ```
 
 *Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -265,6 +266,7 @@ ggplot(obesity_by_gender_tipo_physical,
 ```
 
 *Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -274,6 +276,7 @@ ggplot(obesity_by_gender_tipo_physical,
 ```
 
 *Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad y *facetado* por género
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -284,6 +287,7 @@ ggplot(obesity_by_gender_tipo_physical,
 ```
 
 *Diagrama de dispersión* que relaciona imc con actividad física, por tipo de obesidad y *facetado* por género
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -316,6 +320,7 @@ obesity |>
     .groups = "drop"
   )
 ```
+
 ```{r}
 min(obesity$physical_activity_frequency) # produce: 0
 ```

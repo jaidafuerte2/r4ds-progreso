@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -176,6 +176,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../analysis/test5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Prueba 5</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 6</span></a>
   </div>
 </li>
     </ul>
@@ -320,19 +326,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
    Gender tipo_obesidad    avg_vegetable avg_imc
-   &lt;chr&gt;  &lt;fct&gt;                    &lt;dbl&gt;   &lt;dbl&gt;
- 1 Female Desnutrición              2.58    17.3
- 2 Female Peso normal               2.42    21.8
- 3 Female Sobrepeso                 2.30    27.1
- 4 Female Obesidad grado 1          2.15    32.0
- 5 Female Obesidad grado 2          2.95    38.5
- 6 Female Obesidad grado 3          3.00    42.8
- 7 Male   Desnutrición              2.29    17.2
- 8 Male   Peso normal               2.31    22.4
- 9 Male   Sobrepeso                 2.20    27.3
-10 Male   Obesidad grado 1          2.21    32.8
-11 Male   Obesidad grado 2          2.39    37.0
-12 Male   Obesidad grado 3          2.40    41.7</code></pre>
+   &lt;fct&gt;  &lt;fct&gt;                    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Male   Desnutrición              2.29    17.2
+ 2 Male   Peso normal               2.31    22.4
+ 3 Male   Sobrepeso                 2.20    27.3
+ 4 Male   Obesidad grado 1          2.21    32.8
+ 5 Male   Obesidad grado 2          2.39    37.0
+ 6 Male   Obesidad grado 3          2.40    41.7
+ 7 Female Desnutrición              2.58    17.3
+ 8 Female Peso normal               2.42    21.8
+ 9 Female Sobrepeso                 2.30    27.1
+10 Female Obesidad grado 1          2.15    32.0
+11 Female Obesidad grado 2          2.95    38.5
+12 Female Obesidad grado 3          3.00    42.8</code></pre>
 </div>
 </div>
 <p>NOTA: Esta tabla es muy interesante porque muestra que las mujeres y los hombres que más vegetales comen son los más obesos</p>
@@ -524,19 +530,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 5
    Gender tipo_obesidad    avg_physical_activity median_physical_activ…¹ avg_imc
-   &lt;chr&gt;  &lt;fct&gt;                            &lt;dbl&gt;                   &lt;dbl&gt;   &lt;dbl&gt;
- 1 Female Desnutrición                     1.09                   1         17.3
- 2 Female Peso normal                      1.04                   1         21.8
- 3 Female Sobrepeso                        0.889                  1         27.1
- 4 Female Obesidad grado 1                 0.617                  0.170     32.0
- 5 Female Obesidad grado 2                 0.176                  0.0437    38.5
- 6 Female Obesidad grado 3                 0.659                  0.0168    42.8
- 7 Male   Desnutrición                     1.36                   1.66      17.2
- 8 Male   Peso normal                      1.39                   1         22.4
- 9 Male   Sobrepeso                        1.23                   1         27.3
-10 Male   Obesidad grado 1                 1.11                   1         32.8
-11 Male   Obesidad grado 2                 1.01                   1         37.0
-12 Male   Obesidad grado 3                 0.906                  1         41.7
+   &lt;fct&gt;  &lt;fct&gt;                            &lt;dbl&gt;                   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Male   Desnutrición                     1.36                   1.66      17.2
+ 2 Male   Peso normal                      1.39                   1         22.4
+ 3 Male   Sobrepeso                        1.23                   1         27.3
+ 4 Male   Obesidad grado 1                 1.11                   1         32.8
+ 5 Male   Obesidad grado 2                 1.01                   1         37.0
+ 6 Male   Obesidad grado 3                 0.906                  1         41.7
+ 7 Female Desnutrición                     1.09                   1         17.3
+ 8 Female Peso normal                      1.04                   1         21.8
+ 9 Female Sobrepeso                        0.889                  1         27.1
+10 Female Obesidad grado 1                 0.617                  0.170     32.0
+11 Female Obesidad grado 2                 0.176                  0.0437    38.5
+12 Female Obesidad grado 3                 0.659                  0.0168    42.8
 # ℹ abbreviated name: ¹​median_physical_activity</code></pre>
 </div>
 </div>
@@ -756,17 +762,17 @@ Levels: Public_Transportation Automobile Walking Motorbike Bike</code></pre>
 <pre><code># A tibble: 10 × 4
 # Groups:   Gender [2]
    Gender transportation_mode   avg_imc med_imc
-   &lt;chr&gt;  &lt;fct&gt;                   &lt;dbl&gt;   &lt;dbl&gt;
- 1 Female Public_Transportation    31.5    31.2
- 2 Female Automobile               28.3    28.3
- 3 Female Walking                  22.2    22.1
- 4 Female Motorbike                24.7    24.0
- 5 Female Bike                     23.0    22.0
- 6 Male   Public_Transportation    29.3    29.2
- 7 Male   Automobile               30.7    31.2
- 8 Male   Walking                  24.3    24.8
- 9 Male   Motorbike                25.8    24.6
-10 Male   Bike                     24.9    24.4</code></pre>
+   &lt;fct&gt;  &lt;fct&gt;                   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Male   Public_Transportation    29.3    29.2
+ 2 Male   Automobile               30.7    31.2
+ 3 Male   Walking                  24.3    24.8
+ 4 Male   Motorbike                25.8    24.6
+ 5 Male   Bike                     24.9    24.4
+ 6 Female Public_Transportation    31.5    31.2
+ 7 Female Automobile               28.3    28.3
+ 8 Female Walking                  22.2    22.1
+ 9 Female Motorbike                24.7    24.0
+10 Female Bike                     23.0    22.0</code></pre>
 </div>
 </div>
 <p>Diagrama de caja que relaciona el medio de transporte con avg_imc por género</p>

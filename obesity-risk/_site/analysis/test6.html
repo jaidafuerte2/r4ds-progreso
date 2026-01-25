@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Prueba 6 – Obesity Risk – Exploratory Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e3b051092b0e80bf83595e53a8698843.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../analysis/test6.html">Prueba 6</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Obesity Risk – Exploratory Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctica Previa al borrador de análisis del Obesity Risk</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 3</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 4</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prueba 5</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Prueba 6</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#análisis-de-la-variable-edad" id="toc-análisis-de-la-variable-edad" class="nav-link active" data-scroll-target="#análisis-de-la-variable-edad">Análisis de la variable edad</a>
+  <ul class="collapse">
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#edad-y-género" id="toc-edad-y-género" class="nav-link" data-scroll-target="#edad-y-género">Edad y género</a></li>
+  <li><a href="#edad-e-historia-familiar" id="toc-edad-e-historia-familiar" class="nav-link" data-scroll-target="#edad-e-historia-familiar">Edad e Historia Familiar</a></li>
+  </ul></li>
+  <li><a href="#frecuencia-de-comida-calórica" id="toc-frecuencia-de-comida-calórica" class="nav-link" data-scroll-target="#frecuencia-de-comida-calórica">Frecuencia de comida calórica</a>
+  <ul class="collapse">
+  <li><a href="#consumo-de-vegetales" id="toc-consumo-de-vegetales" class="nav-link" data-scroll-target="#consumo-de-vegetales">Consumo de Vegetales</a></li>
+  </ul></li>
+  <li><a href="#conocer-el-tipo-de-la-variable-consumo-de-vegetales" id="toc-conocer-el-tipo-de-la-variable-consumo-de-vegetales" class="nav-link" data-scroll-target="#conocer-el-tipo-de-la-variable-consumo-de-vegetales">Conocer el tipo de la variable consumo de vegetales</a>
+  <ul class="collapse">
+  <li><a href="#número-de-comidas" id="toc-número-de-comidas" class="nav-link" data-scroll-target="#número-de-comidas">Número de Comidas</a></li>
+  <li><a href="#entrecomidas" id="toc-entrecomidas" class="nav-link" data-scroll-target="#entrecomidas">Entrecomidas</a></li>
+  <li><a href="#edad-y-hábito-de-fumar" id="toc-edad-y-hábito-de-fumar" class="nav-link" data-scroll-target="#edad-y-hábito-de-fumar">Edad y Hábito de Fumar</a></li>
+  <li><a href="#consumo-de-agua" id="toc-consumo-de-agua" class="nav-link" data-scroll-target="#consumo-de-agua">Consumo de agua</a></li>
+  <li><a href="#consumo-de-bebidas-calóricas-y-edad" id="toc-consumo-de-bebidas-calóricas-y-edad" class="nav-link" data-scroll-target="#consumo-de-bebidas-calóricas-y-edad">Consumo de Bebidas Calóricas y Edad</a></li>
+  <li><a href="#actividad-física-y-edad" id="toc-actividad-física-y-edad" class="nav-link" data-scroll-target="#actividad-física-y-edad">Actividad Física y Edad</a></li>
+  <li><a href="#uso-de-tecnología" id="toc-uso-de-tecnología" class="nav-link" data-scroll-target="#uso-de-tecnología">Uso de tecnología</a></li>
+  </ul></li>
+  <li><a href="#conocer-el-tipo-de-la-variable-uso-de-tecnología" id="toc-conocer-el-tipo-de-la-variable-uso-de-tecnología" class="nav-link" data-scroll-target="#conocer-el-tipo-de-la-variable-uso-de-tecnología">Conocer el tipo de la variable uso de tecnología</a>
+  <ul class="collapse">
+  <li><a href="#consumo-de-alcohol-y-edad" id="toc-consumo-de-alcohol-y-edad" class="nav-link" data-scroll-target="#consumo-de-alcohol-y-edad">Consumo de alcohol y Edad</a></li>
+  </ul></li>
+  <li><a href="#conocer-el-tipo-de-la-variable-consumo-de-alcohol" id="toc-conocer-el-tipo-de-la-variable-consumo-de-alcohol" class="nav-link" data-scroll-target="#conocer-el-tipo-de-la-variable-consumo-de-alcohol">Conocer el tipo de la variable consumo de alcohol</a>
+  <ul class="collapse">
+  <li><a href="#medio-de-transporte" id="toc-medio-de-transporte" class="nav-link" data-scroll-target="#medio-de-transporte">Medio de transporte</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Prueba 6</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="análisis-de-la-variable-edad" class="level1">
+<h1>Análisis de la variable edad</h1>
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p><em>Diagrama de dispersión</em> que relaciona el <strong>índice de masa corporal</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona el <strong>tipo de obesidad</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> tipo_obesidad, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nota: Hay cierta relación directa entre el tipo de obesidad y la edad</p>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <em>resumir</em> por <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_age =</span> <span class="fu">mean</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  tipo_obesidad    avg_age med_age
+  &lt;fct&gt;              &lt;dbl&gt;   &lt;dbl&gt;
+1 Desnutrición        19.3    19  
+2 Peso normal         21.0    21  
+3 Sobrepeso           24.5    22  
+4 Obesidad grado 1    25.6    23  
+5 Obesidad grado 2    27.2    26.0
+6 Obesidad grado 3    23.8    26.0</code></pre>
+</div>
+</div>
+<p><em>Nota</em>: Se obeserva que los más obesos si tienen una edad ligeramente mayor</p>
+</section>
+<section id="edad-y-género" class="level2">
+<h2 class="anchored" data-anchor-id="edad-y-género">Edad y género</h2>
+<p>Conocer el tipo de valores que tiene la variables género</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Male   Female
+Levels: Male Female</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable género</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la variable <strong>género</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Mutar</em> la tabla obesidad para saber los que son <strong>mayores o iguales a 45 años</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>obesity_45years <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">more_45y =</span> Age <span class="sc">&gt;=</span> <span class="dv">45</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="dv">1</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_45years[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 1%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">more_45y</th>
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">Gender</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">Height</th>
+<th style="text-align: right;">Weight</th>
+<th style="text-align: left;">family_history_with_overweight</th>
+<th style="text-align: left;">frequent_high_calorie_food</th>
+<th style="text-align: right;">vegetable_consumption_frequency</th>
+<th style="text-align: right;">number_main_meals</th>
+<th style="text-align: left;">food_between_meals</th>
+<th style="text-align: left;">SMOKE</th>
+<th style="text-align: right;">daily_water_consumption</th>
+<th style="text-align: left;">caloric_beverages_consumption</th>
+<th style="text-align: right;">physical_activity_frequency</th>
+<th style="text-align: right;">technology_use_time</th>
+<th style="text-align: left;">alcohol_consumption</th>
+<th style="text-align: left;">transportation_mode</th>
+<th style="text-align: left;">0be1dad</th>
+<th style="text-align: right;">imc</th>
+<th style="text-align: left;">tipo_obesidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">24.44301</td>
+<td style="text-align: right;">1.699998</td>
+<td style="text-align: right;">81.66995</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">2.983297</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">2.763573</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.976473</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Overweight_Level_II</td>
+<td style="text-align: right;">28.25956</td>
+<td style="text-align: left;">Sobrepeso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">18.00000</td>
+<td style="text-align: right;">1.560000</td>
+<td style="text-align: right;">57.00000</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Automobile</td>
+<td style="text-align: left;">0rmal_Weight</td>
+<td style="text-align: right;">23.42209</td>
+<td style="text-align: left;">Peso normal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">18.00000</td>
+<td style="text-align: right;">1.711460</td>
+<td style="text-align: right;">50.16575</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">1.880534</td>
+<td style="text-align: right;">1.411685</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1.910378</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0.866045</td>
+<td style="text-align: right;">1.673584</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Insufficient_Weight</td>
+<td style="text-align: right;">17.12671</td>
+<td style="text-align: left;">Desnutrición</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">20.95274</td>
+<td style="text-align: right;">1.710730</td>
+<td style="text-align: right;">131.27485</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1.674061</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">1.467863</td>
+<td style="text-align: right;">0.780199</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: left;">Obesity_Type_III</td>
+<td style="text-align: right;">44.85580</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Gráfico de barras</em> que relaciona el <strong>género</strong> con las personas <strong>mayores a cuarenta y cinco años</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_45years, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">fill =</span> more_45y)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Gráfico de densidad</em> que relaciona el <strong>imc</strong> con las personas <strong>mayores a cuarenta y cinco años</strong> y <em>facetado</em> por <strong>género</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_45years, <span class="fu">aes</span>(<span class="at">x =</span> imc, <span class="at">color =</span> more_45y)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla de obesidad por <strong>tipo de obesidad</strong> y personas <strong>mayores a 45 años</strong> y <em>resumir</em> por <strong>imc</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obesity_45_tipo <span class="ot">&lt;-</span> obesity_45years <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad, more_45y) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_45_tipo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: left;">more_45y</th>
+<th style="text-align: right;">med_imc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">17.40958</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">22.10029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">22.00174</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">27.06002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">27.68166</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">32.46248</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">31.22130</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">37.12446</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">38.58832</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">42.13743</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona las personas <strong>mayores de 45 años</strong> con el <strong>índice de masa corporal</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_45_tipo, <span class="fu">aes</span>(<span class="at">x =</span> more_45y, <span class="at">y =</span> med_imc)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla mutada de obesidad por <strong>género</strong> y personas <strong>mayores a cuarenta y cinco años</strong> y <em>resumido</em> por <strong>índice de masa corporal</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>obesity_45_gender <span class="ot">&lt;-</span> obesity_45years <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(more_45y, Gender) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>obesity_45_gender <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  more_45y Gender med_imc
+  &lt;lgl&gt;    &lt;fct&gt;    &lt;dbl&gt;
+1 FALSE    Male      29.2
+2 FALSE    Female    30.4
+3 TRUE     Male      27.8
+4 TRUE     Female    28.6</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona a las personas <strong>mayores a 45 años</strong> con la mediana del <strong>índice de masa corporal</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_45_gender, <span class="fu">aes</span>(<span class="at">x =</span> more_45y, <span class="at">y =</span> med_imc)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Nota</em>: Este gráfico es definitorio. Las personas mayores de 45 años tienen un imc menor que los menores de 45 años</p>
+<p><em>Diagrama de caja</em> que relaciona a las personas <strong>mayores de 45 años</strong> e <strong>índice de masa corporal</strong> y <em>facetado</em> por <strong>género</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_45_gender, <span class="fu">aes</span>(<span class="at">x =</span> more_45y, <span class="at">y =</span> med_imc)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Nota</em>: En hombres y en mujeres el peso de los menores de 45 años es mayor que el peso de los mayores de 45 años</p>
+</section>
+<section id="edad-e-historia-familiar" class="level2">
+<h2 class="anchored" data-anchor-id="edad-e-historia-familiar">Edad e Historia Familiar</h2>
+<p>Conocer el tipo de valores que tienela variable historia familiar de exceso de peso</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>family_history_with_overweight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Si No
+Levels: No Si</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable historia familiar de exceso de peso</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>family_history_with_overweight)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la <strong>historia familiar</strong> de exceso de peso con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> family_history_with_overweight, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="frecuencia-de-comida-calórica" class="level1">
+<h1>Frecuencia de comida calórica</h1>
+<p>Conocer el tipo de valores que tiene la variable frecuencia de comida muy calórica</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>frequent_high_calorie_food) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Si No
+Levels: No Si</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable frecuencia de comida muy calórica</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>frequent_high_calorie_food) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la <strong>edad</strong> con la frecuencia de <strong>comida muy calórica</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> frequent_high_calorie_food, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="consumo-de-vegetales" class="level2">
+<h2 class="anchored" data-anchor-id="consumo-de-vegetales">Consumo de Vegetales</h2>
+<p>Conocer el tipo de valores que tiene la varaible consumo de vegetales</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>vegetable_consumption_frequency)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.000000 1.880534 3.000000 2.679664</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conocer-el-tipo-de-la-variable-consumo-de-vegetales" class="level1">
+<h1>Conocer el tipo de la variable consumo de vegetales</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>vegetable_consumption_frequency) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona <strong>edad</strong> con <strong>consumo de vegetales</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <em>resumir</em> por <strong>edad</strong> y <strong>consumo de vegetales</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>obesity_vegetable <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_vegetable =</span> <span class="fu">mean</span>(vegetable_consumption_frequency, </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_vegetable =</span> <span class="fu">median</span>(vegetable_consumption_frequency,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_age =</span> <span class="fu">mean</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="co">#</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#tipo_obesidad = tipo_obesidad</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_vegetable)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: right;">avg_vegetable</th>
+<th style="text-align: right;">med_vegetable</th>
+<th style="text-align: right;">avg_age</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">2.472698</td>
+<td style="text-align: right;">2.750715</td>
+<td style="text-align: right;">19.33883</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">2.366386</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">20.98132</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">2.233578</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">24.48782</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">2.188269</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">25.59448</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">2.524617</td>
+<td style="text-align: right;">2.722161</td>
+<td style="text-align: right;">27.17886</td>
+<td style="text-align: right;">25.96879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">2.978772</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">23.84543</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona <strong>consumo de vegetales</strong> con <strong>edad</strong> <em>coloreado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_vegetable, <span class="fu">aes</span>(<span class="at">x =</span> med_vegetable, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Diagrama de densidad</em> que relaciona el <strong>consumo de vegetales</strong> con el <strong>tipo de obesiddad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> vegetable_consumption_frequency, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="número-de-comidas" class="level2">
+<h2 class="anchored" data-anchor-id="número-de-comidas">Número de Comidas</h2>
+<p>Conocer el tipo de valores que tiene la variable número de comidas principales</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>number_main_meals)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.983297 3.000000 1.411685 1.971472</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable número de comidas principales</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>number_main_meals) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p><em>Gráfico de dispersión</em> que relaciona el <strong>número de comidas principales</strong> con la <strong>edad</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> number_main_meals, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Gráfico de demsidad que relaciona el número de comidas principales con el tipo de obesidad y facetado por tipo de obesidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> number_main_meals, <span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <em>resumir</em> por mediana de <strong>comidas</strong> y <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>obesity_meals <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_meals =</span> <span class="fu">mean</span>(number_main_meals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_meals =</span> <span class="fu">median</span>(number_main_meals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_age =</span> <span class="fu">mean</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># produce:</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_meals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: right;">avg_meals</th>
+<th style="text-align: right;">med_meals</th>
+<th style="text-align: right;">avg_age</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">2.892183</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">19.33883</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">2.863797</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">20.98132</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">2.559570</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24.48782</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">2.502883</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">25.59448</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">2.852366</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">27.17886</td>
+<td style="text-align: right;">25.96879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">2.991216</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">23.84543</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="entrecomidas" class="level2">
+<h2 class="anchored" data-anchor-id="entrecomidas">Entrecomidas</h2>
+<p>Conocer el tipo de variables que tiene la variable entrecomidas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>food_between_meals) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Sometimes  Frequently 0          Always    
+Levels: Sometimes Frequently 0 Always</code></pre>
+</div>
+</div>
+<p>Conocer el tip de la variable entrecomidas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>food_between_meals) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><strong>Diagrama de caja</strong> que relaciona la <strong>edad</strong> con la variable <strong>entre comidas</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> food_between_meals, <span class="at">y =</span> Age )) <span class="sc">+</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y número de <strong>entrecomidas</strong> y <em>resumir</em> por <strong>índice de masa corporal</strong> y <em>edad</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>obesity_between_meal <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad, food_between_meals) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_imc =</span> <span class="fu">mean</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_age =</span> <span class="fu">mean</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_between_meal) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: left;">food_between_meals</th>
+<th style="text-align: right;">avg_imc</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">avg_age</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">17.24811</td>
+<td style="text-align: right;">17.39043</td>
+<td style="text-align: right;">18.72567</td>
+<td style="text-align: right;">18.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">17.30878</td>
+<td style="text-align: right;">17.44126</td>
+<td style="text-align: right;">19.99269</td>
+<td style="text-align: right;">19.74280</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">17.51294</td>
+<td style="text-align: right;">17.44126</td>
+<td style="text-align: right;">20.24765</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">17.18147</td>
+<td style="text-align: right;">17.52050</td>
+<td style="text-align: right;">19.40476</td>
+<td style="text-align: right;">18.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">22.14465</td>
+<td style="text-align: right;">22.14533</td>
+<td style="text-align: right;">21.03864</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">21.80475</td>
+<td style="text-align: right;">21.87500</td>
+<td style="text-align: right;">20.75457</td>
+<td style="text-align: right;">20.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">22.85939</td>
+<td style="text-align: right;">23.38869</td>
+<td style="text-align: right;">21.44846</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">22.16698</td>
+<td style="text-align: right;">21.93635</td>
+<td style="text-align: right;">21.04364</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">27.32545</td>
+<td style="text-align: right;">27.28986</td>
+<td style="text-align: right;">24.80257</td>
+<td style="text-align: right;">22.05215</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">26.96049</td>
+<td style="text-align: right;">26.85185</td>
+<td style="text-align: right;">23.21966</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">26.54233</td>
+<td style="text-align: right;">26.57496</td>
+<td style="text-align: right;">21.28159</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">27.12860</td>
+<td style="text-align: right;">26.86029</td>
+<td style="text-align: right;">23.95918</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">32.53199</td>
+<td style="text-align: right;">32.45568</td>
+<td style="text-align: right;">25.62475</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">31.97788</td>
+<td style="text-align: right;">31.95592</td>
+<td style="text-align: right;">24.29100</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">32.34928</td>
+<td style="text-align: right;">31.24499</td>
+<td style="text-align: right;">21.71692</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">32.63180</td>
+<td style="text-align: right;">32.87311</td>
+<td style="text-align: right;">25.64583</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">37.33484</td>
+<td style="text-align: right;">37.13404</td>
+<td style="text-align: right;">27.18751</td>
+<td style="text-align: right;">25.96879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">36.58790</td>
+<td style="text-align: right;">36.47644</td>
+<td style="text-align: right;">25.35997</td>
+<td style="text-align: right;">22.65982</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">36.10250</td>
+<td style="text-align: right;">35.81771</td>
+<td style="text-align: right;">25.33333</td>
+<td style="text-align: right;">24.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">37.12441</td>
+<td style="text-align: right;">36.44332</td>
+<td style="text-align: right;">26.85714</td>
+<td style="text-align: right;">25.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">42.76030</td>
+<td style="text-align: right;">42.13743</td>
+<td style="text-align: right;">23.84309</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">42.35485</td>
+<td style="text-align: right;">42.25257</td>
+<td style="text-align: right;">23.99923</td>
+<td style="text-align: right;">21.99768</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">40.81633</td>
+<td style="text-align: right;">40.81633</td>
+<td style="text-align: right;">31.00000</td>
+<td style="text-align: right;">31.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona la mediana de <strong>imc</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_between_meal, <span class="fu">aes</span>(<span class="at">x =</span> med_imc, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> food_between_meals)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Nota</em>: Algo que es interesante es que al observar las medianas, vemos que las personas que no comen entre comidas tienen un mayor imc dentro de las personas de peso normal (pero siguen siendo de peso normal), pero dentro de los grupos de los grupo de exceso de peso los que no comen postres o entrecomidas tienen un imc menor dentro de sus grupos.Y es más, las personas en el grupo de obesidad grado 3 no hay quienes no comen postre</p>
+</section>
+<section id="edad-y-hábito-de-fumar" class="level2">
+<h2 class="anchored" data-anchor-id="edad-y-hábito-de-fumar">Edad y Hábito de Fumar</h2>
+<p>Conocer el tipo de valores que tiene la variable fumar</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>SMOKE) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] No Si
+Levels: No Si</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variables fumar</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>SMOKE) <span class="co"># produce: "factor"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la variable <strong>fumar</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> SMOKE, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la <strong>edad</strong> con <strong>fumar</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> SMOKE)) <span class="sc">+</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla obesidad por <strong>tipo de obesidad</strong> y <strong>hábito de fumar</strong> y <em>resumir</em> por <strong>índice de masa corporal</strong> y <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>obesity_SMOKE <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad, SMOKE) <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_SMOKE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: left;">SMOKE</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">17.40958</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">17.43958</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">22.09317</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">23.59914</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">27.10204</td>
+<td style="text-align: right;">21.99884</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">26.83119</td>
+<td style="text-align: right;">22.91605</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">32.45300</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">32.56605</td>
+<td style="text-align: right;">25.97768</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">37.14700</td>
+<td style="text-align: right;">25.96701</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">36.57143</td>
+<td style="text-align: right;">30.89922</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">42.14638</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">40.81633</td>
+<td style="text-align: right;">30.75699</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Diagrama de dispersión que relaciona las medianas del imc y laedad, coloreado por el hábito de fumar y facetado por tipo de obesidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_SMOKE, <span class="fu">aes</span>(<span class="at">x =</span> med_imc, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> SMOKE)) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="consumo-de-agua" class="level2">
+<h2 class="anchored" data-anchor-id="consumo-de-agua">Consumo de agua</h2>
+<p>Conocer el tipo de valores de la variable consumo de agua</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>daily_water_consumption)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.763573 2.000000 1.910378 1.674061</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la varaible consumo de agua</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>daily_water_consumption) <span class="co"># produce: </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona la <strong>edad</strong> con el <strong>consumo de agua</strong>, <em>coloreado</em> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> daily_water_consumption, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <em>resumir</em> por <strong>consumo de agua</strong>, <strong>edad</strong> e <strong>imc</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>obesity_water <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_water =</span> <span class="fu">median</span>(daily_water_consumption, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_water) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: right;">med_water</th>
+<th style="text-align: right;">med_age</th>
+<th style="text-align: right;">med_imc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">19.00000</td>
+<td style="text-align: right;">17.40958</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">21.00000</td>
+<td style="text-align: right;">22.10029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">22.00000</td>
+<td style="text-align: right;">27.10204</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">2.000000</td>
+<td style="text-align: right;">23.00000</td>
+<td style="text-align: right;">32.45568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">2.018970</td>
+<td style="text-align: right;">25.96879</td>
+<td style="text-align: right;">37.12552</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">2.625537</td>
+<td style="text-align: right;">25.96295</td>
+<td style="text-align: right;">42.13743</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona el <strong>consumo de agua</strong> con <strong>edad</strong> y <em>coloreado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_water, <span class="fu">aes</span>(<span class="at">x =</span> med_water, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="consumo-de-bebidas-calóricas-y-edad" class="level2">
+<h2 class="anchored" data-anchor-id="consumo-de-bebidas-calóricas-y-edad">Consumo de Bebidas Calóricas y Edad</h2>
+<p>Conocer el tipo de valores que tiene la variable consumo de bebidas calóricas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>caloric_beverages_consumption) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] No Si
+Levels: No Si</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable consumo de bebidas calóricas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>caloric_beverages_consumption) <span class="co"># produce: "factor" </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona la <strong>edad</strong> con el <strong>consumo de bebidas calóricas</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> caloric_beverages_consumption, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Gráfico de densidad</em> que relaciona la <strong>edad</strong> con el <strong>consumo de bebidas calóricas</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> caloric_beverages_consumption)) <span class="sc">+</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <strong>consumo de bebidas calóricas</strong> y <em>resumir</em> por <strong>imc</strong> y <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>obesity_caloric_beverages <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad, caloric_beverages_consumption) <span class="sc">|&gt;</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_caloric_beverages)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: left;">caloric_beverages_consumption</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">17.39198</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">17.49224</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">22.09317</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">22.39541</td>
+<td style="text-align: right;">20.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">27.16454</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">26.17499</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">32.45568</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">32.06793</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">37.12676</td>
+<td style="text-align: right;">25.96879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">36.57143</td>
+<td style="text-align: right;">24.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">42.13808</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: right;">40.81633</td>
+<td style="text-align: right;">27.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona la <strong>edad</strong> con el <strong>imc</strong>, <em>coloreado</em> por <strong>consumo de bebidas calóricas</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_caloric_beverages, <span class="fu">aes</span>(<span class="at">x =</span> med_imc,</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> caloric_beverages_consumption)) <span class="sc">+</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Nota</em>: Es interesante ver que los que no toman bebidas calóricas tienenun mayor imc.</p>
+</section>
+<section id="actividad-física-y-edad" class="level2">
+<h2 class="anchored" data-anchor-id="actividad-física-y-edad">Actividad Física y Edad</h2>
+<p>Conocer el tipo de valores de la variable actividad física</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>physical_activity_frequency)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.000000 1.000000 0.866045 1.467863</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable actividad física</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>physical_activity_frequency) <span class="co"># produce: "numeric"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona la <strong>actividad física</strong> con la <strong>edad</strong> y <em>facetado</em> por <strong>tipo de obesidad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> physical_activity_frequency, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> <span class="co"># línea de tendencia</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> por <strong>tipo de obesidad</strong> y <em>resumir</em> por <strong>actividad física</strong>, <strong>índice de masa corporal</strong> y <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>obesity_activity <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_physical =</span> <span class="fu">median</span>(physical_activity_frequency, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_physical =</span> <span class="fu">mean</span>(physical_activity_frequency, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">medi_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_activity) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: right;">med_physical</th>
+<th style="text-align: right;">avg_physical</th>
+<th style="text-align: right;">medi_imc</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.1861781</td>
+<td style="text-align: right;">17.40958</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.2054545</td>
+<td style="text-align: right;">22.10029</td>
+<td style="text-align: right;">21.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1.1062668</td>
+<td style="text-align: right;">27.10204</td>
+<td style="text-align: right;">22.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0.9191351</td>
+<td style="text-align: right;">32.45568</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">0.891205</td>
+<td style="text-align: right;">0.8057894</td>
+<td style="text-align: right;">37.12552</td>
+<td style="text-align: right;">25.96879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">0.029728</td>
+<td style="text-align: right;">0.6673476</td>
+<td style="text-align: right;">42.13743</td>
+<td style="text-align: right;">25.96295</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>diagrama de dispersión</em> que relaciona <strong>actividad física</strong> con <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_activity, <span class="fu">aes</span>(<span class="at">x =</span> med_physical, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="uso-de-tecnología" class="level2">
+<h2 class="anchored" data-anchor-id="uso-de-tecnología">Uso de tecnología</h2>
+<p>Conocer el tipo de valores que tiene la variable uso de tecnología</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>technology_use_time)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.976473 1.000000 1.673584 0.780199</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conocer-el-tipo-de-la-variable-uso-de-tecnología" class="level1">
+<h1>Conocer el tipo de la variable uso de tecnología</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>technology_use_time) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona el <strong>uso de tecnología</strong> con la **edad*</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> technology_use_time, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> <span class="co"># linea de tendencia</span></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>tipo_obesidad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla obesidad por <strong>tipo de obesidad</strong> y <em>resumir</em> por <strong>uso de tecnología</strong>, <strong>edad</strong> e <strong>imc</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>obesity_technology <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_tech =</span> <span class="fu">median</span>(technology_use_time, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_tech =</span> <span class="fu">mean</span>(technology_use_time, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_technology)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_obesidad</th>
+<th style="text-align: right;">med_tech</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">med_age</th>
+<th style="text-align: right;">avg_tech</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">17.40958</td>
+<td style="text-align: right;">19.00000</td>
+<td style="text-align: right;">0.7868591</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">22.10029</td>
+<td style="text-align: right;">21.00000</td>
+<td style="text-align: right;">0.6456168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">0.6589175</td>
+<td style="text-align: right;">27.10204</td>
+<td style="text-align: right;">22.00000</td>
+<td style="text-align: right;">0.6384941</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">0.5040360</td>
+<td style="text-align: right;">32.45568</td>
+<td style="text-align: right;">23.00000</td>
+<td style="text-align: right;">0.6704356</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">0.4136630</td>
+<td style="text-align: right;">37.12552</td>
+<td style="text-align: right;">25.96879</td>
+<td style="text-align: right;">0.4817725</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">0.5520060</td>
+<td style="text-align: right;">42.13743</td>
+<td style="text-align: right;">25.96295</td>
+<td style="text-align: right;">0.5305019</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de dispersión</em> que relaciona el <strong>uso de tecnología</strong> con <strong>edad</strong> y <em>colorea y da forma</em> por <strong>tipo de obesidad</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_technology, <span class="fu">aes</span>(<span class="at">x =</span> med_tech, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> tipo_obesidad, <span class="at">shape =</span> tipo_obesidad)) <span class="sc">+</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="consumo-de-alcohol-y-edad" class="level2">
+<h2 class="anchored" data-anchor-id="consumo-de-alcohol-y-edad">Consumo de alcohol y Edad</h2>
+<p>Conocer el tipo de valores de la variable consumo de alcohol</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>alcohol_consumption) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Sometimes  0          Frequently
+Levels: Sometimes 0 Frequently</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conocer-el-tipo-de-la-variable-consumo-de-alcohol" class="level1">
+<h1>Conocer el tipo de la variable consumo de alcohol</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span> (obesity<span class="sc">$</span>alcohol_consumption) <span class="co"># produce: </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona el <strong>consumo de alcohol</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> alcohol_consumption, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Gráfico de densidad</em> que ralaciona la <strong>edad</strong> con el <strong>consumo de alcohol</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> alcohol_consumption)) <span class="sc">+</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla obesity por <strong>consumo de alcohol</strong> y <em>resumir</em> por <strong>edad</strong> e <strong>índice de masa corporal</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>obesity_alcohol <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(alcohol_consumption) <span class="sc">|&gt;</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups=</span> <span class="st">"drop"</span></span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_alcohol) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">alcohol_consumption</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">32.20486</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">27.58536</td>
+<td style="text-align: right;">21.41448</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Frequently</td>
+<td style="text-align: right;">26.98962</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Diagrama de dispersión* que relaciona la mediana del </strong>índice de masa corporal** con la mediana de <strong>edad</strong> y <em>facetada</em> por <strong>consumo de alcohol</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_alcohol, <span class="fu">aes</span>(<span class="at">x =</span> med_imc, <span class="at">y =</span> med_age)) <span class="sc">+</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> alcohol_consumption)) <span class="sc">+</span></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>alcohol_consumption)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>NOTA</em>: Claramente los que toman a veces tienen más obesidad que los que no toman y los que toman con frecuencia.</p>
+<section id="medio-de-transporte" class="level2">
+<h2 class="anchored" data-anchor-id="medio-de-transporte">Medio de transporte</h2>
+<p>Conocer el tipo de valores que tiene la varible medio de transporte</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(obesity<span class="sc">$</span>transportation_mode) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Public_Transportation Automobile            Walking              
+[4] Motorbike             Bike                 
+Levels: Public_Transportation Automobile Walking Motorbike Bike</code></pre>
+</div>
+</div>
+<p>Conocer el tipo de la variable medio de transporte</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(obesity<span class="sc">$</span>transportation_mode) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que relaciona el <strong>medio de transporte</strong> con la <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> transportation_mode, <span class="at">y =</span> Age)) <span class="sc">+</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Gráfico de densidad</em> que relaciona la <strong>edad</strong> con el <strong>medio de transporte</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">color =</span> transportation_mode)) <span class="sc">+</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-73-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Agrupar</em> la tabla obesidad por <strong>medio de transporte</strong> y <em>resumir</em> por <strong>índice de masa corporal</strong> y <strong>edad</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>obesity_transport <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(transportation_mode) <span class="sc">|&gt;</span></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_imc =</span> <span class="fu">median</span>(imc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_age =</span> <span class="fu">median</span>(Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(obesity_transport)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">transportation_mode</th>
+<th style="text-align: right;">med_imc</th>
+<th style="text-align: right;">med_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Public_Transportation</td>
+<td style="text-align: right;">30.00256</td>
+<td style="text-align: right;">21.85630</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Automobile</td>
+<td style="text-align: right;">29.41176</td>
+<td style="text-align: right;">31.53939</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Walking</td>
+<td style="text-align: right;">24.22145</td>
+<td style="text-align: right;">19.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Motorbike</td>
+<td style="text-align: right;">24.48980</td>
+<td style="text-align: right;">22.50000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bike</td>
+<td style="text-align: right;">24.41226</td>
+<td style="text-align: right;">23.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>Diagrama de caja</em> que ralaciona el <strong>medio de transporte</strong> con la mediana del <strong>índice de masa coroporal</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obesity_transport, <span class="fu">aes</span>(<span class="at">x =</span> transportation_mode, </span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">y =</span> med_imc)) <span class="sc">+</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test6_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2026, Jaime V.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
