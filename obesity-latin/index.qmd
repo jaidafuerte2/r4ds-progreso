@@ -1,0 +1,39 @@
+---
+title: "Práctica previa al borrador del análisis de la tabla obesity latin"
+format: html
+editor: visual
+---
+
+![Arte pos moderno de persona obesa](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador del análisis de la tabla obesity latin" width="95%"}
+
+## Qué es esto?
+
+Esto es sólo una práctica de quarto y R con algunos gráficos y transformaciones del [obesity risk data set de kaggle](https://www.kaggle.com/datasets/muhramasaputra/obesity-based-on-eating-habits-and-physical-cond) y está enfocado sobre todo en personas de México, Perú y Colombia. (También se puede descargar esta base de datos desde [esta página](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)
+
+## ¿Qué haré ?
+
+Sólo poner en práctica algunos conocimientos para poner en marcha algunos archivos .qmd , .yml y .R con una perspectiva útil desde el punto de vista de empezar a usar [quarto](https://quarto.org/) como una especie de blog de notas
+
+## Específicamente ¿ qué crearé ?
+
+Crearé un documento [quarto](https://quarto.org/) en formato web, practicando lo aprendido hasta el capítulo 8 del libro [r4ds](https://r4ds.hadley.nz/) con la tabla [obesity latin de kaggle](https://www.kaggle.com/datasets/muhramasaputra/obesity-based-on-eating-habits-and-physical-cond)
+
+## ¿Cuál es el objetivo?
+
+-   Practicar quarto[^1] y la creación básica de una web con sidebar de contenidos
+
+-   Practicar R y la creación de gráficos con r4ds[^2] y el obesity latin de kaggle[^3].
+
+-   Practicar en quarto pub[^4] el despliegue de una web con quarto
+
+-   Adquirir experiencia para crear un blog de apariencia profesional con el obesity latin de kaggle
+
+[^1]: Página web de quarto <https://quartopub.com/>
+
+[^2]: Página web del libro r4ds <https://r4ds.hadley.nz/>
+
+[^3]: Página web para descargar el obesity latin de kaggle <https://www.kaggle.com/datasets/muhramasaputra/obesity-based-on-eating-habits-and-physical-cond>
+
+[^4]: Página web de quarto pub <https://quarto.org/docs/publishing/quarto-pub.html>
+
+## Notas

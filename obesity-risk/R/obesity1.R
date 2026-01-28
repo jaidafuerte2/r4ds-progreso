@@ -37,6 +37,7 @@ ggplot(obesity, aes(x = Age)) +
 ggplot(obesity, aes(x = Age)) +
   geom_density()
 
+
 # Diagrama de caja de Edad y tipo de obesidad
 ggplot(obesity, aes(x = tipo_obesidad, y = Age)) +
   geom_boxplot()

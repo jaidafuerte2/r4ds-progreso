@@ -1,0 +1,74 @@
+---
+title: "Transformaciones"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+obesity <- read_csv("../data/obesity-latin.csv")
+source("../R/load_data.R")
+```
+
+## Lo básico
+
+Visualizar las 4 primeras filas de la tabla obesidad
+
+```{r}
+obesity[1:4,]
+```
+
+Llamar a la tablas obesity como parámetro de la función glimpse para visulaizar las variables como filas (horizontalmente)
+
+```{r}
+glimpse(obesity)
+```
+
+## Filas
+
+Filtrar obesidad por género masculino
+```{r}
+obesity_male <- obesity |>
+  filter(Gender == "Male") # produce:
+obesity_male[1:4,] # Mostrar sólo las 4 primeras filas
+```
+
+Filtrar obesidad por género femenino
+```{r}
+obesity_female <- obesity |>
+  filter(Gender == "Female") # produce:
+obesity_female[1:4,] # Mostrar sólo las 4 primeras filas
+```
+
+Contar por tipo de obesidad y género; y mostrar en orden  descendente
+
+```{r}
+obesity |>
+  count(Gender, tipo_obesidad, sort = TRUE) # produce:
+```
+
+Contar por tipo de obesidad y género
+```{r}
+obesity |> 
+  count(tipo_obesidad, Gender) # produce:
+```
+
+Contar por tipo de obesidad y género; y mostrar en formato glimpse
+```{r}
+obesity_tipo_gender <- obesity |> 
+  count(tipo_obesidad, Gender) # produce:
+glimpse(obesity_tipo_gender)
+```
+
+
+## Columnas
+
+
+
+## Agrupar
+
+
+

@@ -8,7 +8,13 @@ website:
     style: "docked"
     contents: 
       - index.qmd
+      # Nota: los comentarios van después de la almohadilla o numeral 
       - analysis/test1.qmd
+      - analysis/test2.qmd
+      #- analysis/test3.qmd
+      #- analysis/test4.qmd
+      #- analysis/test5.qmd
+      #- analysis/test6.qmd
       
 page-footer:
   left: "Copyright 2026, COVSAcorp."

@@ -11,6 +11,7 @@ editor: visual
 library(tidyverse)
 obesity <- read_csv("../data/obesity_level.csv")
 source("../R/load_data.R")
+#getwd()
 ```
 
 ## Diagrama de dispersión

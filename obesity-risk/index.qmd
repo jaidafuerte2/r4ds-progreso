@@ -5,7 +5,7 @@ editor: visual
 bibliography: references.bib
 ---
 
-![Portada](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle" width=70%}
+![Portada](files/images/portada.jpg){fig-alt="Portada de la práctica del borrador de análisis del obesity Risk de kaggle" width="70%"}
 
 ## ¿Qué es esto?
 

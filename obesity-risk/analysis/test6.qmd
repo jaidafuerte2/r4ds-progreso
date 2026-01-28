@@ -17,7 +17,7 @@ source("../R/load_data.R")
 
 ## Introducción
 
-*Diagrama de dispersión* que relaciona el **índice de masa corporal** con la **edad** 
+*Diagrama de dispersión* que relaciona el **índice de masa corporal** con la **edad**
 
 ```{r}
 #| fig-width: 6
@@ -53,6 +53,7 @@ obesity |>
 ## Edad y género
 
 Conocer el tipo de valores que tiene la variables género
+
 ```{r}
 unique(obesity$Gender)
 ```
@@ -83,7 +84,6 @@ obesity_45years <- obesity |>
 knitr::kable(obesity_45years[1:4,])
 ```
 
-
 *Gráfico de barras* que relaciona el **género** con las personas **mayores a cuarenta y cinco años**
 
 ```{r}
@@ -93,7 +93,7 @@ ggplot(obesity_45years, aes(x = Gender, fill = more_45y)) +
   geom_bar()
 ```
 
-*Gráfico de densidad* que relaciona el **imc** con las personas **mayores a cuarenta y cinco años** y  *facetado* por **género**
+*Gráfico de densidad* que relaciona el **imc** con las personas **mayores a cuarenta y cinco años** y *facetado* por **género**
 
 ```{r}
 #| fig-width: 6
@@ -114,8 +114,6 @@ obesity_45_tipo <- obesity_45years |>
   )
 knitr::kable(obesity_45_tipo)
 ```
-
-
 
 *Diagrama de caja* que relaciona las personas **mayores de 45 años** con el **índice de masa corporal** y *facetado* por **tipo de obesidad**
 
@@ -150,7 +148,7 @@ ggplot(obesity_45_gender, aes(x = more_45y, y = med_imc)) +
 
 *Nota*: Este gráfico es definitorio. Las personas mayores de 45 años tienen un imc menor que los menores de 45 años
 
-*Diagrama de caja* que relaciona a las personas **mayores de 45 años** e **índice de masa corporal** y *facetado* por **género** 
+*Diagrama de caja* que relaciona a las personas **mayores de 45 años** e **índice de masa corporal** y *facetado* por **género**
 
 ```{r}
 #| fig-width: 6
@@ -165,11 +163,13 @@ ggplot(obesity_45_gender, aes(x = more_45y, y = med_imc)) +
 ## Edad e Historia Familiar
 
 Conocer el tipo de valores que tienela variable historia familiar de exceso de peso
+
 ```{r}
 unique(obesity$family_history_with_overweight)
 ```
 
 Conocer el tipo de la variable historia familiar de exceso de peso
+
 ```{r}
 class(obesity$family_history_with_overweight)
 ```
@@ -198,6 +198,7 @@ class(obesity$frequent_high_calorie_food) # produce:
 ```
 
 *Diagrama de caja* que relaciona la **edad** con la frecuencia de **comida muy calórica**
+
 ```{r}
 #| fig-width: 6
 #| fig-height: 4
@@ -208,6 +209,7 @@ ggplot(obesity, aes(x = frequent_high_calorie_food, y = Age)) +
 ## Consumo de Vegetales
 
 Conocer el tipo de valores que tiene la varaible consumo de vegetales
+
 ```{r}
 unique(obesity$vegetable_consumption_frequency)[1:4] # produce:
 ```
@@ -228,7 +230,7 @@ ggplot(obesity, aes(x = vegetable_consumption_frequency, y = Age)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-*Agrupar* por **tipo de obesidad** y *resumir* por **edad** y **consumo de  vegetales**
+*Agrupar* por **tipo de obesidad** y *resumir* por **edad** y **consumo de vegetales**
 
 ```{r}
 obesity_vegetable <- obesity |> 
@@ -254,7 +256,7 @@ knitr::kable(obesity_vegetable)
 ggplot(obesity_vegetable, aes(x = med_vegetable, y = med_age)) +
   geom_point(aes(color = tipo_obesidad))
 ```
-  
+
 *Diagrama de densidad* que relaciona el **consumo de vegetales** con el **tipo de obesiddad**
 
 ```{r}
@@ -363,7 +365,7 @@ ggplot(obesity_between_meal, aes(x = med_imc, y = med_age)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-*Nota*: Algo que es interesante es que al observar las medianas, vemos que las personas que no comen entre comidas tienen un mayor imc dentro de las personas de peso normal (pero siguen siendo de peso normal), pero dentro de los grupos de los grupo de exceso de peso los que no comen postres o entrecomidas tienen un imc menor dentro de sus grupos.Y es más, las personas en el grupo de obesidad  grado 3 no hay quienes no comen postre
+*Nota*: Algo que es interesante es que al observar las medianas, vemos que las personas que no comen entre comidas tienen un mayor imc dentro de las personas de peso normal (pero siguen siendo de peso normal), pero dentro de los grupos de los grupo de exceso de peso los que no comen postres o entrecomidas tienen un imc menor dentro de sus grupos.Y es más, las personas en el grupo de obesidad grado 3 no hay quienes no comen postre
 
 ## Edad y Hábito de Fumar
 
@@ -526,7 +528,6 @@ ggplot(obesity_caloric_beverages, aes(x = med_imc,
 
 *Nota*: Es interesante ver que los que no toman bebidas calóricas tienenun mayor imc.
 
-
 ## Actividad Física y Edad
 
 Conocer el tipo de valores de la variable actividad física
@@ -581,6 +582,7 @@ ggplot(obesity_activity, aes(x = med_physical, y = med_age)) +
 ## Uso de tecnología
 
 Conocer el tipo de valores que tiene la variable uso de tecnología
+
 ```{r}
 unique(obesity$technology_use_time)[1:4] # produce:
 ```
@@ -591,7 +593,7 @@ unique(obesity$technology_use_time)[1:4] # produce:
 class(obesity$technology_use_time) # produce:
 ```
 
-*Diagrama de dispersión* que relaciona el **uso de tecnología** con la **edad*
+*Diagrama de dispersión* que relaciona el **uso de tecnología** con la \*\*edad\*
 
 ```{r}
 #| fig-width: 7
@@ -673,7 +675,7 @@ obesity_alcohol <- obesity |>
 knitr::kable(obesity_alcohol) # produce:
 ```
 
-**Diagrama de dispersión* que relaciona la mediana del **índice de masa corporal** con la mediana de **edad** y *facetada* por **consumo de  alcohol**
+**Diagrama de dispersión\* que relaciona la mediana del** índice de masa corporal\*\* con la mediana de **edad** y *facetada* por **consumo de alcohol**
 
 ```{r}
 #| fig-width: 7
@@ -739,4 +741,3 @@ ggplot(obesity_transport, aes(x = transportation_mode,
                               y = med_imc)) +
   geom_boxplot()
 ```
-

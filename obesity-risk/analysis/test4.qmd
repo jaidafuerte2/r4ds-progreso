@@ -24,6 +24,7 @@ knitr::kable(obesity[1:4,])
 ## Imprimir la base de datos al revés
 
 Imprimir el obesity risk data set en la dirección contraria
+
 ```{r}
 glimpse(obesity)
 ```
@@ -63,12 +64,13 @@ knitr::kable(obesity_count_gender_tipo)
 
 ## Seleccionar
 
-Seleccionar por género, edad, imc y  tipo de obesidad
+Seleccionar por género, edad, imc y tipo de obesidad
 
 ```{r}
 obesity |>
   select(Gender, Age, imc, tipo_obesidad) 
 ```
+
 ## Agrupar
 
 Agrupar por género y tipo de obesidad y resumir imc y edad
@@ -120,4 +122,3 @@ obesity |>
     n_gender = n()
   )
 ```
-

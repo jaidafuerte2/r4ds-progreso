@@ -1,0 +1,172 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "",
+    "text": "Arte pos moderno de persona obesa",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#qué-es-esto",
+    "href": "index.html#qué-es-esto",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "Qué es esto?",
+    "text": "Qué es esto?\nEsto es sólo una práctica de quarto y R con algunos gráficos y transformaciones del obesity risk data set de kaggle y está enfocado sobre todo en personas de México, Perú y Colombia. (También se puede descargar esta base de datos desde esta página",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#qué-haré",
+    "href": "index.html#qué-haré",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "¿Qué haré ?",
+    "text": "¿Qué haré ?\nSólo poner en práctica algunos conocimientos para poner en marcha algunos archivos .qmd , .yml y .R con una perspectiva útil desde el punto de vista de empezar a usar quarto como una especie de blog de notas",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#específicamente-qué-crearé",
+    "href": "index.html#específicamente-qué-crearé",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "Específicamente ¿ qué crearé ?",
+    "text": "Específicamente ¿ qué crearé ?\nCrearé un documento quarto en formato web, practicando lo aprendido hasta el capítulo 8 del libro r4ds con la tabla obesity latin de kaggle",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#cuál-es-el-objetivo",
+    "href": "index.html#cuál-es-el-objetivo",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "¿Cuál es el objetivo?",
+    "text": "¿Cuál es el objetivo?\n\nPracticar quarto1 y la creación básica de una web con sidebar de contenidos\nPracticar R y la creación de gráficos con r4ds2 y el obesity latin de kaggle3.\nPracticar en quarto pub4 el despliegue de una web con quarto\nAdquirir experiencia para crear un blog de apariencia profesional con el obesity latin de kaggle",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#notas",
+    "href": "index.html#notas",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "Notas",
+    "text": "Notas",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "Práctica previa al borrador del análisis de la tabla obesity latin",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nPágina web de quarto https://quartopub.com/↩︎\nPágina web del libro r4ds https://r4ds.hadley.nz/↩︎\nPágina web para descargar el obesity latin de kaggle https://www.kaggle.com/datasets/muhramasaputra/obesity-based-on-eating-habits-and-physical-cond↩︎\nPágina web de quarto pub https://quarto.org/docs/publishing/quarto-pub.html↩︎",
+    "crumbs": [
+      "Práctica previa al borrador del análisis de la tabla obesity latin"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html",
+    "href": "analysis/test1.html",
+    "title": "Visualización",
+    "section": "",
+    "text": "Diagrama de dispersión que relaciona el imc con la edad coloreado por tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() +\n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nDiagrama de dispersión que relaciona con la edad tomando en cuenta el tipo de obesidad y con etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, \n                           shape = tipo_obesidad)) +\n  geom_smooth(method = \"lm\") +\n  labs(\n    title = \"Edad e imc\",\n    subtitle = \"Edad según imc\",\n    x = \"imc = Kg/m^2\", y = \"Edad en años\",\n    color = \"tipo de obesidad\", shape = \"tipo de obesidad\"\n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Visualización"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#primeras-visualizaciones",
+    "href": "analysis/test1.html#primeras-visualizaciones",
+    "title": "Visualización",
+    "section": "",
+    "text": "Diagrama de dispersión que relaciona el imc con la edad coloreado por tipo de obesidad\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age, color = tipo_obesidad)\n) +\n  geom_point() +\n  geom_smooth(method = \"lm\")\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nDiagrama de dispersión que relaciona con la edad tomando en cuenta el tipo de obesidad y con etiquetas\n\nggplot(\n  data = obesity,\n  mapping = aes(x = imc, y = Age)\n) +\n  geom_point(mapping = aes(color = tipo_obesidad, \n                           shape = tipo_obesidad)) +\n  geom_smooth(method = \"lm\") +\n  labs(\n    title = \"Edad e imc\",\n    subtitle = \"Edad según imc\",\n    x = \"imc = Kg/m^2\", y = \"Edad en años\",\n    color = \"tipo de obesidad\", shape = \"tipo de obesidad\"\n  )\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Visualización"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#visualizaciones-con-una-sola-variable",
+    "href": "analysis/test1.html#visualizaciones-con-una-sola-variable",
+    "title": "Visualización",
+    "section": "Visualizaciones con una sola variable",
+    "text": "Visualizaciones con una sola variable\nGrafico de barras para tipo de obesidad.\n\nggplot(obesity, aes(x = tipo_obesidad)) +\n  geom_bar() +\n  labs(\n    title = \"Gráfico de barras de\",\n    subtitle = \"tipo de obesidad\",\n    x = \"Tipo de obesidad\",\n    y = \"cantidad\"\n  )\n\n\n\n\n\n\n\n\nHistograma de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_histogram(binwidth = 1) +\n  labs(\n    title = \"Histograma de\",\n    subtitle = \"Edad\",\n    x = \"edad\", y = \"cantidad\"\n  )\n\n\n\n\n\n\n\n\nGráfico de densidad de edad\n\nggplot(obesity, aes(x = Age)) +\n  geom_density() +\n  labs(\n    title = \"Gráfico de densidad de\",\n    subtitle = \"Edad\",\n    x = \"Edad\", y = \"Densidad\"\n  )",
+    "crumbs": [
+      "Visualización"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#visualizaciones-que-relacionan-dos-variables",
+    "href": "analysis/test1.html#visualizaciones-que-relacionan-dos-variables",
+    "title": "Visualización",
+    "section": "Visualizaciones que relacionan dos variables",
+    "text": "Visualizaciones que relacionan dos variables\nDiagrama de caja de edad y tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, y = Age)) +\n  geom_boxplot() +\n  labs(\n    title = \"Diagrama de caja de\",\n    subtitle = \"Tipo de obesidad y edad\",\n    x = \"tipo de obesidad\", y = \"Edad\"\n  )\n\n\n\n\n\n\n\n\nGráfico de densidad de edad y tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)\n\n\n\n\n\n\n\n\nGráfico de densidad de edad y tipo de obesidad con relleno por tipo de obesidad y opacidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad,\n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)\n\n\n\n\n\n\n\n\nDiagrama de dispersión que relaciona edad e índice de masa corporal\n\nggplot(obesity, aes(x = Age, y = imc)) +\n  geom_point()  \n\n\n\n\n\n\n\n\nGráfico de barras que relaciona el tipo de obesidad con el género\n\nggplot(obesity, aes(x = tipo_obesidad, fill = Gender)) +\n  geom_bar()\n\n\n\n\n\n\n\n\nGráfico de barras que relaciona el tipo de obesidad con el género comparando la distribución entre tipo de obesidad\n\nggplot(obesity, aes(x = tipo_obesidad, fill = Gender)) +\n  geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nGráfico de barras que relaciona el tipo de obesidad con el género comparando la distribución entre tipo de obesidad y etiquetando la proporción\n\nggplot(obesity, aes(x = tipo_obesidad, fill = Gender)) +\n  geom_bar(position = \"fill\") +\n  labs(y = \"Proporción\")",
+    "crumbs": [
+      "Visualización"
+    ]
+  },
+  {
+    "objectID": "analysis/test1.html#visualizaciones-que-relacionan-múltiples-variables",
+    "href": "analysis/test1.html#visualizaciones-que-relacionan-múltiples-variables",
+    "title": "Visualización",
+    "section": "Visualizaciones que relacionan múltiples variables",
+    "text": "Visualizaciones que relacionan múltiples variables\nDiagrama de dispersión que relaciona la edad con el índice de masa corporal coloreado por tipo de obesidad y formateado por género\n\nggplot(obesity, aes(x = Age, y = imc)) +\n  geom_point(aes(color = tipo_obesidad, shape = Gender))\n\n\n\n\n\n\n\n\nDiagrama de dispersión que relaciona la edad con el índice de masa corporal coloreado por tipo de obesidad y formateado por tipo de obesidad y facetado por género\n\nggplot(obesity, aes(x = Age, y = imc)) +\n  geom_point(aes(color = tipo_obesidad, shape = tipo_obesidad)) +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Visualización"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html",
+    "href": "analysis/test2.html",
+    "title": "Transformaciones",
+    "section": "",
+    "text": "Visualizar las 4 primeras filas de la tabla obesidad\n\nobesity[1:4,]\n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Female    21   1.62     64 yes                         no        2     3 Some…\n2 Female    21   1.52     56 yes                         no        3     3 Some…\n3 Male      23   1.8      77 yes                         no        2     3 Some…\n4 Male      27   1.8      87 no                          no        3     3 Some…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;\n\n\nLlamar a la tablas obesity como parámetro de la función glimpse para visulaizar las variables como filas (horizontalmente)\n\nglimpse(obesity)\n\nRows: 2,111\nColumns: 19\n$ Gender                         &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Ma…\n$ Age                            &lt;dbl&gt; 21, 21, 23, 27, 22, 29, 23, 22, 24, 22,…\n$ Height                         &lt;dbl&gt; 1.62, 1.52, 1.80, 1.80, 1.78, 1.62, 1.5…\n$ Weight                         &lt;dbl&gt; 64.0, 56.0, 77.0, 87.0, 89.8, 53.0, 55.…\n$ family_history_with_overweight &lt;chr&gt; \"yes\", \"yes\", \"yes\", \"no\", \"no\", \"no\", …\n$ FAVC                           &lt;chr&gt; \"no\", \"no\", \"no\", \"no\", \"no\", \"yes\", \"y…\n$ FCVC                           &lt;dbl&gt; 2, 3, 2, 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, …\n$ NCP                            &lt;dbl&gt; 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, …\n$ CAEC                           &lt;chr&gt; \"Sometimes\", \"Sometimes\", \"Sometimes\", …\n$ SMOKE                          &lt;chr&gt; \"no\", \"yes\", \"no\", \"no\", \"no\", \"no\", \"n…\n$ CH2O                           &lt;dbl&gt; 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, …\n$ SCC                            &lt;chr&gt; \"no\", \"yes\", \"no\", \"no\", \"no\", \"no\", \"n…\n$ FAF                            &lt;dbl&gt; 0, 3, 2, 2, 0, 0, 1, 3, 1, 1, 2, 2, 2, …\n$ TUE                            &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 1, 0, …\n$ CALC                           &lt;chr&gt; \"no\", \"Sometimes\", \"Frequently\", \"Frequ…\n$ MTRANS                         &lt;chr&gt; \"Public_Transportation\", \"Public_Transp…\n$ NObeyesdad                     &lt;chr&gt; \"Normal_Weight\", \"Normal_Weight\", \"Norm…\n$ imc                            &lt;dbl&gt; 24.38653, 24.23823, 23.76543, 26.85185,…\n$ tipo_obesidad                  &lt;chr&gt; \"Peso normal\", \"Peso normal\", \"Peso nor…",
+    "crumbs": [
+      "Transformaciones"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#lo-básico",
+    "href": "analysis/test2.html#lo-básico",
+    "title": "Transformaciones",
+    "section": "",
+    "text": "Visualizar las 4 primeras filas de la tabla obesidad\n\nobesity[1:4,]\n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Female    21   1.62     64 yes                         no        2     3 Some…\n2 Female    21   1.52     56 yes                         no        3     3 Some…\n3 Male      23   1.8      77 yes                         no        2     3 Some…\n4 Male      27   1.8      87 no                          no        3     3 Some…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;\n\n\nLlamar a la tablas obesity como parámetro de la función glimpse para visulaizar las variables como filas (horizontalmente)\n\nglimpse(obesity)\n\nRows: 2,111\nColumns: 19\n$ Gender                         &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Ma…\n$ Age                            &lt;dbl&gt; 21, 21, 23, 27, 22, 29, 23, 22, 24, 22,…\n$ Height                         &lt;dbl&gt; 1.62, 1.52, 1.80, 1.80, 1.78, 1.62, 1.5…\n$ Weight                         &lt;dbl&gt; 64.0, 56.0, 77.0, 87.0, 89.8, 53.0, 55.…\n$ family_history_with_overweight &lt;chr&gt; \"yes\", \"yes\", \"yes\", \"no\", \"no\", \"no\", …\n$ FAVC                           &lt;chr&gt; \"no\", \"no\", \"no\", \"no\", \"no\", \"yes\", \"y…\n$ FCVC                           &lt;dbl&gt; 2, 3, 2, 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, …\n$ NCP                            &lt;dbl&gt; 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, …\n$ CAEC                           &lt;chr&gt; \"Sometimes\", \"Sometimes\", \"Sometimes\", …\n$ SMOKE                          &lt;chr&gt; \"no\", \"yes\", \"no\", \"no\", \"no\", \"no\", \"n…\n$ CH2O                           &lt;dbl&gt; 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, …\n$ SCC                            &lt;chr&gt; \"no\", \"yes\", \"no\", \"no\", \"no\", \"no\", \"n…\n$ FAF                            &lt;dbl&gt; 0, 3, 2, 2, 0, 0, 1, 3, 1, 1, 2, 2, 2, …\n$ TUE                            &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 1, 0, …\n$ CALC                           &lt;chr&gt; \"no\", \"Sometimes\", \"Frequently\", \"Frequ…\n$ MTRANS                         &lt;chr&gt; \"Public_Transportation\", \"Public_Transp…\n$ NObeyesdad                     &lt;chr&gt; \"Normal_Weight\", \"Normal_Weight\", \"Norm…\n$ imc                            &lt;dbl&gt; 24.38653, 24.23823, 23.76543, 26.85185,…\n$ tipo_obesidad                  &lt;chr&gt; \"Peso normal\", \"Peso normal\", \"Peso nor…",
+    "crumbs": [
+      "Transformaciones"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#filas",
+    "href": "analysis/test2.html#filas",
+    "title": "Transformaciones",
+    "section": "Filas",
+    "text": "Filas\nFiltrar obesidad por género masculino\n\nobesity_male &lt;- obesity |&gt;\n  filter(Gender == \"Male\") # produce:\nobesity_male[1:4,] # Mostrar sólo las 4 primeras filas\n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Male      23   1.8    77   yes                         no        2     3 Some…\n2 Male      27   1.8    87   no                          no        3     3 Some…\n3 Male      22   1.78   89.8 no                          no        2     1 Some…\n4 Male      29   1.62   53   no                          yes       2     3 Some…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;\n\n\nFiltrar obesidad por género femenino\n\nobesity_female &lt;- obesity |&gt;\n  filter(Gender == \"Female\") # produce:\nobesity_female[1:4,] # Mostrar sólo las 4 primeras filas\n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Female    21   1.62     64 yes                         no        2     3 Some…\n2 Female    21   1.52     56 yes                         no        3     3 Some…\n3 Female    23   1.5      55 yes                         yes       3     3 Some…\n4 Female    21   1.72     80 yes                         yes       2     3 Freq…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;\n\n\nContar por tipo de obesidad y género; y mostrar en orden descendente\n\nobesity |&gt;\n  count(Gender, tipo_obesidad, sort = TRUE) # produce:\n\n# A tibble: 12 × 3\n   Gender tipo_obesidad        n\n   &lt;chr&gt;  &lt;chr&gt;            &lt;int&gt;\n 1 Male   Sobrepesso         330\n 2 Male   Obesidad grado 2   279\n 3 Female Obesidad grado 3   267\n 4 Female Sobrepesso         236\n 5 Male   Obesidad grado 1   212\n 6 Female Desnutrición       171\n 7 Female Obesidad grado 1   156\n 8 Female Peso normal        154\n 9 Male   Peso normal        146\n10 Male   Desnutrición       100\n11 Female Obesidad grado 2    59\n12 Male   Obesidad grado 3     1\n\n\nContar por tipo de obesidad y género\n\nobesity |&gt; \n  count(tipo_obesidad, Gender) # produce:\n\n# A tibble: 12 × 3\n   tipo_obesidad    Gender     n\n   &lt;chr&gt;            &lt;chr&gt;  &lt;int&gt;\n 1 Desnutrición     Female   171\n 2 Desnutrición     Male     100\n 3 Obesidad grado 1 Female   156\n 4 Obesidad grado 1 Male     212\n 5 Obesidad grado 2 Female    59\n 6 Obesidad grado 2 Male     279\n 7 Obesidad grado 3 Female   267\n 8 Obesidad grado 3 Male       1\n 9 Peso normal      Female   154\n10 Peso normal      Male     146\n11 Sobrepesso       Female   236\n12 Sobrepesso       Male     330\n\n\nContar por tipo de obesidad y género; y mostrar en formato glimpse\n\nobesity_tipo_gender &lt;- obesity |&gt; \n  count(tipo_obesidad, Gender) # produce:\nglimpse(obesity_tipo_gender)\n\nRows: 12\nColumns: 3\n$ tipo_obesidad &lt;chr&gt; \"Desnutrición\", \"Desnutrición\", \"Obesidad grado 1\", \"Obe…\n$ Gender        &lt;chr&gt; \"Female\", \"Male\", \"Female\", \"Male\", \"Female\", \"Male\", \"F…\n$ n             &lt;int&gt; 171, 100, 156, 212, 59, 279, 267, 1, 154, 146, 236, 330",
+    "crumbs": [
+      "Transformaciones"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#columnas",
+    "href": "analysis/test2.html#columnas",
+    "title": "Transformaciones",
+    "section": "Columnas",
+    "text": "Columnas",
+    "crumbs": [
+      "Transformaciones"
+    ]
+  },
+  {
+    "objectID": "analysis/test2.html#agrupar",
+    "href": "analysis/test2.html#agrupar",
+    "title": "Transformaciones",
+    "section": "Agrupar",
+    "text": "Agrupar",
+    "crumbs": [
+      "Transformaciones"
+    ]
+  }
+]
