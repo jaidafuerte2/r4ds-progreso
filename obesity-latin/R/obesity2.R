@@ -93,6 +93,21 @@ obesity |>
 #9 obesidad grado 2 Male    2906
 #10 obesidad grado 2 Female  4060
 
+# Mutar la tabla obesidad para agregar una variable que muestre
+# si una persona tiene 45 o más años
+obesity_45 <- obesity |>
+  mutate(
+    more45_years = Age >= 45
+  )
+obesity_45[1:4,] # produce:
+# A tibble: 4 × 20
+#  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP
+#  <chr>  <dbl>  <dbl>  <dbl> <chr>                       <chr> <dbl> <dbl>
+#1 Female    21   1.62     64 yes                         no        2     3
+#2 Female    21   1.52     56 yes                         no        3     3
+#3 Male      23   1.8      77 yes                         no        2     3
+#4 Male      27   1.8      87 no                          no        3     3
+
 # En la tabla de obesidad seleccionar por género, índice de masa 
 # corporal, edad y tipo de obesidad
 obesity |>
@@ -112,8 +127,7 @@ obesity |>
 #10 Female  41.4  26   obesidad grado 2
 # ℹ 20,748 more rows
 
-# Agrupar por género de tipo de obesidad y resumir por índice de
-# masa coroporal
+# Contar por género de tipo de obesidad 
 obesity |>
   group_by(Gender, tipo_obesidad) |>
   summarise(

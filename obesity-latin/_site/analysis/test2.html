@@ -334,21 +334,128 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obesity_tipo_gender <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(tipo_obesidad, Gender) <span class="co"># produce:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(obesity_tipo_gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#glimpse(obesity_tipo_gender)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>obesity_tipo_gender</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 12
-Columns: 3
-$ tipo_obesidad &lt;chr&gt; "Desnutrición", "Desnutrición", "Obesidad grado 1", "Obe…
-$ Gender        &lt;chr&gt; "Female", "Male", "Female", "Male", "Female", "Male", "F…
-$ n             &lt;int&gt; 171, 100, 156, 212, 59, 279, 267, 1, 154, 146, 236, 330</code></pre>
+<pre><code># A tibble: 12 × 3
+   tipo_obesidad    Gender     n
+   &lt;chr&gt;            &lt;chr&gt;  &lt;int&gt;
+ 1 Desnutrición     Female   171
+ 2 Desnutrición     Male     100
+ 3 Obesidad grado 1 Female   156
+ 4 Obesidad grado 1 Male     212
+ 5 Obesidad grado 2 Female    59
+ 6 Obesidad grado 2 Male     279
+ 7 Obesidad grado 3 Female   267
+ 8 Obesidad grado 3 Male       1
+ 9 Peso normal      Female   154
+10 Peso normal      Male     146
+11 Sobrepesso       Female   236
+12 Sobrepesso       Male     330</code></pre>
 </div>
 </div>
 </section>
 <section id="columnas" class="level2">
 <h2 class="anchored" data-anchor-id="columnas">Columnas</h2>
+<p>Mutar la tabla obesidad para agregar una variable que muestre si una persona tiene 45 o más años</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>obesity_45 <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">more45_years =</span> Age <span class="sc">&gt;=</span> <span class="dv">45</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#.before = 1,# Para que la nueva variable esté a </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                 <span class="co"># la izquierda</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#.after = Age # Para que la nueva variable esté</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                  <span class="co"># después de Age</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.keep =</span> <span class="st">"used"</span> <span class="co"># Para conservar solo las variables</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                   <span class="co"># involucradas en mutate</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>obesity_45[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+    Age more45_years
+  &lt;dbl&gt; &lt;lgl&gt;       
+1    21 FALSE       
+2    21 FALSE       
+3    23 FALSE       
+4    27 FALSE       </code></pre>
+</div>
+</div>
+<p>En la tabla de obesidad seleccionar por género, índice de masa corporal, edad y tipo de obesidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>selected_obesity <span class="ot">&lt;-</span> obesity <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Gender, imc, Age, tipo_obesidad) <span class="co"># produce:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>selected_obesity[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  Gender   imc   Age tipo_obesidad
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        
+1 Female  24.4    21 Peso normal  
+2 Female  24.2    21 Peso normal  
+3 Male    23.8    23 Peso normal  
+4 Male    26.9    27 Sobrepesso   </code></pre>
+</div>
+</div>
 </section>
 <section id="agrupar" class="level2">
 <h2 class="anchored" data-anchor-id="agrupar">Agrupar</h2>
+<p>Contar por género de tipo de obesidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender, tipo_obesidad) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gender_tipo =</span> <span class="fu">n</span>(),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"keep"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+# Groups:   Gender, tipo_obesidad [12]
+   Gender tipo_obesidad    n_gender_tipo
+   &lt;chr&gt;  &lt;chr&gt;                    &lt;int&gt;
+ 1 Female Desnutrición               171
+ 2 Female Obesidad grado 1           156
+ 3 Female Obesidad grado 2            59
+ 4 Female Obesidad grado 3           267
+ 5 Female Peso normal                154
+ 6 Female Sobrepesso                 236
+ 7 Male   Desnutrición               100
+ 8 Male   Obesidad grado 1           212
+ 9 Male   Obesidad grado 2           279
+10 Male   Obesidad grado 3             1
+11 Male   Peso normal                146
+12 Male   Sobrepesso                 330</code></pre>
+</div>
+</div>
+<p>Filtrar por tipo de obesidad grado 3, agrupar por género y resumir por cantidad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_obesidad <span class="sc">==</span> <span class="st">"Obesidad grado 3"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gender =</span> <span class="fu">n</span>()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  Gender n_gender
+  &lt;chr&gt;     &lt;int&gt;
+1 Female      267
+2 Male          1</code></pre>
+</div>
+</div>
+<p>Conocer la cantidad de personas por género</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>obesity <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gender =</span> <span class="fu">n</span>()</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  Gender n_gender
+  &lt;chr&gt;     &lt;int&gt;
+1 Female     1043
+2 Male       1068</code></pre>
+</div>
+</div>
 
 
 </section>

@@ -60,15 +60,67 @@ Contar por tipo de obesidad y género; y mostrar en formato glimpse
 ```{r}
 obesity_tipo_gender <- obesity |> 
   count(tipo_obesidad, Gender) # produce:
-glimpse(obesity_tipo_gender)
+#glimpse(obesity_tipo_gender)
+obesity_tipo_gender
 ```
-
 
 ## Columnas
 
+Mutar la tabla obesidad para agregar una variable que muestre si una persona tiene 45 o más años
 
+```{r}
+obesity_45 <- obesity |>
+  mutate(
+    more45_years = Age >= 45,
+    #.before = 1,# Para que la nueva variable esté a 
+                 # la izquierda
+    #.after = Age # Para que la nueva variable esté
+                  # después de Age
+    .keep = "used" # Para conservar solo las variables
+                   # involucradas en mutate
+  )
+obesity_45[1:4,] # produce:
+```
+
+En la tabla de obesidad seleccionar por género, índice de masa corporal, edad y tipo de obesidad
+
+```{r}
+selected_obesity <- obesity |>
+  select(Gender, imc, Age, tipo_obesidad) # produce:
+selected_obesity[1:4,]
+```
 
 ## Agrupar
 
+Contar por género de tipo de obesidad 
 
+```{r}
+obesity |>
+  group_by(Gender, tipo_obesidad) |>
+  summarise(
+    n_gender_tipo = n(),
+    .groups = "keep"
+  ) # produce:
+```
+
+Filtrar por tipo de obesidad grado 3, agrupar por género y resumir por cantidad
+
+```{r}
+obesity |> 
+  filter(tipo_obesidad == "Obesidad grado 3") |>
+  group_by(Gender) |>
+  summarise(
+    n_gender = n()
+  )
+```
+
+Conocer la cantidad de personas por género
+
+```{r}
+obesity |>
+  group_by(Gender) |>
+  summarise(
+    n_gender = n()
+  ) # produce:
+```
 
