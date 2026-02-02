@@ -1,0 +1,161 @@
+---
+title: "Puntos Importantes"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+obesity <- read_csv("../data/obesity-latin.csv")
+source("../R/load_data.R")
+```
+
+## Visualizaciones
+
+*Visualizar* barras de **tipo de obesidad** en orden descendente
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +
+  geom_bar()
+```
+
+*Diagrama de densidad* que relaciona la **edad** con el **tipo de obesidad**
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Age, color = tipo_obesidad)) +
+  geom_density(linewidth = 0.75)
+```
+
+*Diagrama de densidad* que relaciona la **edad** con el **tipo de obesidad** y una transparencia de 0.5
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Age, color = tipo_obesidad, 
+                    fill = tipo_obesidad)) +
+  geom_density(alpha = 0.5)
+```
+
+## Transformaciones
+
+```{r}
+# Los nombres de las variables y otros se separan con guiones bajos como en python, no con guiones medios como en lisp
+```
+
+Cambiar el nombre de las variables
+
+```{r}
+obesity_renamed <- obesity |>
+  rename(
+    peso = Weight,
+    altura = Height
+  )
+obesity_renamed[1:4,]
+```
+
+*Reposicionar* **imc** y **tipo de obesidad** al inicio de la tabla
+
+```{r}
+obesity_relocated <- obesity |>
+  relocate(imc, tipo_obesidad)
+obesity_relocated[1:4,] # produce:
+```
+
+*Agrupar* por **tipo de obesidad** y **género** y *resumir* por **imc** y **edad**
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "drop"
+  ) # produce:
+```
+
+## Estilo
+
+```{r}
+# Los nombres usados antes de "<-" y en mutate deben tener solo letras minúsculas, numeros y se separa palabras con guiones bajos "_"
+```
+
+Los operadores siempre van con espacios menos el signo de potencia
+```{r}
+z <- (2 + 4)^2 / 12 
+```
+
+```{r}
+# Estilo para nombres de archivos:
+# 1. Evitar espacios, símbolos y caracteres especiales.
+# 2. Los nombres deben describir lo que hay en el archivo
+# 3. Los nombres deben funcionar bien con el orden predeterminado, 
+# incluso puede comenzar con números para que se coloquen en el orden
+# correcto. Ejemplo:
+# - Mal:
+#alternative model.R
+#code for exploratory analysis.r
+#finalreport.qmd
+#FinalReport.qmd
+#fig 1.png
+#Figure_02.png
+#model_first_try.R
+#run-first.r
+#temp.txt
+# Bien:
+#01-load-data.R
+#02-exploratory-analysis.R
+#03-model-approach-1.R
+#04-model-approach-2.R
+#fig-01.png
+#fig-02.png
+#report-2022-03-20.qmd
+#report-2022-04-02.qmd
+#report-draft-notes.txt
+
+```
+
+Conocer el directorio actual de trabajo
+
+```{r}
+getwd() # produce:
+```
+
+## Importar datos
+
+Cambiar el tipo de la variable género de character a factor
+
+```{r}
+obesity_new_types <- obesity |>
+  mutate(
+    Gender = factor(Gender)
+  )
+obesity_new_types[1:4,] 
+```
+
+Escribir una tabla en un archivo csv
+
+```{r}
+getwd() # produce:
+write_csv(obesity, "../data/my_obesity2.csv")
+```
+
+
+## Importar Datos
+
+Cambiar el tipo de la variable género
+
+```{r}
+obesity_new_types <- obesity |>
+  mutate(
+    Gender = factor(Gender)
+  )
+obesity_new_types[1:4,]
+```
+

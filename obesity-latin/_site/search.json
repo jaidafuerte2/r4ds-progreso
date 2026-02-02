@@ -168,5 +168,65 @@
     "crumbs": [
       "Transformaciones"
     ]
+  },
+  {
+    "objectID": "analysis/test3.html",
+    "href": "analysis/test3.html",
+    "title": "Puntos Importantes",
+    "section": "",
+    "text": "Visualizar barras de tipo de obesidad en orden descendente\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +\n  geom_bar()\n\n\n\n\n\n\n\n\nDiagrama de densidad que relaciona la edad con el tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)\n\n\n\n\n\n\n\n\nDiagrama de densidad que relaciona la edad con el tipo de obesidad y una transparencia de 0.5\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#visualizaciones",
+    "href": "analysis/test3.html#visualizaciones",
+    "title": "Puntos Importantes",
+    "section": "",
+    "text": "Visualizar barras de tipo de obesidad en orden descendente\n\nggplot(obesity, aes(x = fct_infreq(tipo_obesidad))) +\n  geom_bar()\n\n\n\n\n\n\n\n\nDiagrama de densidad que relaciona la edad con el tipo de obesidad\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad)) +\n  geom_density(linewidth = 0.75)\n\n\n\n\n\n\n\n\nDiagrama de densidad que relaciona la edad con el tipo de obesidad y una transparencia de 0.5\n\nggplot(obesity, aes(x = Age, color = tipo_obesidad, \n                    fill = tipo_obesidad)) +\n  geom_density(alpha = 0.5)",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#transformaciones",
+    "href": "analysis/test3.html#transformaciones",
+    "title": "Puntos Importantes",
+    "section": "Transformaciones",
+    "text": "Transformaciones\n\n# Los nombres de las variables y otros se separan con guiones bajos como en python, no con guiones medios como en lisp\n\nCambiar el nombre de las variables\n\nobesity_renamed &lt;- obesity |&gt;\n  rename(\n    peso = Weight,\n    altura = Height\n  )\nobesity_renamed[1:4,]\n\n# A tibble: 4 × 19\n  Gender   Age altura  peso family_history_with_…¹ FAVC   FCVC   NCP CAEC  SMOKE\n  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;\n1 Female    21   1.62    64 yes                    no        2     3 Some… no   \n2 Female    21   1.52    56 yes                    no        3     3 Some… yes  \n3 Male      23   1.8     77 yes                    no        2     3 Some… no   \n4 Male      27   1.8     87 no                     no        3     3 Some… no   \n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 9 more variables: CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;, TUE &lt;dbl&gt;, CALC &lt;chr&gt;,\n#   MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;, tipo_obesidad &lt;chr&gt;\n\n\nReposicionar imc y tipo de obesidad al inicio de la tabla\n\nobesity_relocated &lt;- obesity |&gt;\n  relocate(imc, tipo_obesidad)\nobesity_relocated[1:4,] # produce:\n\n# A tibble: 4 × 19\n    imc tipo_obesidad Gender   Age Height Weight family_history_with_ove…¹ FAVC \n  &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                     &lt;chr&gt;\n1  24.4 Peso normal   Female    21   1.62     64 yes                       no   \n2  24.2 Peso normal   Female    21   1.52     56 yes                       no   \n3  23.8 Peso normal   Male      23   1.8      77 yes                       no   \n4  26.9 Sobrepesso    Male      27   1.8      87 no                        no   \n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 11 more variables: FCVC &lt;dbl&gt;, NCP &lt;dbl&gt;, CAEC &lt;chr&gt;, SMOKE &lt;chr&gt;,\n#   CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;, TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;,\n#   NObeyesdad &lt;chr&gt;\n\n\nAgrupar por tipo de obesidad y género y resumir por imc y edad\n\nobesity |&gt;\n  group_by(tipo_obesidad, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    med_age = median(Age, na.rm = TRUE),\n    .groups = \"drop\"\n  ) # produce:\n\n# A tibble: 12 × 4\n   tipo_obesidad    Gender med_imc med_age\n   &lt;chr&gt;            &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n 1 Desnutrición     Female    17.5    19.9\n 2 Desnutrición     Male      17.6    18  \n 3 Obesidad grado 1 Female    31.9    23  \n 4 Obesidad grado 1 Male      32.7    22.9\n 5 Obesidad grado 2 Female    39.0    25.9\n 6 Obesidad grado 2 Male      36.5    27.6\n 7 Obesidad grado 3 Female    42.8    22.8\n 8 Obesidad grado 3 Male      49.5    18  \n 9 Peso normal      Female    22.0    21  \n10 Peso normal      Male      22.5    21  \n11 Sobrepesso       Female    26.7    22.8\n12 Sobrepesso       Male      27.2    22.7",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#estilo",
+    "href": "analysis/test3.html#estilo",
+    "title": "Puntos Importantes",
+    "section": "Estilo",
+    "text": "Estilo\n\n# Los nombres usados antes de \"&lt;-\" y en mutate deben tener solo letras minúsculas, numeros y se separa palabras con guiones bajos \"_\"\n\nLos operadores siempre van con espacios menos el signo de potencia\n\nz &lt;- (2 + 4)^2 / 12 \n\n\n# Estilo para nombres de archivos:\n# 1. Evitar espacios, símbolos y caracteres especiales.\n# 2. Los nombres deben describir lo que hay en el archivo\n# 3. Los nombres deben funcionar bien con el orden predeterminado, \n# incluso puede comenzar con números para que se coloquen en el orden\n# correcto. Ejemplo:\n# - Mal:\n#alternative model.R\n#code for exploratory analysis.r\n#finalreport.qmd\n#FinalReport.qmd\n#fig 1.png\n#Figure_02.png\n#model_first_try.R\n#run-first.r\n#temp.txt\n# Bien:\n#01-load-data.R\n#02-exploratory-analysis.R\n#03-model-approach-1.R\n#04-model-approach-2.R\n#fig-01.png\n#fig-02.png\n#report-2022-03-20.qmd\n#report-2022-04-02.qmd\n#report-draft-notes.txt\n\nConocer el directorio actual de trabajo\n\ngetwd() # produce:\n\n[1] \"/cloud/project/r4ds-progreso/obesity-latin/analysis\"",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#importar-datos",
+    "href": "analysis/test3.html#importar-datos",
+    "title": "Puntos Importantes",
+    "section": "Importar datos",
+    "text": "Importar datos\nCambiar el tipo de la variable género de character a factor\n\nobesity_new_types &lt;- obesity |&gt;\n  mutate(\n    Gender = factor(Gender)\n  )\nobesity_new_types[1:4,] \n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Female    21   1.62     64 yes                         no        2     3 Some…\n2 Female    21   1.52     56 yes                         no        3     3 Some…\n3 Male      23   1.8      77 yes                         no        2     3 Some…\n4 Male      27   1.8      87 no                          no        3     3 Some…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;\n\n\nEscribir una tabla en un archivo csv\n\ngetwd() # produce:\n\n[1] \"/cloud/project/r4ds-progreso/obesity-latin/analysis\"\n\nwrite_csv(obesity, \"../data/my_obesity2.csv\")",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
+  },
+  {
+    "objectID": "analysis/test3.html#importar-datos-1",
+    "href": "analysis/test3.html#importar-datos-1",
+    "title": "Puntos Importantes",
+    "section": "Importar Datos",
+    "text": "Importar Datos\nCambiar el tipo de la variable género\n\nobesity_new_types &lt;- obesity |&gt;\n  mutate(\n    Gender = factor(Gender)\n  )\nobesity_new_types[1:4,]\n\n# A tibble: 4 × 19\n  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC \n  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;\n1 Female    21   1.62     64 yes                         no        2     3 Some…\n2 Female    21   1.52     56 yes                         no        3     3 Some…\n3 Male      23   1.8      77 yes                         no        2     3 Some…\n4 Male      27   1.8      87 no                          no        3     3 Some…\n# ℹ abbreviated name: ¹​family_history_with_overweight\n# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,\n#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,\n#   tipo_obesidad &lt;chr&gt;",
+    "crumbs": [
+      "Puntos Importantes"
+    ]
   }
 ]

@@ -30,6 +30,7 @@ glimpse(obesity)
 ## Filas
 
 Filtrar obesidad por género masculino
+
 ```{r}
 obesity_male <- obesity |>
   filter(Gender == "Male") # produce:
@@ -37,13 +38,14 @@ obesity_male[1:4,] # Mostrar sólo las 4 primeras filas
 ```
 
 Filtrar obesidad por género femenino
+
 ```{r}
 obesity_female <- obesity |>
   filter(Gender == "Female") # produce:
 obesity_female[1:4,] # Mostrar sólo las 4 primeras filas
 ```
 
-Contar por tipo de obesidad y género; y mostrar en orden  descendente
+Contar por tipo de obesidad y género; y mostrar en orden descendente
 
 ```{r}
 obesity |>
@@ -51,12 +53,14 @@ obesity |>
 ```
 
 Contar por tipo de obesidad y género
+
 ```{r}
 obesity |> 
   count(tipo_obesidad, Gender) # produce:
 ```
 
 Contar por tipo de obesidad y género; y mostrar en formato glimpse
+
 ```{r}
 obesity_tipo_gender <- obesity |> 
   count(tipo_obesidad, Gender) # produce:
@@ -92,7 +96,7 @@ selected_obesity[1:4,]
 
 ## Agrupar
 
-Contar por género de tipo de obesidad 
+Contar por género de tipo de obesidad
 
 ```{r}
 obesity |>
@@ -123,4 +127,3 @@ obesity |>
     n_gender = n()
   ) # produce:
 ```
-
