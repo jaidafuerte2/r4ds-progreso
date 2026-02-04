@@ -261,15 +261,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>obesity_renamed[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age altura  peso family_history_with_…¹ FAVC   FCVC   NCP CAEC  SMOKE
-  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-1 Female    21   1.62    64 yes                    no        2     3 Some… no   
-2 Female    21   1.52    56 yes                    no        3     3 Some… yes  
-3 Male      23   1.8     77 yes                    no        2     3 Some… no   
-4 Male      27   1.8     87 no                     no        3     3 Some… no   
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 9 more variables: CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;, TUE &lt;dbl&gt;, CALC &lt;chr&gt;,
-#   MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;, tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age altura  peso tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Female    21   1.62    64 si                      no                      
+2 Female    21   1.52    56 si                      no                      
+3 Male      23   1.8     77 si                      no                      
+4 Male      27   1.8     87 no                      no                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p><em>Reposicionar</em> <strong>imc</strong> y <strong>tipo de obesidad</strong> al inicio de la tabla</p>
@@ -279,15 +281,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>obesity_relocated[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] <span class="co"># produce:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-    imc tipo_obesidad Gender   Age Height Weight family_history_with_ove…¹ FAVC 
-  &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                     &lt;chr&gt;
-1  24.4 Peso normal   Female    21   1.62     64 yes                       no   
-2  24.2 Peso normal   Female    21   1.52     56 yes                       no   
-3  23.8 Peso normal   Male      23   1.8      77 yes                       no   
-4  26.9 Sobrepesso    Male      27   1.8      87 no                        no   
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 11 more variables: FCVC &lt;dbl&gt;, NCP &lt;dbl&gt;, CAEC &lt;chr&gt;, SMOKE &lt;chr&gt;,
-#   CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;, TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;,
+    imc tipo_obesidad Gender   Age Height Weight tiene_familiares_obesos
+  &lt;dbl&gt; &lt;fct&gt;         &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                  
+1  24.4 Peso normal   Female    21   1.62     64 si                     
+2  24.2 Peso normal   Female    21   1.52     56 si                     
+3  23.8 Peso normal   Male      23   1.8      77 si                     
+4  26.9 Sobrepeso     Male      27   1.8      87 no                     
+# ℹ 12 more variables: come_comida_muy_calorica &lt;fct&gt;, come_vegetales &lt;dbl&gt;,
+#   comidas_principales &lt;dbl&gt;, come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;,
+#   agua_diaria &lt;dbl&gt;, toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;,
+#   uso_tecnologia &lt;dbl&gt;, consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;,
 #   NObeyesdad &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -303,19 +306,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 4
    tipo_obesidad    Gender med_imc med_age
-   &lt;chr&gt;            &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;
- 1 Desnutrición     Female    17.5    19.9
- 2 Desnutrición     Male      17.6    18  
- 3 Obesidad grado 1 Female    31.9    23  
- 4 Obesidad grado 1 Male      32.7    22.9
- 5 Obesidad grado 2 Female    39.0    25.9
- 6 Obesidad grado 2 Male      36.5    27.6
- 7 Obesidad grado 3 Female    42.8    22.8
- 8 Obesidad grado 3 Male      49.5    18  
- 9 Peso normal      Female    22.0    21  
-10 Peso normal      Male      22.5    21  
-11 Sobrepesso       Female    26.7    22.8
-12 Sobrepesso       Male      27.2    22.7</code></pre>
+   &lt;fct&gt;            &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Desnutricion     Male      17.6    18  
+ 2 Desnutricion     Female    17.5    19.9
+ 3 Peso normal      Male      22.5    21  
+ 4 Peso normal      Female    22.0    21  
+ 5 Sobrepeso        Male      27.2    22.7
+ 6 Sobrepeso        Female    26.7    22.8
+ 7 Obesidad grado 1 Male      32.7    22.9
+ 8 Obesidad grado 1 Female    31.9    23  
+ 9 Obesidad grado 2 Male      36.5    27.6
+10 Obesidad grado 2 Female    39.0    25.9
+11 Obesidad grado 3 Male      49.5    18  
+12 Obesidad grado 3 Female    42.8    22.8</code></pre>
 </div>
 </div>
 </section>
@@ -375,16 +378,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>obesity_new_types[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC 
-  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1 Female    21   1.62     64 yes                         no        2     3 Some…
-2 Female    21   1.52     56 yes                         no        3     3 Some…
-3 Male      23   1.8      77 yes                         no        2     3 Some…
-4 Male      27   1.8      87 no                          no        3     3 Some…
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,
-#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
-#   tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age Height Weight tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Female    21   1.62     64 si                      no                      
+2 Female    21   1.52     56 si                      no                      
+3 Male      23   1.8      77 si                      no                      
+4 Male      27   1.8      87 no                      no                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>Escribir una tabla en un archivo csv</p>
@@ -407,16 +411,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>obesity_new_types[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC 
-  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1 Female    21   1.62     64 yes                         no        2     3 Some…
-2 Female    21   1.52     56 yes                         no        3     3 Some…
-3 Male      23   1.8      77 yes                         no        2     3 Some…
-4 Male      27   1.8      87 no                          no        3     3 Some…
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,
-#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
-#   tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age Height Weight tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Female    21   1.62     64 si                      no                      
+2 Female    21   1.52     56 si                      no                      
+3 Male      23   1.8      77 si                      no                      
+4 Male      27   1.8      87 no                      no                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 

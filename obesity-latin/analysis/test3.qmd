@@ -87,6 +87,7 @@ obesity |>
 ```
 
 Los operadores siempre van con espacios menos el signo de potencia
+
 ```{r}
 z <- (2 + 4)^2 / 12 
 ```
@@ -146,7 +147,6 @@ getwd() # produce:
 write_csv(obesity, "../data/my_obesity2.csv")
 ```
 
-
 ## Importar Datos
 
 Cambiar el tipo de la variable género
@@ -158,4 +158,3 @@ obesity_new_types <- obesity |>
   )
 obesity_new_types[1:4,]
 ```
-

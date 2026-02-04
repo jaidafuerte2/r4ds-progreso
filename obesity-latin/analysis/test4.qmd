@@ -1,0 +1,227 @@
+---
+title: "Preparando la tabla"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+my_obesity <- read_csv("../data/obesity-latin.csv")
+#View(my_obesity)
+```
+
+## Transformaciones Básicas
+
+*Crear* la variable **imc** y *calcular* el **índice de masa corporal**.
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    imc = Weight / (Height ^ 2)
+  )
+```
+
+*Reclasificar* el **tipo de obesidad** porque no coincide con la clasificación de la OMS
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    tipo_obesidad = case_when(
+      imc < 18.5 ~ "Desnutricion",
+      imc < 25 ~ "Peso normal",
+      imc < 30 ~ "Sobrepeso",
+      imc < 35 ~ "Obesidad grado 1",
+      imc < 40 ~ "Obesidad grado 2",
+      imc >= 40 ~ "Obesidad grado 3",
+      TRUE ~ NA_character_
+    )
+  )
+```
+
+*Renombrar* a las varibles de la data set de obesidad para que sean más legibles en español
+
+```{r}
+my_obesity <- my_obesity |>
+  rename(
+    tiene_familiares_obesos = family_history_with_overweight,
+    come_comida_muy_calorica = FAVC,
+    come_vegetales = FCVC,
+    comidas_principales = NCP,
+    come_refrigerios = CAEC,
+    fuma = SMOKE,
+    agua_diaria = CH2O,
+    toma_bebidas_calóricas = SCC,
+    actividad_fisica = FAF,
+    uso_tecnologia = TUE,
+    consume_alcohol = CALC,
+    medio_transporte = MTRANS
+  )
+# NOTA: Es mejor que las variables numéricas no tengan verbo, las 
+# variables dicotomicas es mejor nombrarlas al inicio con verbos y
+# las categorías a veces es bueno iniciarlas con verbos como en 
+# consumo de alcohol, pero esto no siempre es ideal como en medio
+# de transporte
+```
+
+*Conocer* el **tipo** de la variable tipo de obesidad:
+
+```{r}
+class(my_obesity$tipo_obesidad) # produce: "character"
+```
+
+*Conocer* los **valores** de la variable **tipo de obesidad**
+
+```{r}
+unique(my_obesity$tipo_obesidad) # produce:
+```
+
+*Convertir* la variable tipo de obesidad de **character** a **factor**:
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    tipo_obesidad = factor(
+      tipo_obesidad,
+      levels = c(
+        "Desnutricion",
+        "Peso normal",
+        "Sobrepeso",
+        "Obesidad grado 1",
+        "Obesidad grado 2",
+        "Obesidad grado 3"
+      )
+    )
+  )
+```
+
+```{r}
+class(my_obesity$tipo_obesidad) # produce: factor
+
+```
+
+```{r}
+unique(my_obesity$tipo_obesidad) # produce:
+```
+
+## Transformaciones de la Variable Género
+
+*Convertir* género a **factor**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    Gender = factor(
+      Gender,
+      levels = c("Male", "Female")
+    )
+  )
+```
+
+```{r}
+class(my_obesity$Gender) # produce: "factor"
+```
+
+## Transformaciones de la varaible Historia Familiar de Obesidad
+
+*Traducir* los valores de la variable de **historia familiar de obesidad**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    tiene_familiares_obesos = recode(
+      tiene_familiares_obesos,
+      "yes" = "si",
+      "no" = "no"
+    )
+  )
+```
+
+```{r}
+class(my_obesity$tiene_familiares_obesos) # produce: "character"
+```
+
+*Cambiar el tipo* de la variable de **historia familiar de obesidad** a **factor**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    tiene_familiares_obesos = factor(
+      tiene_familiares_obesos,
+      levels = c("si", "no")
+    )
+  )
+```
+
+```{r}
+class(my_obesity$tiene_familiares_obesos) # produce: "factor"
+```
+
+## Transformaciones de la variable de Comida muy Calórica
+
+*Traducir* los valores de la variable **comida muy calórica**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    come_comida_muy_calorica = recode(
+      come_comida_muy_calorica,
+      "yes" = "si",
+      "no" = "no"
+    )
+  )
+```
+
+```{r}
+class(my_obesity$come_comida_muy_calorica) # produce: "character"
+```
+
+*Cambiar el tip*o de la variable **comida muy calórica** a **factor**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    come_comida_muy_calorica = factor(
+      come_comida_muy_calorica,
+      levels = c("si", "no")
+    )
+  )
+
+```
+
+```{r}
+class(my_obesity$come_comida_muy_calorica) # produce: "factor"
+```
+
+## Transformaciones de la varaible de  Consumo de Vegetales
+
+*Conocer los valores* de la variable **come vegetales**
+
+```{r}
+unique(my_obesity$come_vegetales)[1:20] # produce:
+```
+
+*Conocer el tipo* de la variable **come vegetales**
+
+```{r}
+class(my_obesity$come_vegetales) # produce : "numeric"
+```
+
+*NOTA*: Es posible que sean valores por semana, el manual no lo indica. "numeric" es double o de doble precisión es decir que puede tener decimales
+
+## Transformaciones de la varaible Cantidad de Comidas Principales
+
+*Conocer los valores* de la variable **comidas principales**
+
+```{r}
+unique(my_obesity$comidas_principales)[1:20] # produce:
+```
+
+*Conocer el tipo* de la varaible **comidas principales**
+
+```{r}
+class(my_obesity$comidas_principales) # produce: "numeric"
+```
+

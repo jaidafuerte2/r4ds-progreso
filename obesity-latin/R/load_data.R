@@ -2,6 +2,12 @@ library(readr)
 library(dplyr)
 library(tidyverse)
 
+#################################
+##
+## Transformaciones Básicas
+##
+#################################
+
 # Importar desde el IDE la tabla obesity latin y cuidar de llamarla 
 # obesity
 
@@ -56,6 +62,7 @@ obesity <- obesity |>
 #unique(obesity$tipo_obesidad) # produce:
 #[1] "Peso normal"      "Sobrepeso"       "Obesidad grado 1"
 #[4] "Desnutricion"     "Obesidad grado 2" "Obesidad grado 3"
+
 # Convertir la variable tipo de obesidad de character a factor:
 obesity <- obesity |>
   mutate(
@@ -76,6 +83,12 @@ obesity <- obesity |>
 #[1] Peso normal      Sobrepeso        Obesidad grado 1 Desnutricion    
 #[5] Obesidad grado 2 Obesidad grado 3
 
+#################################
+##
+## Transformaciones de Género
+##
+#################################
+
 # Convertir género a factor
 obesity <- obesity |>
   mutate(
@@ -85,6 +98,12 @@ obesity <- obesity |>
     )
   )
 #class(obesity$Gender) # produce: "factor"
+
+###################################################
+##
+## Transformaciones Historia Familiar de Obesidad
+##
+###################################################
 
 # Traducir los valores de la variable de historia familiar de obesidad 
 obesity <- obesity |>
@@ -108,6 +127,12 @@ obesity <- obesity |>
   )
 #class(obesity$tiene_familiares_obesos) # produce: "factor"
 
+############################################
+##
+## Transformaciones de Comida muy Calórica
+##
+############################################
+
 # Traducir los valores de la variable comida muy calórica
 obesity <- obesity |>
   mutate(
@@ -129,6 +154,12 @@ obesity <- obesity |>
   )
 #class(obesity$come_comida_muy_calorica) # produce: "factor"
 
+##############################################
+##
+## Transformaciones de Consumo de Vegetales
+##
+##############################################
+
 # Conocer los valores de la variable come vegetales
 #unique(obesity$come_vegetales) # produce:
 #[1] 2.000000 3.000000 1.000000 2.450218 2.880161 2.008760 2.596579
@@ -141,6 +172,12 @@ obesity <- obesity |>
 # indica. "numeric" es double o de doble precisión es decir que puede
 # tener decimales
 
+#####################################################
+##
+## Transformaciones Cantidad de Comidas Principales
+##
+#####################################################
+
 # Conocer los valores de la variable comidas principales
 #unique(obesity$comidas_principales) # produce:
 #[1] 2.000000 3.000000 1.000000 2.450218 2.880161 2.008760 2.596579
@@ -149,6 +186,12 @@ obesity <- obesity |>
 #[22] 2.596364 2.767731 2.815157 2.737762 2.568063 2.524428 2.971574
 # Conocer el tipo de la varaible comidas principales
 #class(obesity$comidas_principales) # produce: "numeric"
+
+#################################################
+##
+## Transformaciones de Consumo de Refrigerios
+##
+#################################################
 
 # Conocer los valores que tiene la variable come refrigerios
 unique(obesity$come_refrigerios) # produce: 
@@ -178,6 +221,12 @@ obesity <- obesity |>
   )
 #class(obesity$come_refrigerios) # produce: "factor
 
+######################################################
+##
+## Transformaciones de Consumo de Hábitos de Fumar
+##
+######################################################
+
 #unique(obesity$fuma) # produce: # [1] "no"  "yes"
 # Traducir los valores de la variable fumar
 obesity <- obesity |>
@@ -200,6 +249,12 @@ obesity <- obesity |>
   )
 class(obesity$fuma) # produce: "factor"
 
+###############################################
+##
+## Transformaciones Consumo diario de Agua
+##
+###############################################
+
 # Conocer los valores que tiene la variable concumo de agua diaria
 unique(obesity$agua_diaria) # produce:
 #[1] 2.000000 3.000000 1.000000 1.152736 1.115967 2.704507 2.184707
@@ -209,6 +264,12 @@ unique(obesity$agua_diaria) # produce:
 
 # Conocer el tipo de la variable de consumo de agua diaria
 #class(obesity$agua_diaria) # produce: "numeric"
+
+#######################################################
+##
+## Transformaciones de Consumo de Bebidas Calóricas
+##
+#######################################################
 
 #unique(obesity$toma_bebidas_calóricas) # produce:
 # [1] "no"  "yes"
@@ -234,6 +295,12 @@ obesity <- obesity |>
   )
 #class(obesity$toma_bebidas_calóricas) # produce: "factor"
 
+############################################
+##
+## Transformaciones de Actividad Física
+##
+############################################
+
 #unique(obesity$actividad_fisica) # produce:
 #[1] 0.000000 3.000000 2.000000 1.000000 0.319156 1.541072 1.978631
 #[8] 0.100320 1.586525 1.399183 1.680844 2.206738 1.318170 0.902095
@@ -242,6 +309,12 @@ obesity <- obesity |>
 
 #class(obesity$actividad_fisica) # produce: "numeric"
 
+############################################
+##
+## Transformaciones de Uso de Tecnología
+##
+############################################
+
 # Conocer los valores de la varaible de uso de tecnología
 #unique(obesity$uso_tecnologia) # produce:
 #[1] 1.000000 0.000000 2.000000 0.294990 0.838957 0.479221 0.625350
@@ -249,8 +322,15 @@ obesity <- obesity |>
 #[15] 0.062488 0.997400 0.738269 0.860497 0.478676 0.555967 0.469735
 #[22] 0.371941 0.009254 0.832400 0.114716 0.256382 1.547086 1.906141
 
+
 # Conocer el tipo de la variable de uso de tecnnología
 #class(obesity$uso_tecnologia) # produce: "numeric"
+
+##############################################
+##
+## Transformaciones de Consumo de Alcohol
+##
+##############################################
 
 # Conocer los valores de la variable consumo de alcohol
 #unique(obesity$consume_alcohol) # produce:
@@ -279,6 +359,12 @@ obesity <- obesity |>
     )
   )
 #class(obesity$consume_alcohol) # produce: "factor"
+
+######################################################
+##
+## Transformaciones de Tipo de Medio de Transporte
+##
+######################################################
 
 #unique(obesity$medio_transporte) # produce:
 #[1] "Public_Transportation" "Walking"              
