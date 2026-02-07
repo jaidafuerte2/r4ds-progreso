@@ -195,7 +195,7 @@ my_obesity <- my_obesity |>
 class(my_obesity$come_comida_muy_calorica) # produce: "factor"
 ```
 
-## Transformaciones de la varaible de  Consumo de Vegetales
+## Transformaciones de la varaible de Consumo de Vegetales
 
 *Conocer los valores* de la variable **come vegetales**
 
@@ -223,5 +223,244 @@ unique(my_obesity$comidas_principales)[1:20] # produce:
 
 ```{r}
 class(my_obesity$comidas_principales) # produce: "numeric"
+```
+
+## Transformaciones de la variable de Consumo de Refrigerios
+
+*Conocer los valores* que tiene la variable **come refrigerios**
+
+```{r}
+unique(my_obesity$come_refrigerios) # produce: 
+```
+
+*Traducir los valores* de la variable **come refrigerios**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    come_refrigerios = recode(
+      come_refrigerios,
+      "Sometimes" = "ocasional",
+      "Frequently" = "frecuente",
+      "no" = "nunca",
+      "Always" = "siempre"
+    )
+  )
+unique(my_obesity$come_refrigerios) # produce:
+
+```
+
+```{r}
+class(my_obesity$come_refrigerios) # produce: "character"
+
+```
+
+
+*Cambiar el tipo* de la variable **come refrigerios**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    come_refrigerios = factor(
+      come_refrigerios, 
+      levels = c("ocasional", "frecuente", "nunca", "siempre")
+    )
+  )
+class(my_obesity$come_refrigerios) # produce: "factor
+```
+
+
+## Transformaciones de la variable Hábito de Fumar
+
+*Conocer los valores* que tiene la variable **hábito de fumar**
+
+```{r}
+unique(my_obesity$fuma) # produce: # [1] "no"  "yes"
+```
+
+*Traducir los valores* de la variable **fumar**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    fuma = recode(
+      fuma,
+      "yes" = "si",
+      "no" = "no"
+    )
+  )
+unique(my_obesity$fuma) # produce: # [1] "no" "si"
+```
+
+
+*Cambiar el tipo* de la variable **hábito de fumar** a factor
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    fuma = factor(
+      fuma,
+      levels = c("si", "no")
+    )
+  )
+class(my_obesity$fuma) # produce: "factor"
+```
+
+## Transformaciones de la variable Consumo diario de Agua
+
+*Conocer los valores* que tiene la variable **consumo de agua diaria**
+
+```{r}
+unique(my_obesity$agua_diaria)[1:20] # produce:
+```
+
+*Conocer el tipo* de la variable de **consumo de agua diaria**
+
+```{r}
+class(my_obesity$agua_diaria) # produce: "numeric"
+```
+
+## Transformaciones de la varaible Consumo de Bebidas Calóricas
+
+*Conocer los valores* de la variable **consumo de bebidas calóricas**
+
+```{r}
+unique(my_obesity$toma_bebidas_calóricas) # produce:
+
+```
+
+*Traducir los valores* de la variable **consumo de bebidas calóricas**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    toma_bebidas_calóricas = recode(
+      toma_bebidas_calóricas,
+      "no" = "no",
+      "yes" = "si"
+    )
+  )
+unique(my_obesity$toma_bebidas_calóricas) # produce: [1] no si
+```
+
+
+*Cambiar el tipo* de la variable de **consumo de bebidas calóricas**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    toma_bebidas_calóricas = factor(
+      toma_bebidas_calóricas,
+      levels = c("no", "si")
+    )
+  )
+class(my_obesity$toma_bebidas_calóricas) # produce: "factor"
+```
+
+## Transformaciones de la variable Actividad Física
+
+*Conocer los valores* de la varaible actividad física
+
+```{r}
+unique(my_obesity$actividad_fisica)[1:20] # produce:
+
+```
+
+*Conocer el tipo* de la variable **actividad física**
+
+```{r}
+class(my_obesity$actividad_fisica) # produce: "numeric"
+```
+
+## Transformaciones de la varaible Uso de Tecnología
+
+*Conocer los valores* de la varaible de **uso de tecnología**
+
+```{r}
+unique(my_obesity$uso_tecnologia)[1:20] # produce:
+```
+
+*Conocer el tipo* de la variable de **uso de tecnnología**
+
+```{r}
+class(my_obesity$uso_tecnologia) # produce: "numeric"
+```
+
+## Transformaciones de la variable Consumo de Alcohol
+
+*Conocer los valores* de la variable **consumo de alcohol**
+
+```{r}
+unique(my_obesity$consume_alcohol) # produce:
+```
+
+*Traducir los valores* de la variable **consumo de alcohol**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    consume_alcohol = recode(
+      consume_alcohol,
+      "no" = "nunca",
+      "Sometimes" = "ocasional",
+      "Frequently" = "frecuente",
+      "Always" = "siempre"
+    )
+  )
+unique(my_obesity$consume_alcohol) # produce:
+
+```
+
+*Cambiar el tipo* de la variable de **consumo de alcohol**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    consume_alcohol = factor(
+      consume_alcohol,
+      levels = c("nunca", "ocasional", "frecuente", "siempre")
+    )
+  )
+class(my_obesity$consume_alcohol) # produce: "factor"
+```
+
+## Transformaciones de la variable Tipo de Medio de Transporte
+
+*Conocer los valores* de la varaible  **tipo de medio de transporte**
+
+```{r}
+unique(my_obesity$medio_transporte) # produce:
+```
+
+*Traducir los valores* de la variable **medio de transporte**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    medio_transporte = recode(
+      medio_transporte,
+      "Public_Transportation" = "transporte_publico",
+      "Walking" = "camina",
+      "Automobile" = "auto",
+      "Motorbike" = "moto",
+      "Bike" = "bicicleta"
+    )
+  )
+unique(my_obesity$medio_transporte) # produce:
+
+```
+
+*Cambiar el tipo* de la variable **medio de transporte a factor**
+
+```{r}
+my_obesity <- my_obesity |>
+  mutate(
+    medio_transporte = factor(
+      medio_transporte,
+      levels = c("transporte_publico", "auto", "moto", "camina",
+                 "bicicleta")
+    )
+  )
+class(my_obesity$medio_transporte) # produce: "factor"
 ```
 

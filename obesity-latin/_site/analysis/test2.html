@@ -166,6 +166,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Puntos Importantes</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/test4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparando la tabla</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -212,16 +218,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>obesity[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC 
-  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1 Female    21   1.62     64 yes                         no        2     3 Some…
-2 Female    21   1.52     56 yes                         no        3     3 Some…
-3 Male      23   1.8      77 yes                         no        2     3 Some…
-4 Male      27   1.8      87 no                          no        3     3 Some…
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,
-#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
-#   tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age Height Weight tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Female    21   1.62     64 si                      no                      
+2 Female    21   1.52     56 si                      no                      
+3 Male      23   1.8      77 si                      no                      
+4 Male      27   1.8      87 no                      no                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>Llamar a la tablas obesity como parámetro de la función glimpse para visulaizar las variables como filas (horizontalmente)</p>
@@ -230,25 +237,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 2,111
 Columns: 19
-$ Gender                         &lt;chr&gt; "Female", "Female", "Male", "Male", "Ma…
-$ Age                            &lt;dbl&gt; 21, 21, 23, 27, 22, 29, 23, 22, 24, 22,…
-$ Height                         &lt;dbl&gt; 1.62, 1.52, 1.80, 1.80, 1.78, 1.62, 1.5…
-$ Weight                         &lt;dbl&gt; 64.0, 56.0, 77.0, 87.0, 89.8, 53.0, 55.…
-$ family_history_with_overweight &lt;chr&gt; "yes", "yes", "yes", "no", "no", "no", …
-$ FAVC                           &lt;chr&gt; "no", "no", "no", "no", "no", "yes", "y…
-$ FCVC                           &lt;dbl&gt; 2, 3, 2, 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, …
-$ NCP                            &lt;dbl&gt; 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, …
-$ CAEC                           &lt;chr&gt; "Sometimes", "Sometimes", "Sometimes", …
-$ SMOKE                          &lt;chr&gt; "no", "yes", "no", "no", "no", "no", "n…
-$ CH2O                           &lt;dbl&gt; 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, …
-$ SCC                            &lt;chr&gt; "no", "yes", "no", "no", "no", "no", "n…
-$ FAF                            &lt;dbl&gt; 0, 3, 2, 2, 0, 0, 1, 3, 1, 1, 2, 2, 2, …
-$ TUE                            &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 1, 0, …
-$ CALC                           &lt;chr&gt; "no", "Sometimes", "Frequently", "Frequ…
-$ MTRANS                         &lt;chr&gt; "Public_Transportation", "Public_Transp…
-$ NObeyesdad                     &lt;chr&gt; "Normal_Weight", "Normal_Weight", "Norm…
-$ imc                            &lt;dbl&gt; 24.38653, 24.23823, 23.76543, 26.85185,…
-$ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso nor…</code></pre>
+$ Gender                   &lt;fct&gt; Female, Female, Male, Male, Male, Male, Femal…
+$ Age                      &lt;dbl&gt; 21, 21, 23, 27, 22, 29, 23, 22, 24, 22, 26, 2…
+$ Height                   &lt;dbl&gt; 1.62, 1.52, 1.80, 1.80, 1.78, 1.62, 1.50, 1.6…
+$ Weight                   &lt;dbl&gt; 64.0, 56.0, 77.0, 87.0, 89.8, 53.0, 55.0, 53.…
+$ tiene_familiares_obesos  &lt;fct&gt; si, si, si, no, no, no, si, no, si, si, si, s…
+$ come_comida_muy_calorica &lt;fct&gt; no, no, no, no, no, si, si, no, si, si, si, s…
+$ come_vegetales           &lt;dbl&gt; 2, 3, 2, 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, …
+$ comidas_principales      &lt;dbl&gt; 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, …
+$ come_refrigerios         &lt;fct&gt; ocasional, ocasional, ocasional, ocasional, o…
+$ fuma                     &lt;fct&gt; no, si, no, no, no, no, no, no, no, no, no, n…
+$ agua_diaria              &lt;dbl&gt; 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2, 1, …
+$ toma_bebidas_calóricas   &lt;fct&gt; no, si, no, no, no, no, no, no, no, no, no, s…
+$ actividad_fisica         &lt;dbl&gt; 0, 3, 2, 2, 0, 0, 1, 3, 1, 1, 2, 2, 2, 2, 1, …
+$ uso_tecnologia           &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 1, 0, 1, 1, …
+$ consume_alcohol          &lt;fct&gt; nunca, ocasional, frecuente, frecuente, ocasi…
+$ medio_transporte         &lt;fct&gt; transporte_publico, transporte_publico, trans…
+$ NObeyesdad               &lt;chr&gt; "Normal_Weight", "Normal_Weight", "Normal_Wei…
+$ imc                      &lt;dbl&gt; 24.38653, 24.23823, 23.76543, 26.85185, 28.34…
+$ tipo_obesidad            &lt;fct&gt; Peso normal, Peso normal, Peso normal, Sobrep…</code></pre>
 </div>
 </div>
 </section>
@@ -261,16 +268,17 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>obesity_male[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] <span class="co"># Mostrar sólo las 4 primeras filas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC 
-  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1 Male      23   1.8    77   yes                         no        2     3 Some…
-2 Male      27   1.8    87   no                          no        3     3 Some…
-3 Male      22   1.78   89.8 no                          no        2     1 Some…
-4 Male      29   1.62   53   no                          yes       2     3 Some…
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,
-#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
-#   tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age Height Weight tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Male      23   1.8    77   si                      no                      
+2 Male      27   1.8    87   no                      no                      
+3 Male      22   1.78   89.8 no                      no                      
+4 Male      29   1.62   53   no                      si                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>Filtrar obesidad por género femenino</p>
@@ -280,16 +288,17 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>obesity_female[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,] <span class="co"># Mostrar sólo las 4 primeras filas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 19
-  Gender   Age Height Weight family_history_with_overw…¹ FAVC   FCVC   NCP CAEC 
-  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-1 Female    21   1.62     64 yes                         no        2     3 Some…
-2 Female    21   1.52     56 yes                         no        3     3 Some…
-3 Female    23   1.5      55 yes                         yes       3     3 Some…
-4 Female    21   1.72     80 yes                         yes       2     3 Freq…
-# ℹ abbreviated name: ¹​family_history_with_overweight
-# ℹ 10 more variables: SMOKE &lt;chr&gt;, CH2O &lt;dbl&gt;, SCC &lt;chr&gt;, FAF &lt;dbl&gt;,
-#   TUE &lt;dbl&gt;, CALC &lt;chr&gt;, MTRANS &lt;chr&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
-#   tipo_obesidad &lt;chr&gt;</code></pre>
+  Gender   Age Height Weight tiene_familiares_obesos come_comida_muy_calorica
+  &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                   &lt;fct&gt;                   
+1 Female    21   1.62     64 si                      no                      
+2 Female    21   1.52     56 si                      no                      
+3 Female    23   1.5      55 si                      si                      
+4 Female    21   1.72     80 si                      si                      
+# ℹ 13 more variables: come_vegetales &lt;dbl&gt;, comidas_principales &lt;dbl&gt;,
+#   come_refrigerios &lt;fct&gt;, fuma &lt;fct&gt;, agua_diaria &lt;dbl&gt;,
+#   toma_bebidas_calóricas &lt;fct&gt;, actividad_fisica &lt;dbl&gt;, uso_tecnologia &lt;dbl&gt;,
+#   consume_alcohol &lt;fct&gt;, medio_transporte &lt;fct&gt;, NObeyesdad &lt;chr&gt;, imc &lt;dbl&gt;,
+#   tipo_obesidad &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>Contar por tipo de obesidad y género; y mostrar en orden descendente</p>
@@ -299,17 +308,17 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
    Gender tipo_obesidad        n
-   &lt;chr&gt;  &lt;chr&gt;            &lt;int&gt;
- 1 Male   Sobrepesso         330
+   &lt;fct&gt;  &lt;fct&gt;            &lt;int&gt;
+ 1 Male   Sobrepeso          330
  2 Male   Obesidad grado 2   279
  3 Female Obesidad grado 3   267
- 4 Female Sobrepesso         236
+ 4 Female Sobrepeso          236
  5 Male   Obesidad grado 1   212
- 6 Female Desnutrición       171
+ 6 Female Desnutricion       171
  7 Female Obesidad grado 1   156
  8 Female Peso normal        154
  9 Male   Peso normal        146
-10 Male   Desnutrición       100
+10 Male   Desnutricion       100
 11 Female Obesidad grado 2    59
 12 Male   Obesidad grado 3     1</code></pre>
 </div>
@@ -321,19 +330,19 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
    tipo_obesidad    Gender     n
-   &lt;chr&gt;            &lt;chr&gt;  &lt;int&gt;
- 1 Desnutrición     Female   171
- 2 Desnutrición     Male     100
- 3 Obesidad grado 1 Female   156
- 4 Obesidad grado 1 Male     212
- 5 Obesidad grado 2 Female    59
- 6 Obesidad grado 2 Male     279
- 7 Obesidad grado 3 Female   267
- 8 Obesidad grado 3 Male       1
- 9 Peso normal      Female   154
-10 Peso normal      Male     146
-11 Sobrepesso       Female   236
-12 Sobrepesso       Male     330</code></pre>
+   &lt;fct&gt;            &lt;fct&gt;  &lt;int&gt;
+ 1 Desnutricion     Male     100
+ 2 Desnutricion     Female   171
+ 3 Peso normal      Male     146
+ 4 Peso normal      Female   154
+ 5 Sobrepeso        Male     330
+ 6 Sobrepeso        Female   236
+ 7 Obesidad grado 1 Male     212
+ 8 Obesidad grado 1 Female   156
+ 9 Obesidad grado 2 Male     279
+10 Obesidad grado 2 Female    59
+11 Obesidad grado 3 Male       1
+12 Obesidad grado 3 Female   267</code></pre>
 </div>
 </div>
 <p>Contar por tipo de obesidad y género; y mostrar en formato glimpse</p>
@@ -345,19 +354,19 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
    tipo_obesidad    Gender     n
-   &lt;chr&gt;            &lt;chr&gt;  &lt;int&gt;
- 1 Desnutrición     Female   171
- 2 Desnutrición     Male     100
- 3 Obesidad grado 1 Female   156
- 4 Obesidad grado 1 Male     212
- 5 Obesidad grado 2 Female    59
- 6 Obesidad grado 2 Male     279
- 7 Obesidad grado 3 Female   267
- 8 Obesidad grado 3 Male       1
- 9 Peso normal      Female   154
-10 Peso normal      Male     146
-11 Sobrepesso       Female   236
-12 Sobrepesso       Male     330</code></pre>
+   &lt;fct&gt;            &lt;fct&gt;  &lt;int&gt;
+ 1 Desnutricion     Male     100
+ 2 Desnutricion     Female   171
+ 3 Peso normal      Male     146
+ 4 Peso normal      Female   154
+ 5 Sobrepeso        Male     330
+ 6 Sobrepeso        Female   236
+ 7 Obesidad grado 1 Male     212
+ 8 Obesidad grado 1 Female   156
+ 9 Obesidad grado 2 Male     279
+10 Obesidad grado 2 Female    59
+11 Obesidad grado 3 Male       1
+12 Obesidad grado 3 Female   267</code></pre>
 </div>
 </div>
 </section>
@@ -394,11 +403,11 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   Gender   imc   Age tipo_obesidad
-  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        
+  &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;        
 1 Female  24.4    21 Peso normal  
 2 Female  24.2    21 Peso normal  
 3 Male    23.8    23 Peso normal  
-4 Male    26.9    27 Sobrepesso   </code></pre>
+4 Male    26.9    27 Sobrepeso    </code></pre>
 </div>
 </div>
 </section>
@@ -416,19 +425,19 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <pre><code># A tibble: 12 × 3
 # Groups:   Gender, tipo_obesidad [12]
    Gender tipo_obesidad    n_gender_tipo
-   &lt;chr&gt;  &lt;chr&gt;                    &lt;int&gt;
- 1 Female Desnutrición               171
- 2 Female Obesidad grado 1           156
- 3 Female Obesidad grado 2            59
- 4 Female Obesidad grado 3           267
- 5 Female Peso normal                154
- 6 Female Sobrepesso                 236
- 7 Male   Desnutrición               100
- 8 Male   Obesidad grado 1           212
- 9 Male   Obesidad grado 2           279
-10 Male   Obesidad grado 3             1
-11 Male   Peso normal                146
-12 Male   Sobrepesso                 330</code></pre>
+   &lt;fct&gt;  &lt;fct&gt;                    &lt;int&gt;
+ 1 Male   Desnutricion               100
+ 2 Male   Peso normal                146
+ 3 Male   Sobrepeso                  330
+ 4 Male   Obesidad grado 1           212
+ 5 Male   Obesidad grado 2           279
+ 6 Male   Obesidad grado 3             1
+ 7 Female Desnutricion               171
+ 8 Female Peso normal                154
+ 9 Female Sobrepeso                  236
+10 Female Obesidad grado 1           156
+11 Female Obesidad grado 2            59
+12 Female Obesidad grado 3           267</code></pre>
 </div>
 </div>
 <p>Filtrar por tipo de obesidad grado 3, agrupar por género y resumir por cantidad</p>
@@ -442,9 +451,9 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Gender n_gender
-  &lt;chr&gt;     &lt;int&gt;
-1 Female      267
-2 Male          1</code></pre>
+  &lt;fct&gt;     &lt;int&gt;
+1 Male          1
+2 Female      267</code></pre>
 </div>
 </div>
 <p>Conocer la cantidad de personas por género</p>
@@ -457,9 +466,9 @@ $ tipo_obesidad                  &lt;chr&gt; "Peso normal", "Peso normal", "Peso
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Gender n_gender
-  &lt;chr&gt;     &lt;int&gt;
-1 Female     1043
-2 Male       1068</code></pre>
+  &lt;fct&gt;     &lt;int&gt;
+1 Male       1068
+2 Female     1043</code></pre>
 </div>
 </div>
 

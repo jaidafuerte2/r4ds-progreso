@@ -8,6 +8,8 @@ library(tidyverse)
 ##
 #################################
 
+getwd()
+
 # Importar desde el IDE la tabla obesity latin y cuidar de llamarla 
 # obesity
 
@@ -223,7 +225,7 @@ obesity <- obesity |>
 
 ######################################################
 ##
-## Transformaciones de Consumo de Hábitos de Fumar
+## Transformaciones de Hábito de Fumar
 ##
 ######################################################
 
