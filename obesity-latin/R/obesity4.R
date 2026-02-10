@@ -415,3 +415,152 @@ obesity_fisica # produce:
 ggplot(obesity_fisica, aes(x = med_imc, y = med_fisica)) +
   geom_point(aes(color = Gender)) +
   facet_wrap(~tipo_obesidad)
+
+#######################################
+##
+## 10.- Uso de Tecnología y Género
+##
+#######################################
+
+# Conocer el tipo de la variable uso de tecnología
+class(obesity$uso_tecnologia) # produce: "numeric"
+
+# Conocer los valores de la varaible de tiempo de uso de tecnología
+unique(obesity$uso_tecnologia)[1:20] # produce:
+#[1] 1.000000 0.000000 2.000000 0.294990 0.838957 0.479221 0.625350
+#[8] 0.265790 0.555468 0.928972 1.340107 0.589980 1.374650 1.283673
+#[15] 0.062488 0.997400 0.738269 0.860497 0.478676 0.555967
+
+# Diagrama de caja que relaciona el género con el uso de tecnología
+# y facetado por tipo de obesidad
+ggplot(obesity, aes(x = Gender, y = uso_tecnologia)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla de obesidad por tipo de obesidad y género y resumir
+# por uso de tecnología
+obesity_tecnologia <- obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_tecnologia = median(uso_tecnologia, na.rm = TRUE),
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_tecnologia # produce:
+# A tibble: 12 × 4
+# Groups:   tipo_obesidad, Gender [12]
+#  tipo_obesidad    Gender med_tecnologia med_imc
+#  <fct>            <fct>           <dbl>   <dbl>
+#1 Desnutricion     Male            1        17.6
+#2 Desnutricion     Female          0.860    17.5
+#3 Peso normal      Male            1        22.5
+#4 Peso normal      Female          1        22.0
+#5 Sobrepeso        Male            0.467    27.2
+#6 Sobrepeso        Female          0.750    26.7
+#7 Obesidad grado 1 Male            0.694    32.7
+#8 Obesidad grado 1 Female          0        31.9
+#9 Obesidad grado 2 Male            0.362    36.5
+#10 Obesidad grado 2 Female          0.692    39.0
+#11 Obesidad grado 3 Male            1        49.5
+#12 Obesidad grado 3 Female          0.646    42.8
+
+# Diagrama de dispersión que relaciona el uso de tecnología con el
+# índice de masa corporal coloreado por género y facetado por tipo de 
+# obesidad
+ggplot(obesity_tecnologia, aes(x = med_tecnologia, y = med_imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+
+#####################################
+##
+## 11.- Consumo de Alcohol y Género
+##
+#####################################
+
+# Conocer el tipo de la variable de consumo de alcohol
+class(obesity$consume_alcohol) # produce: "factor"
+
+# Conocer los valores de la variable consumo de alcohol
+unique(obesity$consume_alcohol) # produce:
+#[1] nunca     ocasional frecuente siempre  
+
+# Gráfico de barras que relaciona el consumo de alcohol con el género
+# y facetado por tipo de obesidad
+ggplot(obesity, aes(x = Gender, fill = consume_alcohol)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+
+obesity_alcohol <- obesity |>
+  group_by(consume_alcohol, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_alcohol # produce:
+# A tibble: 7 × 3
+# Groups:   consume_alcohol, Gender [7]
+#  consume_alcohol Gender med_imc
+#  <fct>           <fct>    <dbl>
+#1 nunca           Male      29.4
+#2 nunca           Female    26.5
+#3 ocasional       Male      28.7
+#4 ocasional       Female    32.1
+#5 frecuente       Male      27.5
+#6 frecuente       Female    25.6
+#7 siempre         Male      22.5
+
+# Diagrama de caja que relaciona el género con el índice de masa 
+# corporal y facetado por consumo de lacohol
+ggplot(obesity_alcohol, aes(x = Gender, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~consume_alcohol)
+
+#########################################
+##
+## 12.- Medio de Transporte y Género
+##
+#########################################
+
+# Conocer el tipo de la variable de medio de transporte
+class(obesity$medio_transporte) # produce: "factor"
+
+# Conocer los valores de la variable medio de transporte
+unique(obesity$medio_transporte) # produce: 
+#[1] transporte_publico camina             auto              
+#[4] moto               bicicleta  
+
+# Gráfico de barras que relaciona el género con el medio de transporte
+# y facetado por tipo de obesidad
+ggplot(obesity, aes(x = Gender, fill = medio_transporte)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla de obesidad por tipo de medio de transporte y género
+# y resumido por índice de masa corporal
+obesity_transporte <- obesity |>
+  group_by(medio_transporte, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_transporte # produce:
+# A tibble: 9 × 3
+# Groups:   medio_transporte, Gender [9]
+#  medio_transporte   Gender med_imc
+#  <fct>              <fct>    <dbl>
+#1 transporte_publico Male      28.7
+#2 transporte_publico Female    29.8
+#3 auto               Male      30.9
+#4 auto               Female    27.7
+#5 moto               Male      24.3
+#6 moto               Female    28.9
+#7 camina             Male      24.2
+#8 camina             Female    22.0
+#9 bicicleta          Male      24.2
+
+# Diagrama de caja que relaciona el género con el índice de masa 
+# corporal y facetado por tipo de medio de transporte
+ggplot(obesity_transporte, aes(x = Gender, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~medio_transporte)
+
