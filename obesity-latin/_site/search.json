@@ -378,5 +378,145 @@
     "crumbs": [
       "Preparando la tabla"
     ]
+  },
+  {
+    "objectID": "analysis/test5.html",
+    "href": "analysis/test5.html",
+    "title": "Análisis de Género",
+    "section": "",
+    "text": "Conocer los valores de la variable género\n\nunique(obesity$Gender) # produce: [1] Female Male\n\n[1] Female Male  \nLevels: Male Female\n\n\nConocer el tipo de la variable género\n\nclass(obesity$Gender) # produce: [1] \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras de la varaible de género\n\nggplot(obesity, aes(x = Gender)) +\n  geom_bar()",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#introducción",
+    "href": "analysis/test5.html#introducción",
+    "title": "Análisis de Género",
+    "section": "",
+    "text": "Conocer los valores de la variable género\n\nunique(obesity$Gender) # produce: [1] Female Male\n\n[1] Female Male  \nLevels: Male Female\n\n\nConocer el tipo de la variable género\n\nclass(obesity$Gender) # produce: [1] \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras de la varaible de género\n\nggplot(obesity, aes(x = Gender)) +\n  geom_bar()",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#historia-familiar-de-exceso-de-peso-y-género",
+    "href": "analysis/test5.html#historia-familiar-de-exceso-de-peso-y-género",
+    "title": "Análisis de Género",
+    "section": "1.- Historia familiar de exceso de peso y género",
+    "text": "1.- Historia familiar de exceso de peso y género\nConocer los valores de la variable historia familiar de exceso de peso\n\nunique(obesity$tiene_familiares_obesos) # produce: [1] si no\n\n[1] si no\nLevels: si no\n\n\nConocer el tipo de la varaible historia familiar de obesidad\n\nclass(obesity$tiene_familiares_obesos) # produce: [1] \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras que relaciona el género con la historia familiar de exceso de peso\n\nggplot(obesity, aes(x = Gender, fill = tiene_familiares_obesos)) +\n  geom_bar(position = \"fill\")\n\n\n\n\n\n\n\n\nAgrupar por historia familiar de exceso de peso y género y resumir por índice de masa corporal\n\nobesity_historia_familiar &lt;- obesity |&gt;\n  group_by(tiene_familiares_obesos, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  ) \nknitr::kable(obesity_historia_familiar) # produce:\n\n\n\n\ntiene_familiares_obesos\nGender\nmed_imc\n\n\n\n\nsi\nMale\n31.24753\n\n\nsi\nFemale\n31.83623\n\n\nno\nMale\n24.41928\n\n\nno\nFemale\n18.16837\n\n\n\n\n\nDiagrama de caja que relaciona el género con la mediana del índice de masa corporal. Facetada por historia familiar de obesidad\n\nggplot(obesity_historia_familiar, aes(x = Gender, \n                                      y = med_imc)) +\n  geom_boxplot() +\n  facet_wrap(~tiene_familiares_obesos)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-comida-calórica-y-género",
+    "href": "analysis/test5.html#consumo-de-comida-calórica-y-género",
+    "title": "Análisis de Género",
+    "section": "2.- Consumo de comida calórica y Género",
+    "text": "2.- Consumo de comida calórica y Género\nConocer los valores de la variable consumo de comida muy calórica\n\nunique(obesity$come_comida_muy_calorica) # produce: [1] no si\n\n[1] no si\nLevels: si no\n\n\nConocer el tipo de la variable consumo de comida muy calórica\n\nclass(obesity$come_comida_muy_calorica) # produce: \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras que relaciona el Género con el consumo de comida calórica y facetada por tipo de obesidad\n\nggplot(obesity, aes( x = Gender, fill = come_comida_muy_calorica)) +\n  geom_bar(position = \"fill\") +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar por género y consumo de comida muy calórica\n\nobesity_calorica &lt;- obesity |&gt;\n  group_by(Gender, come_comida_muy_calorica) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  ) \nknitr::kable(obesity_calorica) # produce:\n\n\n\n\nGender\ncome_comida_muy_calorica\nmed_imc\n\n\n\n\nMale\nsi\n29.56638\n\n\nMale\nno\n25.60694\n\n\nFemale\nsi\n30.90495\n\n\nFemale\nno\n22.83737\n\n\n\n\n\nDiagrama de caja que relaciona el género con el índice de masa corporal y coloreado por consumo de comida calórica\n\nggplot(obesity_calorica, aes(x = Gender, y = med_imc)) +\n  geom_boxplot(aes(color = come_comida_muy_calorica))",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-vegetales-y-género",
+    "href": "analysis/test5.html#consumo-de-vegetales-y-género",
+    "title": "Análisis de Género",
+    "section": "3.- Consumo de Vegetales y Género",
+    "text": "3.- Consumo de Vegetales y Género\nConocer los valores de la variable consumo de vegetales\n\nunique(obesity$come_vegetales)[1:20] # produce:\n\n [1] 2.000000 3.000000 1.000000 2.450218 2.880161 2.008760 2.596579 2.591439\n [9] 2.392665 1.123939 2.027574 2.658112 2.886260 2.714447 2.750715 1.492500\n[17] 2.205439 2.059138 2.310423 2.823179\n\n\nConocer el tipo de la variable consumo de vegetales\n\nclass(obesity$come_vegetales) # produce: \"numeric\"\n\n[1] \"numeric\"\n\n\nGráfico de caja que relaciona el género con el consumo de vegetales facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, y = come_vegetales)) +\n  geom_boxplot() +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar por género y tipo de obesidad y resumir por índice de masa corporal y consumo de vegetales\n\nobesity_vegetales &lt;- obesity |&gt;\n  group_by(tipo_obesidad, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    med_vegetales = median(come_vegetales, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_vegetales) # produce:\n\n\n\n\ntipo_obesidad\nGender\nmed_imc\nmed_vegetales\n\n\n\n\nDesnutricion\nMale\n17.63010\n2.393947\n\n\nDesnutricion\nFemale\n17.48282\n2.880161\n\n\nPeso normal\nMale\n22.49135\n2.000000\n\n\nPeso normal\nFemale\n22.03857\n2.000000\n\n\nSobrepeso\nMale\n27.20133\n2.000000\n\n\nSobrepeso\nFemale\n26.71661\n2.234066\n\n\nObesidad grado 1\nMale\n32.70044\n2.000000\n\n\nObesidad grado 1\nFemale\n31.89249\n2.059804\n\n\nObesidad grado 2\nMale\n36.47965\n2.397284\n\n\nObesidad grado 2\nFemale\n39.02219\n3.000000\n\n\nObesidad grado 3\nMale\n49.47239\n3.000000\n\n\nObesidad grado 3\nFemale\n42.75894\n3.000000\n\n\n\n\n\nDiagrama de caja que relaciona el tipo de obesidad con el consumo de vegetales y facetado por género\n\nggplot(obesity_vegetales, aes(x = tipo_obesidad, y = med_vegetales)) +\n  geom_boxplot() +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#número-de-comidas-principales-y-género",
+    "href": "analysis/test5.html#número-de-comidas-principales-y-género",
+    "title": "Análisis de Género",
+    "section": "4.- Número de Comidas Principales y género",
+    "text": "4.- Número de Comidas Principales y género\nConocer los valores de la variable de número de comidas principales\n\nunique(obesity$comidas_principales)[1:20] # produce:\n\n [1] 3.000000 1.000000 4.000000 3.289260 3.995147 1.726260 2.581015 1.600812\n [9] 1.737620 1.105480 2.084600 1.894384 2.857787 3.765526 3.285167 3.691226\n[17] 3.156153 1.079760 3.559841 3.891994\n\n\nConocer el tipo de la variable de número de comidas principales\n\nclass(obesity$comidas_principales) # produce: \"numeric\"\n\n[1] \"numeric\"\n\n\nDiagrama de caja que relaciona el género con el número de comidas principales y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, y = comidas_principales)) +\n  geom_boxplot() +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla de obesidad por género y tipo de obesidad y resumir por número de comidas principales\n\nobesity |&gt;\n  group_by(Gender, tipo_obesidad) |&gt;\n  summarise(\n    med_comidas_principales = median(comidas_principales, \n                                     na.rm = TRUE),\n    .groups = \"keep\"\n  ) |&gt;\n  knitr::kable()\n\n\n\n\nGender\ntipo_obesidad\nmed_comidas_principales\n\n\n\n\nMale\nDesnutricion\n3.161301\n\n\nMale\nPeso normal\n3.000000\n\n\nMale\nSobrepeso\n3.000000\n\n\nMale\nObesidad grado 1\n3.000000\n\n\nMale\nObesidad grado 2\n3.000000\n\n\nMale\nObesidad grado 3\n3.000000\n\n\nFemale\nDesnutricion\n3.000000\n\n\nFemale\nPeso normal\n3.000000\n\n\nFemale\nSobrepeso\n3.000000\n\n\nFemale\nObesidad grado 1\n2.875101\n\n\nFemale\nObesidad grado 2\n3.000000\n\n\nFemale\nObesidad grado 3\n3.000000",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-refrigerios-y-género",
+    "href": "analysis/test5.html#consumo-de-refrigerios-y-género",
+    "title": "Análisis de Género",
+    "section": "5.- Consumo de Refrigerios y género",
+    "text": "5.- Consumo de Refrigerios y género\nConocer los valores de la variable de consumo de refrigerios\n\nunique(obesity$come_refrigerios) # produce:\n\n[1] ocasional frecuente siempre   nunca    \nLevels: ocasional frecuente nunca siempre\n\n\nConocer el tipo de la variable consumo de refrigerios\n\nclass(obesity$come_refrigerios) # produce: \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras que relaciona el género con el consumo de refrigerios y facetado por tipo de obeidad\n\nggplot(obesity, aes(x = Gender, fill = come_refrigerios)) + \n  geom_bar(position = \"fill\") + \n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla obesidad por género y consumo de calorías, y resumir por índice de masa corporal\n\nobesity_refrigerios &lt;- obesity |&gt;\n  group_by(come_refrigerios, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_refrigerios) # produce:\n\n\n\n\ncome_refrigerios\nGender\nmed_imc\n\n\n\n\nocasional\nMale\n31.04769\n\n\nocasional\nFemale\n31.38296\n\n\nfrecuente\nMale\n22.97578\n\n\nfrecuente\nFemale\n17.97492\n\n\nnunca\nMale\n26.67276\n\n\nnunca\nFemale\n24.50895\n\n\nsiempre\nMale\n24.27489\n\n\nsiempre\nFemale\n22.58271\n\n\n\n\n\nDiagrama de caja que relaciona el consumo de refrigerios con el índice de masa corporal y facetada por género\n\nggplot(obesity_refrigerios, aes(x = come_refrigerios, y = med_imc)) +\n  geom_boxplot() +\n  facet_wrap(~Gender)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#hábito-de-fumar-y-género",
+    "href": "analysis/test5.html#hábito-de-fumar-y-género",
+    "title": "Análisis de Género",
+    "section": "6.- Hábito de Fumar y Género",
+    "text": "6.- Hábito de Fumar y Género\nConocer los valores de la varible de hábito de fumar\n\nunique(obesity$fuma) # produce: [1] no si\n\n[1] no si\nLevels: si no\n\n\nConocer el tipo de la variable hábito de fumar\n\nclass(obesity$fuma) # produce: [1] \"factor\"\n\n[1] \"factor\"\n\n\nGráfico de barras que relaciona género con el hábito de fumar y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, fill = fuma)) +\n  geom_bar(position = \"fill\") +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla obesidad por hábito de fumar y género y resumir por índice de masa corporal.\n\nobesity |&gt;\n  group_by(fuma, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    avg_imc = mean(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  ) |&gt; knitr::kable()\n\n\n\n\nfuma\nGender\nmed_imc\navg_imc\n\n\n\n\nsi\nMale\n35.26476\n31.13518\n\n\nsi\nFemale\n26.89232\n26.79391\n\n\nno\nMale\n28.78859\n29.22861\n\n\nno\nFemale\n28.51195\n30.17868",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-agua-y-género",
+    "href": "analysis/test5.html#consumo-de-agua-y-género",
+    "title": "Análisis de Género",
+    "section": "7.- Consumo de Agua y Género",
+    "text": "7.- Consumo de Agua y Género\nConocer el tipo de la variable consumo de agua\n\nclass(obesity$agua_diaria) # produce: \"numeric\"\n\n[1] \"numeric\"\n\n\nConocer los valores de la varaible consumo de agua\n\nunique(obesity$agua_diaria)[1:20] # produce:\n\n [1] 2.000000 3.000000 1.000000 1.152736 1.115967 2.704507 2.184707 2.406541\n [9] 2.984323 2.444125 2.654702 2.825629 2.847264 2.884033 2.147746 2.815293\n[17] 2.593459 1.031354 2.651258 1.792022\n\n\nDiagrama de caja que relaciona el género con el consumo de agua y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, y = agua_diaria)) +\n  geom_boxplot() +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla de obesidad por tipo de obesidad y género y resumida por consumo de agua e índice de masa corporal\n\nobesity_agua &lt;- obesity |&gt;\n  group_by(tipo_obesidad, Gender) |&gt;\n  summarise(\n    med_agua = median(agua_diaria, na.rm = TRUE),\n    avg_agua = mean(agua_diaria, na.tm = TRUE),\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_agua) # produce\n\n\n\n\ntipo_obesidad\nGender\nmed_agua\navg_agua\nmed_imc\n\n\n\n\nDesnutricion\nMale\n2.000000\n2.123461\n17.63010\n\n\nDesnutricion\nFemale\n1.670620\n1.723055\n17.48282\n\n\nPeso normal\nMale\n2.000000\n1.925343\n22.49135\n\n\nPeso normal\nFemale\n2.000000\n1.766475\n22.03857\n\n\nSobrepeso\nMale\n2.000000\n2.151893\n27.20133\n\n\nSobrepeso\nFemale\n2.000000\n1.915390\n26.71661\n\n\nObesidad grado 1\nMale\n2.358109\n2.310869\n32.70044\n\n\nObesidad grado 1\nFemale\n1.944579\n1.854402\n31.89249\n\n\nObesidad grado 2\nMale\n2.000000\n1.859811\n36.47965\n\n\nObesidad grado 2\nFemale\n1.495830\n1.750684\n39.02219\n\n\nObesidad grado 3\nMale\n2.000000\n2.000000\n49.47239\n\n\nObesidad grado 3\nFemale\n2.501638\n2.296859\n42.75894\n\n\n\n\n\nDiagrama de dispersión que relaciona el consumo de agua con el índice de masa corporal, coloreado por género y facetado por tipo de obesidad\n\nggplot(obesity_agua, aes(x = med_agua, y = med_imc)) +\n  geom_point(aes(color = Gender)) +\n  facet_wrap(~tipo_obesidad)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-bebidas-calóricas-y-género",
+    "href": "analysis/test5.html#consumo-de-bebidas-calóricas-y-género",
+    "title": "Análisis de Género",
+    "section": "8.- Consumo de bebidas calóricas y género",
+    "text": "8.- Consumo de bebidas calóricas y género\nConocer el tipo de la variable consumo de bebidas calóricas\n\nclass(obesity$toma_bebidas_calóricas) # produce: \"factor\"\n\n[1] \"factor\"\n\n\nConocer los valores de la variable consumo de bebidas calóricas\n\nunique(obesity$toma_bebidas_calóricas) # produce: [1] no si\n\n[1] no si\nLevels: no si\n\n\nGráfico de barras que relaciona el género con el consumo de bebidas calóricas, facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, fill = toma_bebidas_calóricas)) +\n  geom_bar(position = \"fill\") +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla obesidad por género y consumo de bebidas calóricas y resumir por índice de masa corporal\n\nobesity |&gt;\n  group_by(Gender, toma_bebidas_calóricas) |&gt;\n  summarize(\n    med_imc = median(imc, na.rm = TRUE),\n    avg_imc = mean(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  ) |&gt; knitr::kable() # produce: \n\n\n\n\nGender\ntoma_bebidas_calóricas\nmed_imc\navg_imc\n\n\n\n\nMale\nno\n29.00051\n29.39937\n\n\nMale\nsi\n24.81365\n24.51153\n\n\nFemale\nno\n29.44086\n30.68948\n\n\nFemale\nsi\n23.58139\n22.35330",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#actividad-física-y-género",
+    "href": "analysis/test5.html#actividad-física-y-género",
+    "title": "Análisis de Género",
+    "section": "9.- Actividad Física y Género",
+    "text": "9.- Actividad Física y Género\nConocer el tipo de la variable actividad física\n\nclass(obesity$actividad_fisica) # produce: \"numeric\"\n\n[1] \"numeric\"\n\n\nConocer los valores de la variable actividad física\n\nunique(obesity$actividad_fisica)[1:20] # produce: \n\n [1] 0.000000 3.000000 2.000000 1.000000 0.319156 1.541072 1.978631 0.100320\n [9] 1.586525 1.399183 1.680844 2.206738 1.318170 0.902095 0.600817 0.119643\n[17] 0.345684 1.679935 2.539762 0.196152\n\n\nDiagrama de caja que relaciona el género con la actividad física y facetada por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, y = actividad_fisica)) +\n  geom_boxplot() +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla obesidad por tipo de obesidad y género y resumir por índice de masa corporal y actividad física\n\nobesity_fisica &lt;- obesity |&gt;\n  group_by(tipo_obesidad, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    med_fisica = median(actividad_fisica, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_fisica) # produce:\n\n\n\n\ntipo_obesidad\nGender\nmed_imc\nmed_fisica\n\n\n\n\nDesnutricion\nMale\n17.63010\n1.9881705\n\n\nDesnutricion\nFemale\n17.48282\n1.1904650\n\n\nPeso normal\nMale\n22.49135\n1.0000000\n\n\nPeso normal\nFemale\n22.03857\n1.0000000\n\n\nSobrepeso\nMale\n27.20133\n1.0000000\n\n\nSobrepeso\nFemale\n26.71661\n0.7192815\n\n\nObesidad grado 1\nMale\n32.70044\n1.0000000\n\n\nObesidad grado 1\nFemale\n31.89249\n0.3961655\n\n\nObesidad grado 2\nMale\n36.47965\n0.9875210\n\n\nObesidad grado 2\nFemale\n39.02219\n0.1291780\n\n\nObesidad grado 3\nMale\n49.47239\n2.0000000\n\n\nObesidad grado 3\nFemale\n42.75894\n0.6165030\n\n\n\n\n\nDiagrama de dispersión que relaciona el índice de masa corporal con la actividad física, coloreado por género y facetado por tipo de obesidad\n\nggplot(obesity_fisica, aes(x = med_imc, y = med_fisica)) +\n  geom_point(aes(color = Gender)) +\n  facet_wrap(~tipo_obesidad)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#uso-de-tecnología-y-género",
+    "href": "analysis/test5.html#uso-de-tecnología-y-género",
+    "title": "Análisis de Género",
+    "section": "10.- Uso de Tecnología y Género",
+    "text": "10.- Uso de Tecnología y Género\nConocer el tipo de la variable uso de tecnología\n\nclass(obesity$uso_tecnologia) # produce: \"numeric\"\n\n[1] \"numeric\"\n\n\nConocer los valores de la variable de tiempo de uso de tecnología\n\nunique(obesity$uso_tecnologia)[1:20] # produce:\n\n [1] 1.000000 0.000000 2.000000 0.294990 0.838957 0.479221 0.625350 0.265790\n [9] 0.555468 0.928972 1.340107 0.589980 1.374650 1.283673 0.062488 0.997400\n[17] 0.738269 0.860497 0.478676 0.555967\n\n\nDiagrama de caja que relaciona el género con el uso de tecnología y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, y = uso_tecnologia)) +\n  geom_boxplot() +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla de obesidad por tipo de obesidad y género y resumir por uso de tecnología\n\nobesity_tecnologia &lt;- obesity |&gt;\n  group_by(tipo_obesidad, Gender) |&gt;\n  summarise(\n    med_tecnologia = median(uso_tecnologia, na.rm = TRUE),\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_tecnologia) # produce:\n\n\n\n\ntipo_obesidad\nGender\nmed_tecnologia\nmed_imc\n\n\n\n\nDesnutricion\nMale\n1.0000000\n17.63010\n\n\nDesnutricion\nFemale\n0.8604970\n17.48282\n\n\nPeso normal\nMale\n1.0000000\n22.49135\n\n\nPeso normal\nFemale\n1.0000000\n22.03857\n\n\nSobrepeso\nMale\n0.4668785\n27.20133\n\n\nSobrepeso\nFemale\n0.7502505\n26.71661\n\n\nObesidad grado 1\nMale\n0.6939975\n32.70044\n\n\nObesidad grado 1\nFemale\n0.0000000\n31.89249\n\n\nObesidad grado 2\nMale\n0.3621600\n36.47965\n\n\nObesidad grado 2\nFemale\n0.6923430\n39.02219\n\n\nObesidad grado 3\nMale\n1.0000000\n49.47239\n\n\nObesidad grado 3\nFemale\n0.6462880\n42.75894\n\n\n\n\n\nDiagrama de dispersión que relaciona el uso de tecnología con el índice de masa corporal coloreado por género y facetado por tipo de obesidad\n\nggplot(obesity_tecnologia, aes(x = med_tecnologia, y = med_imc)) +\n  geom_point(aes(color = Gender)) +\n  facet_wrap(~tipo_obesidad)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#consumo-de-alcohol-y-género",
+    "href": "analysis/test5.html#consumo-de-alcohol-y-género",
+    "title": "Análisis de Género",
+    "section": "11.- Consumo de Alcohol y Género",
+    "text": "11.- Consumo de Alcohol y Género\nConocer el tipo de la variable de consumo de alcohol\n\nclass(obesity$consume_alcohol) # produce: \"factor\"\n\n[1] \"factor\"\n\n\nConocer los valores de la variable consumo de alcohol\n\nunique(obesity$consume_alcohol) # produce:\n\n[1] nunca     ocasional frecuente siempre  \nLevels: nunca ocasional frecuente siempre\n\n#[1] nunca     ocasional frecuente siempre  \n\nGráfico de barras que relaciona el consumo de alcohol con el género y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, fill = consume_alcohol)) +\n  geom_bar(position = \"fill\") +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla obesidad por consumo de alcohol y género y resumir por índice de masa corporal\n\nobesity_alcohol &lt;- obesity |&gt;\n  group_by(consume_alcohol, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_alcohol) # produce:\n\n\n\n\nconsume_alcohol\nGender\nmed_imc\n\n\n\n\nnunca\nMale\n29.38476\n\n\nnunca\nFemale\n26.45388\n\n\nocasional\nMale\n28.71356\n\n\nocasional\nFemale\n32.10046\n\n\nfrecuente\nMale\n27.46836\n\n\nfrecuente\nFemale\n25.60184\n\n\nsiempre\nMale\n22.49135\n\n\n\n\n\nDiagrama de caja que relaciona el género con el índice de masa corporal y facetado por consumo de lacohol\n\nggplot(obesity_alcohol, aes(x = Gender, y = med_imc)) +\n  geom_boxplot() +\n  facet_wrap(~consume_alcohol)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
+  },
+  {
+    "objectID": "analysis/test5.html#medio-de-transporte-y-género",
+    "href": "analysis/test5.html#medio-de-transporte-y-género",
+    "title": "Análisis de Género",
+    "section": "12.- Medio de Transporte y Género",
+    "text": "12.- Medio de Transporte y Género\nConocer el tipo de la variable de medio de transporte\n\nclass(obesity$medio_transporte) # produce: \"factor\"\n\n[1] \"factor\"\n\n\nConocer los valores de la variable medio de transporte\n\nunique(obesity$medio_transporte) # produce: \n\n[1] transporte_publico camina             auto               moto              \n[5] bicicleta         \nLevels: transporte_publico auto moto camina bicicleta\n\n#[1] transporte_publico camina             auto \n#[4] moto               bicicleta  \n\nGráfico de barras que relaciona el género con el medio de transporte y facetado por tipo de obesidad\n\nggplot(obesity, aes(x = Gender, fill = medio_transporte)) +\n  geom_bar(position = \"fill\") +\n  facet_wrap(~tipo_obesidad)\n\n\n\n\n\n\n\n\nAgrupar la tabla de obesidad por tipo de medio de transporte y género y resumido por índice de masa corporal\n\nobesity_transporte &lt;- obesity |&gt;\n  group_by(medio_transporte, Gender) |&gt;\n  summarise(\n    med_imc = median(imc, na.rm = TRUE),\n    .groups = \"keep\"\n  )\nknitr::kable(obesity_transporte) # produce:\n\n\n\n\nmedio_transporte\nGender\nmed_imc\n\n\n\n\ntransporte_publico\nMale\n28.71941\n\n\ntransporte_publico\nFemale\n29.76627\n\n\nauto\nMale\n30.85221\n\n\nauto\nFemale\n27.73131\n\n\nmoto\nMale\n24.28098\n\n\nmoto\nFemale\n28.88889\n\n\ncamina\nMale\n24.22145\n\n\ncamina\nFemale\n22.03857\n\n\nbicicleta\nMale\n24.21229\n\n\n\n\n\nDiagrama de caja que relaciona el género con el índice de masa corporal y facetado por tipo de medio de transporte\n\nggplot(obesity_transporte, aes(x = Gender, y = med_imc)) +\n  geom_boxplot() +\n  facet_wrap(~medio_transporte)",
+    "crumbs": [
+      "Análisis de Género"
+    ]
   }
 ]

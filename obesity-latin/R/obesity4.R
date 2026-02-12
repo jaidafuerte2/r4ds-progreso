@@ -253,6 +253,8 @@ ggplot(obesity, aes(x = Gender, fill = fuma)) +
   geom_bar(position = "fill") +
   facet_wrap(~tipo_obesidad)
 
+# Agrupar la tabla obesidad por género y hábito de fumar y resumir 
+# por índice de masa corporal
 obesity |>
   group_by(Gender, fuma) |>
   summarise(

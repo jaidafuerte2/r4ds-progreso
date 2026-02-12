@@ -255,7 +255,6 @@ class(my_obesity$come_refrigerios) # produce: "character"
 
 ```
 
-
 *Cambiar el tipo* de la variable **come refrigerios**
 
 ```{r}
@@ -268,7 +267,6 @@ my_obesity <- my_obesity |>
   )
 class(my_obesity$come_refrigerios) # produce: "factor
 ```
-
 
 ## Transformaciones de la variable Hábito de Fumar
 
@@ -291,7 +289,6 @@ my_obesity <- my_obesity |>
   )
 unique(my_obesity$fuma) # produce: # [1] "no" "si"
 ```
-
 
 *Cambiar el tipo* de la variable **hábito de fumar** a factor
 
@@ -342,7 +339,6 @@ my_obesity <- my_obesity |>
   )
 unique(my_obesity$toma_bebidas_calóricas) # produce: [1] no si
 ```
-
 
 *Cambiar el tipo* de la variable de **consumo de bebidas calóricas**
 
@@ -426,7 +422,7 @@ class(my_obesity$consume_alcohol) # produce: "factor"
 
 ## Transformaciones de la variable Tipo de Medio de Transporte
 
-*Conocer los valores* de la varaible  **tipo de medio de transporte**
+*Conocer los valores* de la varaible **tipo de medio de transporte**
 
 ```{r}
 unique(my_obesity$medio_transporte) # produce:
@@ -463,4 +459,3 @@ my_obesity <- my_obesity |>
   )
 class(my_obesity$medio_transporte) # produce: "factor"
 ```
-

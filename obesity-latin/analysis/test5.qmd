@@ -1,0 +1,584 @@
+---
+title: "Análisis de Género"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+obesity <- read_csv("../data/obesity-latin.csv")
+source("../R/load_data.R")
+```
+
+## 0.- Introducción
+
+Conocer los *valores* de la variable *género*
+
+```{r}
+unique(obesity$Gender) # produce: [1] Female Male
+```
+
+Conocer el tipo de la variable género
+
+```{r}
+class(obesity$Gender) # produce: [1] "factor"
+```
+
+*Gráfico de barras* de la varaible de *género*
+
+```{r}
+#| fig-width: 6
+#| fig.height: 4
+ggplot(obesity, aes(x = Gender)) +
+  geom_bar()
+```
+
+## 1.- Historia familiar de exceso de peso y género
+
+Conocer los *valores* de la variable *historia familiar de exceso de peso*
+
+```{r}
+unique(obesity$tiene_familiares_obesos) # produce: [1] si no
+```
+
+Conocer el *tipo* de la varaible *historia familiar de obesidad*
+
+```{r}
+class(obesity$tiene_familiares_obesos) # produce: [1] "factor"
+```
+
+*Gráfico de barras* que relaciona el *género* con la *historia familiar de exceso de peso*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = tiene_familiares_obesos)) +
+  geom_bar(position = "fill")
+```
+
+*Agrupar* por *historia familiar de exceso de peso* y *género* y *resumir* por *índice de masa corporal*
+
+```{r}
+obesity_historia_familiar <- obesity |>
+  group_by(tiene_familiares_obesos, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  ) 
+knitr::kable(obesity_historia_familiar) # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con la mediana del *índice de masa corporal*. *Facetada* por *historia familiar de obesidad*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_historia_familiar, aes(x = Gender, 
+                                      y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~tiene_familiares_obesos)
+```
+
+## 2.- Consumo de comida calórica y Género
+
+Conocer los *valores* de la variable *consumo de comida muy calórica*
+
+```{r}
+unique(obesity$come_comida_muy_calorica) # produce: [1] no si
+```
+
+Conocer el *tipo* de la variable *consumo de comida muy calórica*
+
+```{r}
+class(obesity$come_comida_muy_calorica) # produce: "factor"
+```
+
+
+*Gráfico de barras* que relaciona el *Género* con el *consumo de comida calórica* y *facetada* por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes( x = Gender, fill = come_comida_muy_calorica)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* por *género* y *consumo de comida muy calórica*
+
+```{r}
+obesity_calorica <- obesity |>
+  group_by(Gender, come_comida_muy_calorica) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  ) 
+knitr::kable(obesity_calorica) # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con el *índice de masa corporal* y *coloreado* por *consumo de comida calórica*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_calorica, aes(x = Gender, y = med_imc)) +
+  geom_boxplot(aes(color = come_comida_muy_calorica))
+```
+
+## 3.- Consumo de Vegetales y Género
+
+Conocer los *valores* de la variable *consumo de vegetales*
+
+```{r}
+unique(obesity$come_vegetales)[1:20] # produce:
+```
+
+Conocer el *tipo* de la variable *consumo de vegetales*
+
+```{r}
+class(obesity$come_vegetales) # produce: "numeric"
+```
+
+
+*Gráfico de caja* que relaciona el *género* con el *consumo de vegetales* *facetado* por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = come_vegetales)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* por *género* y *tipo de obesidad* y *resumir* por *índice de masa corporal* y *consumo de vegetales*
+
+```{r}
+obesity_vegetales <- obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_vegetales = median(come_vegetales, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_vegetales) # produce:
+```
+
+*Diagrama de caja* que relaciona el *tipo de obesidad* con el *consumo de vegetales* y *facetado* por *género*
+
+```{r}
+#| fig-width: 9
+#| fig-height: 4
+ggplot(obesity_vegetales, aes(x = tipo_obesidad, y = med_vegetales)) +
+  geom_boxplot() +
+  facet_wrap(~Gender)
+```
+
+## 4.- Número de Comidas Principales y género
+
+Conocer los *valores* de la variable de *número de comidas principales*
+
+```{r}
+unique(obesity$comidas_principales)[1:20] # produce:
+```
+
+Conocer el *tipo* de la variable de *número de comidas principales*
+
+```{r}
+class(obesity$comidas_principales) # produce: "numeric"
+```
+
+*Diagrama de caja* que relaciona el *género* con el *número de comidas principales* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = comidas_principales)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* la tabla de obesidad por *género* y *tipo de obesidad* y *resumir* por *número de comidas principales*
+
+```{r}
+obesity |>
+  group_by(Gender, tipo_obesidad) |>
+  summarise(
+    med_comidas_principales = median(comidas_principales, 
+                                     na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+## 5.- Consumo de Refrigerios y género
+
+Conocer los *valores* de la variable de *consumo de refrigerios*
+
+```{r}
+unique(obesity$come_refrigerios) # produce:
+```
+
+Conocer el *tipo* de la variable *consumo de refrigerios*
+
+```{r}
+class(obesity$come_refrigerios) # produce: "factor"
+```
+
+*Gráfico de barras* que relaciona el *género* con el *consumo de refrigerios* y facetado por *tipo de obeidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = come_refrigerios)) + 
+  geom_bar(position = "fill") + 
+  facet_wrap(~tipo_obesidad)
+```
+
+*Agrupar* la tabla obesidad por *género* y *consumo de calorías*, y *resumir* por *índice de masa corporal*
+
+```{r}
+obesity_refrigerios <- obesity |>
+  group_by(come_refrigerios, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_refrigerios) # produce:
+```
+
+*Diagrama de caja* que relaciona el *consumo de refrigerios* con el *índice de masa corporal* y facetada por *género*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_refrigerios, aes(x = come_refrigerios, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~Gender)
+```
+
+## 6.- Hábito de Fumar y Género
+
+Conocer los *valores* de la varible de *hábito de fumar*
+
+```{r}
+unique(obesity$fuma) # produce: [1] no si
+```
+
+Conocer el *tipo* de la variable *hábito de fumar*
+
+```{r}
+class(obesity$fuma) # produce: [1] "factor"
+```
+
+*Gráfico de barras* que relaciona *género* con el *hábito de fumar* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = fuma)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+```
+
+*Agrupar* la tabla obesidad por *hábito de fumar* y *género* y resumir por índice de masa corporal.
+
+```{r}
+obesity |>
+  group_by(fuma, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    .groups = "keep"
+  ) |> knitr::kable()
+```
+
+## 7.- Consumo de Agua y Género
+
+Conocer el *tipo* de la variable *consumo de agua*
+
+```{r}
+class(obesity$agua_diaria) # produce: "numeric"
+```
+
+
+Conocer los *valores* de la varaible *consumo de agua*
+
+```{r}
+unique(obesity$agua_diaria)[1:20] # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con el *consumo de agua* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, y = agua_diaria)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* la tabla de obesidad por *tipo de obesidad* y *género* y resumida por *consumo de agua* e *índice de masa corporal*
+
+```{r}
+obesity_agua <- obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_agua = median(agua_diaria, na.rm = TRUE),
+    avg_agua = mean(agua_diaria, na.tm = TRUE),
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_agua) # produce
+```
+
+*Diagrama de dispersión* que relaciona el *consumo de agua* con el *índice de masa corporal*, coloreado por *género* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_agua, aes(x = med_agua, y = med_imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+## 8.- Consumo de bebidas calóricas y género
+
+Conocer el *tipo* de la variable *consumo de bebidas calóricas*
+
+```{r}
+class(obesity$toma_bebidas_calóricas) # produce: "factor"
+```
+
+
+Conocer los *valores* de la variable *consumo de bebidas calóricas*
+
+```{r}
+unique(obesity$toma_bebidas_calóricas) # produce: [1] no si
+```
+
+
+*Gráfico de barras* que relaciona el *género* con el *consumo de bebidas calóricas*, facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = toma_bebidas_calóricas)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* la tabla obesidad por *género* y *consumo de bebidas calóricas* y resumir por *índice de masa corporal*
+
+```{r}
+obesity |>
+  group_by(Gender, toma_bebidas_calóricas) |>
+  summarize(
+    med_imc = median(imc, na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    .groups = "keep"
+  ) |> knitr::kable() # produce: 
+
+
+```
+
+## 9.- Actividad Física y Género
+
+Conocer el *tipo* de la variable *actividad física*
+
+```{r}
+class(obesity$actividad_fisica) # produce: "numeric"
+```
+
+
+Conocer los *valores* de la variable *actividad física*
+
+```{r}
+unique(obesity$actividad_fisica)[1:20] # produce: 
+```
+
+*Diagrama de caja* que relaciona el *género* con la *actividad física* y facetada por *tipo de obesidad*
+
+```{r}
+ggplot(obesity, aes(x = Gender, y = actividad_fisica)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+
+```
+
+
+*Agrupar* la tabla obesidad por *tipo de obesidad* y *género* y resumir por *índice de masa corporal* y *actividad física*
+
+```{r}
+obesity_fisica <- obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_fisica = median(actividad_fisica, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_fisica) # produce:
+
+```
+
+*Diagrama de dispersión* que relaciona el *índice de masa corporal* con la *actividad física*, coloreado por *género* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_fisica, aes(x = med_imc, y = med_fisica)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+## 10.- Uso de Tecnología y Género
+
+Conocer el *tipo* de la variable *uso de tecnología*
+
+```{r}
+class(obesity$uso_tecnologia) # produce: "numeric"
+```
+
+Conocer los *valores* de la variable de *tiempo de uso de tecnología*
+
+```{r}
+unique(obesity$uso_tecnologia)[1:20] # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con el *uso de tecnología* y facetado por *tipo de obesidad*
+
+```{r}
+ggplot(obesity, aes(x = Gender, y = uso_tecnologia)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* la tabla de obesidad por *tipo de obesidad* y *género* y resumir por *uso de tecnología*
+
+```{r}
+obesity_tecnologia <- obesity |>
+  group_by(tipo_obesidad, Gender) |>
+  summarise(
+    med_tecnologia = median(uso_tecnologia, na.rm = TRUE),
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_tecnologia) # produce:
+```
+
+*Diagrama de dispersión* que relaciona el *uso de tecnología* con el *índice de masa corporal* coloreado por *género* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_tecnologia, aes(x = med_tecnologia, y = med_imc)) +
+  geom_point(aes(color = Gender)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+## 11.- Consumo de Alcohol y Género
+
+Conocer el *tipo* de la variable de *consumo de alcohol*
+
+```{r}
+class(obesity$consume_alcohol) # produce: "factor"
+```
+
+
+Conocer los *valores* de la variable *consumo de alcohol*
+
+```{r}
+unique(obesity$consume_alcohol) # produce:
+#[1] nunca     ocasional frecuente siempre  
+```
+
+*Gráfico de barras* que relaciona el *consumo de alcohol* con el *género* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = consume_alcohol)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+```
+
+*Agrupar* la tabla obesidad por *consumo de alcohol* y *género* y resumir por *índice de masa corporal*  
+
+```{r}
+obesity_alcohol <- obesity |>
+  group_by(consume_alcohol, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_alcohol) # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con el *índice de masa corporal* y facetado por *consumo de lacohol*
+
+```{r}
+ggplot(obesity_alcohol, aes(x = Gender, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~consume_alcohol)
+
+```
+
+## 12.- Medio de Transporte y Género
+
+Conocer el *tipo* de la variable de *medio de transporte*
+
+```{r}
+class(obesity$medio_transporte) # produce: "factor"
+
+```
+
+
+Conocer los *valores* de la variable *medio de transporte*
+
+```{r}
+unique(obesity$medio_transporte) # produce: 
+#[1] transporte_publico camina             auto 
+#[4] moto               bicicleta  
+
+```
+
+*Gráfico de barras* que relaciona el *género* con el *medio de transporte* y facetado por *tipo de obesidad*
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity, aes(x = Gender, fill = medio_transporte)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+*Agrupar* la tabla de obesidad por *tipo de medio de transporte* y *género* y resumido por *índice de masa corporal*
+
+```{r}
+obesity_transporte <- obesity |>
+  group_by(medio_transporte, Gender) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_transporte) # produce:
+```
+
+*Diagrama de caja* que relaciona el *género* con el *índice de masa corporal* y facetado por *tipo de medio de transporte*
+
+```{r}
+
+ggplot(obesity_transporte, aes(x = Gender, y = med_imc)) +
+  geom_boxplot() +
+  facet_wrap(~medio_transporte)
+```
+
