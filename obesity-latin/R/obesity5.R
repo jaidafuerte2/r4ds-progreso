@@ -178,3 +178,264 @@ obesity_vegetales # produce:
 ggplot(obesity_vegetales, aes(x = med_vegetales, y = med_age)) +
   geom_point(aes(color = tipo_obesidad)) +
   facet_wrap(~tipo_obesidad)
+
+################################################
+##
+## 4.- Número de Comidas Principales y edad
+##
+################################################
+
+# Conocer el tipo de la varaible de comidas principales
+class(obesity$comidas_principales) # produce: "numeric"
+
+# Conocer los valores de la varaible comidas principales
+unique(obesity$comidas_principales)[1:20] # produce:
+#[1] 3.000000 1.000000 4.000000 3.289260 3.995147 1.726260 2.581015
+#[8] 1.600812 1.737620 1.105480 2.084600 1.894384 2.857787 3.765526
+#[15] 3.285167 3.691226 3.156153 1.079760 3.559841 3.891994
+
+# Diagrama de dispersión que relaciona la edad con las comidas principales
+# coloreado, y facetado por tipo de obesidad
+ggplot(obesity, aes(x = Age, y = comidas_principales)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla obesidad por tipo de obesidad y resumir por número
+# de comidas y edad
+obesity_comidas <- obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_comidas = median(comidas_principales, na.rm = TRUE),
+    avg_comidas = mean(comidas_principales, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    n_tipo = n(),
+    .groups = "keep"
+  )
+obesity_comidas # produce:
+# A tibble: 6 × 4
+# Groups:   tipo_obesidad [6]
+#  tipo_obesidad    med_comidas avg_comidas med_age
+#  <fct>                  <dbl>       <dbl>   <dbl>
+#1 Desnutricion               3        2.91    19.2
+#2 Peso normal                3        2.73    21  
+#3 Sobrepeso                  3        2.50    22.7
+#4 Obesidad grado 1           3        2.45    23  
+#5 Obesidad grado 2           3        2.79    26.0
+#6 Obesidad grado 3           3        3       22.8
+
+# Diagrama de dispersión que relaciona la edad con el número de comidas
+# coloreado y facetado por tipo de obesidad
+ggplot(obesity_comidas, aes(x = med_age, y = avg_comidas)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+
+#####################################
+##
+## 5.- Consumo de Refrigerios y edad
+##
+#####################################
+
+# Conocer el tipo de la variable consumo de refrigerios
+class(obesity$come_refrigerios) # produce:  "factor"
+
+# Conocer los valores de la varaible consumo de refrigerio
+unique(obesity$come_refrigerios) # produce : 
+# [1] ocasional frecuente siempre   nunca 
+
+# Diagrama de caja que relaciona el consumo de refrigerios con la edad,
+# coloreado por consumo de refrigerios y facetado por tipo de obesidad
+ggplot(obesity, aes(x = come_refrigerios, y = Age)) +
+  geom_boxplot(aes(color = come_refrigerios)) +
+  facet_wrap(~tipo_obesidad)
+
+obesity_refrigerios <- obesity |> 
+  group_by(come_refrigerios) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_refrigerios # produce:
+# A tibble: 4 × 3
+# Groups:   come_refrigerios [4]
+#  come_refrigerios med_imc med_age
+#  <fct>              <dbl>   <dbl>
+#1 ocasional           31.2      23
+#2 frecuente           18.9      21
+#3 nunca               26.4      21
+#4 siempre             23.8      21
+
+# Diagrama de dispersión que relaciona la edad con el índice de masa 
+# corporal, coloreado por consumo de refrigerios
+ggplot(obesity_refrigerios, aes(x = med_age, y = med_imc)) +
+  geom_point(aes(color = come_refrigerios))
+
+
+#####################################
+##
+## 6.- Hábito de Fumar y Género
+##
+#####################################
+
+# Conocer el tipo de la variable de hábito de fumar
+class(obesity$fuma) # produce: "factor"
+
+# Conocer los valores de la variable hábito de fumar
+unique(obesity$fuma) # produce: [1] no si
+
+# Diagrama de caja que relaciona el hábito de fumar con la edad, facetado
+# por tipo de obesidad
+ggplot(obesity, aes(x = fuma, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+
+obesity_fuma <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    fumadores = sum(fuma == "si", na.rm = TRUE),
+    prop_fumadores = mean(fuma == "si", na.rm = TRUE) * 100,
+    #round(mean(SMOKE == "yes") * 100, 1) # formato bonito
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_fuma # produce:
+# A tibble: 6 × 4
+# Groups:   tipo_obesidad [6]
+#  tipo_obesidad    fumadores prop_fumadores med_age
+#  <fct>                <int>          <dbl>   <dbl>
+#1 Desnutricion             1          0.369    19.2
+#2 Peso normal             13          4.33     21  
+#3 Sobrepeso                8          1.41     22.7
+#4 Obesidad grado 1         6          1.63     23  
+#5 Obesidad grado 2        15          4.44     26.0
+#6 Obesidad grado 3         1          0.373    22.8
+
+ggplot(obesity_fuma, aes(x = med_age, y = prop_fumadores)) +
+  geom_point(aes(color = tipo_obesidad))
+
+##################################
+##
+## 7.- Consumo de Agua y Edad
+##
+##################################  
+
+# Conocer el tipo de la variable de consumo de agua 
+class(obesity$agua_diaria) # produce: "numeric"
+
+# Conocer el tipo de valores de la variable de consumo de agua
+unique(obesity$agua_diaria)[1:20] # produce:
+#[1] 2.000000 3.000000 1.000000 1.152736 1.115967 2.704507 2.184707
+#[8] 2.406541 2.984323 2.444125 2.654702 2.825629 2.847264 2.884033
+#[15] 2.147746 2.815293 2.593459 1.031354 2.651258 1.792022
+
+# Diagrama de dispersión que relaciona la edad con el consumo de agua,
+# facetado por tipo de obesidad
+ggplot(obesity, aes(x = Age, y = agua_diaria)) +
+  geom_point() +
+  facet_wrap(~tipo_obesidad)
+
+# Agrupar la tabla obesidad por tipo de obesidad y resumir por edad y
+# consumo de agua
+obesity_agua <- obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_agua = median(agua_diaria, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_agua # produce:  
+# A tibble: 6 × 3
+# Groups:   tipo_obesidad [6]
+#  tipo_obesidad    med_agua med_age
+#  <fct>               <dbl>   <dbl>
+#1 Desnutricion         2       19.2
+#2 Peso normal          2       21  
+#3 Sobrepeso            2       22.7
+#4 Obesidad grado 1     2.02    23  
+#5 Obesidad grado 2     2       26.0
+#6 Obesidad grado 3     2.50    22.8
+
+# Diagrama de dispersión que relaciona la edad con el consumo de agua,
+# coloreado por tipo de obesidad
+ggplot(obesity_agua, aes(x = med_age, y = med_agua)) +
+  geom_point(aes(color = tipo_obesidad))
+
+# Agrupar la tabla obesidad por tipo de obesidad y resumir por quienes
+# consumen más de 2 litros de agua
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_agua2 = sum(agua_diaria > 2, na.rm = TRUE),
+    prop_agua2 = mean(agua_diaria > 2, na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) # produce:
+# A tibble: 6 × 4
+# Groups:   tipo_obesidad [6]
+#  tipo_obesidad    sum_agua2 prop_agua2 med_age
+#  <fct>                <int>      <dbl>   <dbl>
+#1 Desnutricion            90       33.2    19.2
+#2 Peso normal             43       14.3    21  
+#3 Sobrepeso              224       39.6    22.7
+#4 Obesidad grado 1       186       50.5    23  
+#5 Obesidad grado 2       160       47.3    26.0
+#6 Obesidad grado 3       191       71.3    22.8
+
+###############################################
+##
+## 8.- Consumo de bebidas calóricas y edad
+##
+###############################################
+
+# Conocer el tipo de la variable conusmo de bebidas calóricas
+class(obesity$toma_bebidas_calóricas) # produce: "factor"
+
+# Conocer los valores de la variable consumo de bebidas calóricas
+unique(obesity$toma_bebidas_calóricas) # produce: [1] no si
+
+# Diagrama de caja que relaciona el consumo de bebidas calóricas con 
+# la edad, facetado por tipo de obesidad
+ggplot(obesity, aes(x = toma_bebidas_calóricas, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+
+obesity |>
+  group_by(toma_bebidas_calóricas) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) # produce:
+# A tibble: 2 × 3
+# Groups:   toma_bebidas_calóricas [2]
+#  toma_bebidas_calóricas med_imc med_age
+#  <fct>                    <dbl>   <dbl>
+#1 no                        29.3    22.9
+#2 si                        24.2    19.0
+
+obesity_caloricas <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_caloricas = sum(toma_bebidas_calóricas == "si", na.rm = TRUE),
+    prop_caloricas = mean(toma_bebidas_calóricas == "si", 
+                          na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_caloricas # produce:
+# A tibble: 6 × 4
+# Groups:   tipo_obesidad [6]
+#  tipo_obesidad    sum_caloricas prop_caloricas med_age
+#  <fct>                    <int>          <dbl>   <dbl>
+#1 Desnutricion                22          8.12     19.2
+#2 Peso normal                 37         12.3      21  
+#3 Sobrepeso                   34          6.01     22.7
+#4 Obesidad grado 1             2          0.543    23  
+#5 Obesidad grado 2             1          0.296    26.0
+#6 Obesidad grado 3             0          0        22.8
+
+# Diagrama de dispersión que relaciona la edad con el porcentaje de
+# personas que sí toman bebidas calóricas
+ggplot(obesity_caloricas, aes(x = med_age, y = prop_caloricas)) +
+  geom_point(aes(color = tipo_obesidad))
+
