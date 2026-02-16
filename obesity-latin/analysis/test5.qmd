@@ -96,7 +96,6 @@ Conocer el *tipo* de la variable *consumo de comida muy calórica*
 class(obesity$come_comida_muy_calorica) # produce: "factor"
 ```
 
-
 *Gráfico de barras* que relaciona el *Género* con el *consumo de comida calórica* y *facetada* por *tipo de obesidad*
 
 ```{r}
@@ -106,7 +105,6 @@ ggplot(obesity, aes( x = Gender, fill = come_comida_muy_calorica)) +
   geom_bar(position = "fill") +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* por *género* y *consumo de comida muy calórica*
 
@@ -143,7 +141,6 @@ Conocer el *tipo* de la variable *consumo de vegetales*
 class(obesity$come_vegetales) # produce: "numeric"
 ```
 
-
 *Gráfico de caja* que relaciona el *género* con el *consumo de vegetales* *facetado* por *tipo de obesidad*
 
 ```{r}
@@ -153,7 +150,6 @@ ggplot(obesity, aes(x = Gender, y = come_vegetales)) +
   geom_boxplot() +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* por *género* y *tipo de obesidad* y *resumir* por *índice de masa corporal* y *consumo de vegetales*
 
@@ -201,7 +197,6 @@ ggplot(obesity, aes(x = Gender, y = comidas_principales)) +
   geom_boxplot() +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* la tabla de obesidad por *género* y *tipo de obesidad* y *resumir* por *número de comidas principales*
 
@@ -306,7 +301,6 @@ Conocer el *tipo* de la variable *consumo de agua*
 class(obesity$agua_diaria) # produce: "numeric"
 ```
 
-
 Conocer los *valores* de la varaible *consumo de agua*
 
 ```{r}
@@ -322,7 +316,6 @@ ggplot(obesity, aes(x = Gender, y = agua_diaria)) +
   geom_boxplot() +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* la tabla de obesidad por *tipo de obesidad* y *género* y resumida por *consumo de agua* e *índice de masa corporal*
 
@@ -356,13 +349,11 @@ Conocer el *tipo* de la variable *consumo de bebidas calóricas*
 class(obesity$toma_bebidas_calóricas) # produce: "factor"
 ```
 
-
 Conocer los *valores* de la variable *consumo de bebidas calóricas*
 
 ```{r}
 unique(obesity$toma_bebidas_calóricas) # produce: [1] no si
 ```
-
 
 *Gráfico de barras* que relaciona el *género* con el *consumo de bebidas calóricas*, facetado por *tipo de obesidad*
 
@@ -373,7 +364,6 @@ ggplot(obesity, aes(x = Gender, fill = toma_bebidas_calóricas)) +
   geom_bar(position = "fill") +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* la tabla obesidad por *género* y *consumo de bebidas calóricas* y resumir por *índice de masa corporal*
 
@@ -397,7 +387,6 @@ Conocer el *tipo* de la variable *actividad física*
 class(obesity$actividad_fisica) # produce: "numeric"
 ```
 
-
 Conocer los *valores* de la variable *actividad física*
 
 ```{r}
@@ -412,7 +401,6 @@ ggplot(obesity, aes(x = Gender, y = actividad_fisica)) +
   facet_wrap(~tipo_obesidad)
 
 ```
-
 
 *Agrupar* la tabla obesidad por *tipo de obesidad* y *género* y resumir por *índice de masa corporal* y *actividad física*
 
@@ -460,7 +448,6 @@ ggplot(obesity, aes(x = Gender, y = uso_tecnologia)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-
 *Agrupar* la tabla de obesidad por *tipo de obesidad* y *género* y resumir por *uso de tecnología*
 
 ```{r}
@@ -492,7 +479,6 @@ Conocer el *tipo* de la variable de *consumo de alcohol*
 class(obesity$consume_alcohol) # produce: "factor"
 ```
 
-
 Conocer los *valores* de la variable *consumo de alcohol*
 
 ```{r}
@@ -510,7 +496,7 @@ ggplot(obesity, aes(x = Gender, fill = consume_alcohol)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-*Agrupar* la tabla obesidad por *consumo de alcohol* y *género* y resumir por *índice de masa corporal*  
+*Agrupar* la tabla obesidad por *consumo de alcohol* y *género* y resumir por *índice de masa corporal*
 
 ```{r}
 obesity_alcohol <- obesity |>
@@ -540,7 +526,6 @@ class(obesity$medio_transporte) # produce: "factor"
 
 ```
 
-
 Conocer los *valores* de la variable *medio de transporte*
 
 ```{r}
@@ -559,7 +544,6 @@ ggplot(obesity, aes(x = Gender, fill = medio_transporte)) +
   geom_bar(position = "fill") +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 *Agrupar* la tabla de obesidad por *tipo de medio de transporte* y *género* y resumido por *índice de masa corporal*
 
@@ -581,4 +565,3 @@ ggplot(obesity_transporte, aes(x = Gender, y = med_imc)) +
   geom_boxplot() +
   facet_wrap(~medio_transporte)
 ```
-

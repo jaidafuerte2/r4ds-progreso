@@ -1,0 +1,445 @@
+---
+title: "Análisis de Edad"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+obesity <- read_csv("../data/obesity-latin.csv")
+source("../R/load_data.R")
+```
+
+##  0.- Introducción
+
+Conocer el tipo de la variable edad
+
+```{r}
+class(obesity$Age) # produce: "numeric"
+```
+
+
+Conocer los valores de la variable edad
+
+```{r}
+unique(obesity$Age)[1:20] # produce:
+```
+
+Histograma de la variable edad
+
+```{r}
+ggplot(obesity, aes(x = Age)) +
+  geom_histogram(binwidth = 1)
+```
+
+Gráfico de densidad de la variable edad
+
+```{r}
+ggplot(obesity, aes(x = Age)) +
+  geom_density()
+```
+
+## 1.- Historia familiar de exceso de peso
+
+Conocer el tipo de la varaible de famialiares obesos
+
+```{r}
+class(obesity$tiene_familiares_obesos) # produce: "factor"
+```
+
+Conocer los valores de la varaible de familiares obesos
+
+```{r}
+unique(obesity$tiene_familiares_obesos) # produce: 
+#[1] si no
+#Levels: si no
+```
+
+Diagrama de caja que relaciona familiares obesos con la edad, facetada por tipo de obesidad
+
+```{r}
+ggplot(obesity, aes(x = tiene_familiares_obesos, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla de obesidad por tipo de obesidad y familiares obesos, resumido por edad e índice de masa corporal
+
+```{r}
+obesity_familiares <- obesity |>
+  group_by(tipo_obesidad, tiene_familiares_obesos) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) 
+knitr::kable(obesity_familiares) # produce:
+```
+
+Diagrama de dispersión que relaciona el índice de masa corporal con la edad, facetado por tipo de obesidad y coloreado por familiares obesos.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(obesity_familiares, aes(x = med_imc, y = med_age)) +
+  geom_point(aes(color = tiene_familiares_obesos)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por los que si tienen familiares obesos.
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_familiares = sum(tiene_familiares_obesos == "si", na.rm = TRUE),
+    perc_familiares = mean(tiene_familiares_obesos == "si",
+                           na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |> knitr::kable()
+```
+
+## 2.- Consumo de comida calórica y Edad
+
+Conocer el tipo de la variable de consumo de comida muy calórica
+
+```{r}
+class(obesity$come_comida_muy_calorica) # produce: "factor"
+```
+
+
+Conocer los valores de la varaible consumo de comida muy calórica
+
+```{r}
+unique(obesity$come_comida_muy_calorica) # produce: [1] no si
+```
+
+
+Diagrama de caja que relaciona el consumo de comida muy calórica con edad, factada por tipo de obesidad
+
+```{r}
+ggplot(obesity, aes(x = come_comida_muy_calorica, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla obesidad por tipo de obesidad y consumo de comida muy calórica, resumida por índice de masa corporal y edad.
+
+```{r}
+obesity_calorica <- obesity |>
+  group_by(tipo_obesidad, come_comida_muy_calorica) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_calorica) # produce:
+```
+
+
+Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado por consumo de comida muy calórica
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_calorica, aes(x = med_age, y = med_imc)) +
+  geom_point(aes( color = come_comida_muy_calorica)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por los que sí comen comida muy calórica
+
+```{r}
+obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_muy_calorica = sum(come_comida_muy_calorica == "si",
+                            na.rm = TRUE),
+    perc_muy_calorica = mean(come_comida_muy_calorica == "si",
+                             na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+## 3.- Consumo de Vegetales y Edad
+
+Conocer el tipo de la variable consumo de vegetales
+
+```{r}
+class(obesity$come_vegetales) # produce: "numeric"
+```
+
+Conocer los valores de la varaible consumo de vegetales
+
+```{r}
+unique(obesity$come_vegetales)[1:20] # produce: 
+```
+
+
+Diagrama de dispersión que relaciona consumo de vegetales y edad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = come_vegetales, y = Age)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla de obesidad por tipo de obesidad , resumida por consumo de vegetales y edad
+
+```{r}
+obesity_vegetales <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_vegetales = median(come_vegetales, na.rm = TRUE),
+    avg_vegetales = mean(come_vegetales, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_vegetales)
+```
+
+Diagrama de dispersión que relaciona el consumo de vegetales con edad, coloreado y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_vegetales, aes(x = med_vegetales, y = med_age)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar por tipo de obesidad y resumir por edad y los que comen siempre vegetales
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_vegetales_igual3 = sum(come_vegetales == 3, na.rm = TRUE),
+    perc_vegetales_igual3 = mean(come_vegetales == 3,
+                                 na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+Agrupar por tipo de obesidad y resumir por edad y los que nunca comen vegetales
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_vegetales_igual1 = sum(come_vegetales == 1, na.rm = TRUE),
+    perc_vegetales_igual1 = mean(come_vegetales == 1,
+                                 na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+## 4.- Número de Comidas Principales y edad
+
+Conocer el tipo de la varaible de comidas principales
+
+```{r}
+class(obesity$comidas_principales) # produce: "numeric"
+```
+
+
+Conocer los valores de la varaible comidas principales
+
+```{r}
+unique(obesity$comidas_principales)[1:20] # produce:
+```
+
+Diagrama de dispersión que relaciona la edad con las comidas principales coloreado, y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Age, y = comidas_principales)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por número de comidas y edad
+
+```{r}
+obesity_comidas <- obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_comidas = median(comidas_principales, na.rm = TRUE),
+    avg_comidas = mean(comidas_principales, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    n_tipo = n(),
+    .groups = "keep"
+  )
+knitr::kable(obesity_comidas)
+```
+
+
+Diagrama de dispersión que relaciona la edad con el número de comidas coloreado y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity_comidas, aes(x = med_age, y = avg_comidas)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen menos de 3 veces al días
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_comidas_menos3 = mean(comidas_principales < 3, na.rm = TRUE),
+    perc_comidas_menos3 = mean(comidas_principales < 3
+                               , na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen menos de 2 veces al días
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_comidas_menos2 = mean(comidas_principales <= 2, na.rm = TRUE),
+    perc_comidas_menos2 = mean(comidas_principales <= 2
+                               , na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen mas de 3 veces al días
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_comidas_mas3 = mean(comidas_principales > 3, na.rm = TRUE),
+    perc_comidas_mas3 = mean(comidas_principales > 3
+                               , na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+
+Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen mas de 4 veces al días
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_comidas_mas4 = mean(comidas_principales >= 4, na.rm = TRUE),
+    perc_comidas_mas4 = mean(comidas_principales >= 4
+                             , na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+
+```
+
+## 5.- Consumo de Refrigerios y edad
+
+Conocer el tipo de la variable consumo de refrigerios
+
+```{r}
+class(obesity$come_refrigerios) # produce:  "factor"
+```
+
+
+Conocer los valores de la varaible consumo de refrigerio
+
+```{r}
+unique(obesity$come_refrigerios) # produce : 
+# [1] ocasional frecuente siempre   nunca 
+```
+
+
+Diagrama de caja que relaciona el consumo de refrigerios con la edad, coloreado por consumo de refrigerios y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = come_refrigerios, y = Age)) +
+  geom_boxplot(aes(color = come_refrigerios)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla obesidad por consumo de refrigerios y resumir por índice de masa corporal y edad
+
+```{r}
+obesity_refrigerios <- obesity |> 
+  group_by(come_refrigerios) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_refrigerios)
+```
+
+ Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado por consumo de refrigerios
+
+```{r}
+ggplot(obesity_refrigerios, aes(x = med_age, y = med_imc)) +
+  geom_point(aes(color = come_refrigerios))
+```
+
+
+Agrupar tabla por tipo de obesidad y resumir por los que nunca comen refrigerios y su edad
+
+```{r}
+obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_numca = sum(come_refrigerios == "nunca", na.rm = TRUE),
+    perc_nunca = mean(come_refrigerios == "nunca", 
+                      na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+
+Agrupar tabla por tipo de obesidad y resumir por los que siempre comen refrigerios y su edad
+
+```{r}
+obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_siempre = sum(come_refrigerios == "siempre", na.rm = TRUE),
+    perc_siempre = mean(come_refrigerios == "siempre", 
+                      na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
