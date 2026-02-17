@@ -443,3 +443,371 @@ obesity |>
   ) |>
   knitr::kable()
 ```
+
+## 6.- Hábito de Fumar y Género
+
+Conocer el tipo de la variable de hábito de fumar
+
+```{r}
+class(obesity$fuma) # produce: "factor"
+```
+
+
+Conocer los valores de la variable hábito de fumar
+
+```{r}
+unique(obesity$fuma) # produce: [1] no si
+```
+
+Diagrama de caja que relaciona el hábito de fumar con la edad, facetado por tipo de obesidad
+
+```{r}
+ggplot(obesity, aes(x = fuma, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por los que si fuman
+
+```{r}
+obesity_fuma <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    fumadores = sum(fuma == "si", na.rm = TRUE),
+    prop_fumadores = mean(fuma == "si", na.rm = TRUE) * 100,
+    #round(mean(SMOKE == "yes") * 100, 1) # formato bonito
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_fuma)
+```
+
+Diagrama de dispersión que relaciona la edad con los fumadores, coloreado por tipo de obesidad
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_fuma, aes(x = med_age, y = prop_fumadores)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+## 7.- Consumo de Agua y Edad
+
+Conocer el tipo de la variable de consumo de agua 
+
+```{r}
+class(obesity$agua_diaria) # produce: "numeric"
+```
+
+Conocer el tipo de valores de la variable de consumo de agua
+
+```{r}
+unique(obesity$agua_diaria)[1:20] # produce:
+```
+
+
+Diagrama de dispersión que relaciona la edad con el consumo de agua, facetado por tipo de obesidad
+
+```{r}
+ggplot(obesity, aes(x = Age, y = agua_diaria)) +
+  geom_point() +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por edad y consumo de agua
+
+```{r}
+obesity_agua <- obesity |> 
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_agua = median(agua_diaria, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+obesity_agua
+```
+
+Diagrama de dispersión que relaciona la edad con el consumo de agua, coloreado por tipo de obesidad
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_agua, aes(x = med_age, y = med_agua)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por quienes consumen más de 2 litros de agua
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_agua2 = sum(agua_diaria > 2, na.rm = TRUE),
+    prop_agua2 = mean(agua_diaria > 2, na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+## 8.- Consumo de bebidas calóricas y edad
+
+Conocer el tipo de la variable conusmo de bebidas calóricas
+
+```{r}
+class(obesity$toma_bebidas_calóricas) # produce: "factor"
+```
+
+
+Conocer los valores de la variable consumo de bebidas calóricas
+
+```{r}
+unique(obesity$toma_bebidas_calóricas) # produce: [1] no si
+```
+
+
+Diagrama de caja que relaciona el consumo de bebidas calóricas conla edad, facetado por tipo de obesidad
+
+```{r}
+ggplot(obesity, aes(x = toma_bebidas_calóricas, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por consumo de bebidas calóricas y resumida por índice de masa corporal y edad 
+```{r}
+obesity |>
+  group_by(toma_bebidas_calóricas) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por conusmo de bebidas calóricas
+
+```{r}
+obesity_caloricas <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_caloricas = sum(toma_bebidas_calóricas == "si", na.rm = TRUE),
+    prop_caloricas = mean(toma_bebidas_calóricas == "si", 
+                          na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_caloricas) # produce:
+```
+
+Diagrama de dispersión que relaciona la edad con el porcentaje de personas que sí toman bebidas calóricas
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_caloricas, aes(x = med_age, y = prop_caloricas)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+## 9.- Actividad Física y Edad
+
+Conocer el tipo de la variable de actividad física
+
+```{r}
+class(obesity$actividad_fisica) # produce: "numeric"
+```
+
+Conocer los valores de la variable actividad física
+
+```{r}
+unique(obesity$actividad_fisica)[1:20] # produce: 
+```
+
+Diagrama de dispersión que relaciona el edad con la actividad física, coloreado y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Age, y = actividad_fisica)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por actividad física y edad
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_actividad = median(actividad_fisica, na.rm = TRUE),
+    avg_actividad = mean(actividad_fisica, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumir por actividad física y edad
+
+```{r}
+obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    sum_actividad_equal0 = sum(actividad_fisica == 0, na.rm = TRUE),
+    perc_actividad_equal0 = mean(actividad_fisica == 0,
+                                 na.rm = TRUE) * 100,
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  ) |>
+  knitr::kable()
+```
+
+## 10.- Uso de Tecnología y edad
+
+Conocer el tipo de la varaible de uso de tecnología
+
+```{r}
+class(obesity$uso_tecnologia) # produce: "numeric"
+```
+
+Conocer los valores de la variable tecnología
+
+```{r}
+unique(obesity$uso_tecnologia)[1:20] # produce:
+```
+
+Diagrama de dispersión que relaciona la edad con el uso detecnología , coloreado y facetado por el tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = Age, y = uso_tecnologia)) +
+  geom_point(aes(color = tipo_obesidad)) +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por tipo de obesidad y resumido por la variable uso de tecnología y edad
+
+```{r}
+obesity_tecnologia <- obesity |>
+  group_by(tipo_obesidad) |>
+  summarise(
+    med_tecnologia = median(uso_tecnologia, na.rm = TRUE),
+    avg_tecnologia = mean(uso_tecnologia, na.rm = TRUE),
+    med_age = median(Age, ne.rm = TRUE),
+    .groups= "keep" 
+  )
+knitr::kable(obesity_tecnologia)
+```
+
+Diagrama de dispersión que relaciona la edad con el uso de tecnología y coloreado por tipo de obesidad
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_tecnologia, aes(x = med_age, y = avg_tecnologia)) +
+  geom_point(aes(color = tipo_obesidad))
+```
+
+## 11.- Consumo de Alcohol y Edad
+
+Conocer el tipo de la variable de consumo de alcohol
+
+```{r}
+class(obesity$consume_alcohol) # produce: "factor"
+```
+
+
+Conocer los valores de la variable de consumo de alcohol
+
+```{r}
+unique(obesity$consume_alcohol) # produce: 
+# [1] nunca     ocasional frecuente siempre 
+```
+
+Diagrama de caja que relaciona el consumo de alcohol con la edad, facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(obesity, aes(x = consume_alcohol, y = Age)) + 
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+Agrupar la tabla obesidad por consumo de alcohol y resumir por índice de masa corporal y edad
+
+```{r}
+obesity_alcohol <- obesity |> 
+  group_by(consume_alcohol) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    med_age = median(Age, na.rm = TRUE),
+    .groups = "keep"
+  )
+knitr::kable(obesity_alcohol) 
+```
+
+Diagrama de dispersión que relaciona la edad con el índice de masacorporal, coloreado y formado por consumo de alcohol 
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_alcohol, aes(x = med_age, y = med_imc)) + 
+  geom_point(aes(color = consume_alcohol, shape = consume_alcohol))
+```
+
+## 12.- Medio de Transporte y Edad
+
+Conocer el tipo de la variable medio de transporte
+
+```{r}
+class(obesity$medio_transporte) # produce: "factor"
+```
+
+
+Conocer los valores de la variable medio de transporte
+
+```{r}
+unique(obesity$medio_transporte) # produce:
+#[1] transporte_publico camina             auto        
+```
+
+Diagrama de caja que relaciona la variable de medio transporte con con la edad y facetado por tipo de obesidad
+
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+ggplot(obesity, aes(x = medio_transporte, y = Age)) +
+  geom_boxplot() +
+  facet_wrap(~tipo_obesidad)
+```
+
+
+Agrupar la tabla obesidad por medio de transporte y resumir por índice de masa corporal y edad
+
+```{r}
+obesity_transporte <- obesity |>
+  group_by(medio_transporte) |>
+  summarise(
+    med_imc = median(imc, na.rm = TRUE),
+    avg_imc = mean(imc, na.rm = TRUE),
+    med_age = median(imc, na.rm = TRUE),
+    .groups = "keep"
+  ) 
+knitr::kable(obesity_transporte) # produce:
+```
+
+
+Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado y formado por medio de transporte
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(obesity_transporte, aes(x = med_age, y = med_imc)) +
+  geom_point(aes(color = medio_transporte, shape = medio_transporte))
+```
+
