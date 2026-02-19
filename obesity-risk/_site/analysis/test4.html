@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Rows: 20,758
 Columns: 20
 $ id                              &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …
-$ Gender                          &lt;chr&gt; "Male", "Female", "Female", "Female", …
+$ Gender                          &lt;fct&gt; Male, Female, Female, Female, Male, Ma…
 $ Age                             &lt;dbl&gt; 24.44301, 18.00000, 18.00000, 20.95274…
 $ Height                          &lt;dbl&gt; 1.699998, 1.560000, 1.711460, 1.710730…
 $ Weight                          &lt;dbl&gt; 81.66995, 57.00000, 50.16575, 131.2748…
@@ -413,7 +413,7 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10,336 × 20
       id Gender   Age Height Weight family_history_with_overweight
-   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                         
+   &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                         
  1     0 Male    24.4   1.70   81.7 Si                            
  2     4 Male    31.6   1.91   93.8 Si                            
  3     5 Male    18.1   1.75   51.6 Si                            
@@ -440,7 +440,7 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10,422 × 20
       id Gender   Age Height Weight family_history_with_overweight
-   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                         
+   &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                         
  1     1 Female  18     1.56   57   Si                            
  2     2 Female  18     1.71   50.2 Si                            
  3     3 Female  21.0   1.71  131.  Si                            
@@ -470,7 +470,7 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
    Gender tipo_obesidad        n
-   &lt;chr&gt;  &lt;fct&gt;            &lt;int&gt;
+   &lt;fct&gt;  &lt;fct&gt;            &lt;int&gt;
  1 Female Obesidad grado 3  3146
  2 Male   Sobrepeso         2991
  3 Male   Obesidad grado 2  2799
@@ -501,36 +501,6 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Desnutrición</td>
-<td style="text-align: right;">1532</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Peso normal</td>
-<td style="text-align: right;">1886</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Sobrepeso</td>
-<td style="text-align: right;">1749</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 1</td>
-<td style="text-align: right;">1195</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 2</td>
-<td style="text-align: right;">914</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 3</td>
-<td style="text-align: right;">3146</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Desnutrición</td>
 <td style="text-align: right;">876</td>
@@ -560,6 +530,36 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <td style="text-align: left;">Obesidad grado 3</td>
 <td style="text-align: right;">107</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">1532</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">1886</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">1749</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">1195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">914</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">3146</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -574,7 +574,7 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20,758 × 4
    Gender   Age   imc tipo_obesidad   
-   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;           
+   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;           
  1 Male    24.4  28.3 Sobrepeso       
  2 Female  18    23.4 Peso normal     
  3 Female  18    17.1 Desnutrición    
@@ -614,42 +614,6 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Desnutrición</td>
-<td style="text-align: right;">17.30355</td>
-<td style="text-align: right;">19.70756</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Peso normal</td>
-<td style="text-align: right;">21.81253</td>
-<td style="text-align: right;">20.87401</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Sobrepeso</td>
-<td style="text-align: right;">27.10022</td>
-<td style="text-align: right;">24.90783</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 1</td>
-<td style="text-align: right;">32.00934</td>
-<td style="text-align: right;">27.62549</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 2</td>
-<td style="text-align: right;">38.46819</td>
-<td style="text-align: right;">26.01810</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 3</td>
-<td style="text-align: right;">42.79598</td>
-<td style="text-align: right;">23.72363</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Desnutrición</td>
 <td style="text-align: right;">17.22907</td>
@@ -685,6 +649,42 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <td style="text-align: right;">41.68187</td>
 <td style="text-align: right;">27.42652</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">17.30355</td>
+<td style="text-align: right;">19.70756</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">21.81253</td>
+<td style="text-align: right;">20.87401</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">27.10022</td>
+<td style="text-align: right;">24.90783</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">32.00934</td>
+<td style="text-align: right;">27.62549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">38.46819</td>
+<td style="text-align: right;">26.01810</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">42.79598</td>
+<td style="text-align: right;">23.72363</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -708,36 +708,6 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Desnutrición</td>
-<td style="text-align: right;">1532</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Peso normal</td>
-<td style="text-align: right;">1886</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Sobrepeso</td>
-<td style="text-align: right;">1749</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 1</td>
-<td style="text-align: right;">1195</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 2</td>
-<td style="text-align: right;">914</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Obesidad grado 3</td>
-<td style="text-align: right;">3146</td>
-</tr>
 <tr class="odd">
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Desnutrición</td>
@@ -768,6 +738,36 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <td style="text-align: left;">Obesidad grado 3</td>
 <td style="text-align: right;">107</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Desnutrición</td>
+<td style="text-align: right;">1532</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Peso normal</td>
+<td style="text-align: right;">1886</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Sobrepeso</td>
+<td style="text-align: right;">1749</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 1</td>
+<td style="text-align: right;">1195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 2</td>
+<td style="text-align: right;">914</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Obesidad grado 3</td>
+<td style="text-align: right;">3146</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -794,12 +794,12 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Female</td>
-<td style="text-align: right;">3146</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Male</td>
 <td style="text-align: right;">107</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">3146</td>
 </tr>
 </tbody>
 </table>
@@ -815,9 +815,9 @@ $ tipo_obesidad                   &lt;fct&gt; Sobrepeso, Peso normal, Desnutrici
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   Gender n_gender
-  &lt;chr&gt;     &lt;int&gt;
-1 Female    10422
-2 Male      10336</code></pre>
+  &lt;fct&gt;     &lt;int&gt;
+1 Male      10336
+2 Female    10422</code></pre>
 </div>
 </div>
 
