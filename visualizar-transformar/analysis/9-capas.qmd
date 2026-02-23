@@ -1,0 +1,188 @@
+---
+title: "9-capas"
+format: html
+editor: visual
+---
+
+## Introducción
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+```
+
+Un primer vistazo a la tabla mpg
+
+```{r}
+glimpse(mpg[1:4,])
+```
+
+## Algunos cambios estéticos
+
+Asignar explícitamente el color azul a los puntos del diagrama de dispersión, también darles un tamaño de 0.8 pixeles y forma de rombo (que es la forma 9).
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(color = "blue", shape = 9, size = 0.8)
+```
+
+## Objetos geométricos
+
+Diagrama de dispersión vs línea suavizada que representan lo mismo
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point()
+
+```
+
+```{r}
+#| message: false #Oculta el mensaje dela línea suavizada
+#| fig-width: 5
+#| fig-height: 3
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_smooth()
+```
+
+Diagrama de dispersión con línea savizada coloreada por drv
+
+```{r}
+#| message: false # Omite el mensaje dela línea suavizada 
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) + geom_point(size = 0.2) + geom_smooth()
+```
+
+Línea suavizada coloreada por drv
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+#| message: false
+ggplot(mpg, aes(x = displ, y = hwy)) + geom_smooth(aes(color = drv))
+
+```
+
+
+Diagrama de disersión coloreado por class y con una única línea suavizada
+
+```{r}
+#| message: false
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy)) +         geom_point(aes(color = class)) + geom_smooth()
+```
+
+Histograma revela que la distribución del kilometraje en carretera es bimodal
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = hwy)) + 
+  geom_histogram(binwidth = 2) 
+```
+
+Gráfico de densidad revela que la distribución del kilometraje en carretera es bimodal 
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(mpg, aes(x = hwy)) + 
+  geom_density() 
+```
+
+
+Diagrama de caja revela dos posibles valores atípicos 
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(mpg, aes(x = hwy)) + 
+  geom_boxplot()
+```
+
+
+ 
+Gráfico de crestas que sirve para visualizar las densidades de varaibles numéricas relacionadas con categóricas 
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+library(ggridges)
+ggplot(mpg, aes(x = hwy, y = drv, fill = drv, color = drv)) + 
+  geom_density_ridges(alpha = 0.5, show.legend = FALSE)
+```
+
+Ejemplo de obtener ayuda de cualquier geom:
+
+```{r}
+#?geom_smooth
+```
+
+## Facetas
+
+Facetar una varaible
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  facet_wrap(~cyl)
+```
+
+Facetar dos variables con escalas personalizadas
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  facet_grid(drv ~ cyl, scales = "free")
+```
+
+# Ajustes de Posición
+
+Gráfico de barras coloreado
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = drv, fill = drv)) + 
+  geom_bar()
+```
+
+Gráfico de barras coloreadas que relaciona dos variables categóricas
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar()
+```
+
+Gráfico de barras con la misma altura. Para esto se usa el porcentaje en lugar del conteo.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar(position = "fill")
+```
+
+
+Gráfico de barras con las barras una a lado de otra
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar(position = "dodge")
+```
+

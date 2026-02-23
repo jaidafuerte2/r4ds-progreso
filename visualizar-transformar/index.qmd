@@ -1,0 +1,41 @@
+---
+title: "Visualizar y Transformar de R4DS"
+format: html
+editor: visual
+---
+
+![Portada del libro R4DS](files/images/cover-r4ds.jpg){fig-alt="Portada del libro R for data science" width="35%"}
+
+## ¿Qué es esto?
+
+Esto es sólo una práctica de las secciones de visualizar y transformar del libro "R for data science" abreviado comúnmente como [R4DS](https://r4ds.hadley.nz/). La práctica está enfocada en lo que considero importante para el análisis de la tabla [obesity risk de kaggle](https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset).
+
+## ¿Qué haré?
+
+Esto es un cuaderno de apuntes, en forma de página web, hecho con [quarto](https://quarto.org/),por lo que pondré en práctica cómo crear archivos .qmd y .yml para generar archivos .html a partir de lo que voy poniendo en práctica del libro [r4ds](https://r4ds.hadley.nz/).
+
+## ¿Cómo lo haré?
+
+Crearé una página web en [quarto](https://quarto.org/), es decir, crearé varios archivos .qmd a partir de los ejemplos del libro [r4ds](https://r4ds.hadley.nz/) de los capítulos de visualizar y transformar. Además crearé una plantilla .yml para poder renderizar estos archivos a html y en formato de página web
+
+## ¿Cuál es el objetivo?
+
+- Practicar quarto[^1] y la creación básica de una web con sidebar de contenidos y dividida por secciones: Visualizar y Transformar
+
+- Practicar R, la creación de gráficos y las transformaciones más importantes que se enseñan en R4DS[^2] desde el punto de vista de lo que considero necesario para el análisis del obesity risk[^3] de kaggle.
+
+- Practicar el despliegue de páginas web en netlify[^4] desde github[^5]. Aunque la idea primaria era desplegar en quartopub[^6],  esto no funcionó pero netlify es una opción más que aceptable e incluso mejor que quartopub
+
+- Perfeccionar algunas técnicas de visualización y tranformación útiles para el análisis del obesity risk de kaggle
+
+[^1]: Página web de quarto <https://quartopub.com/>
+
+[^2]: Página web del libro "R for data science" <https://r4ds.hadley.nz/>
+
+[^3]: Página web del obesity risk de kaggle <https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset>
+
+[^4]: Página del servicio de alojamiento netlify <https://www.netlify.com/>
+
+[^5]: Página web del servicio de versionado de github <https://github.com/>
+
+[^6]: Pagina web del servicio de publicación de documentos de quarto, quartopub <https://quartopub.com/>

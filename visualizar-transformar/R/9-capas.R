@@ -1,3 +1,15 @@
+##########################################################
+##                                                      ##  
+##                      9-CAPAS                         ##
+##                                                      ##
+##########################################################
+
+#################################
+##
+## 0. Introducción
+##
+#################################
+
 library(tidyverse)
 
 glimpse(mpg[1:4,]) # produce: 
@@ -15,12 +27,24 @@ glimpse(mpg[1:4,]) # produce:
 #$ fl           <chr> "p", "p", "p", "p"
 #$ class        <chr> "compact", "compact", "compact", "compact"
 
+######################################
+##
+## Algunos cambios estéticos
+##
+######################################
+
 # Asignar explícitamente el color azul a los puntos del diagrama de
 # dispersión y forma de rombo (que es la 9).
 ggplot(mpg, aes(x = displ, y = hwy)) + 
   geom_point(color = "blue", shape = 9, size = 0.8)
 
-# Diagrama de dispersión vs sínea suavizada que representan lo mismo
+######################################
+##
+## Objetos geométricos
+##
+######################################
+
+# Diagrama de dispersión vs línea suavizada que representan lo mismo
 ggplot(mpg, aes(x = displ, y = hwy)) + 
   geom_point()
 ggplot(mpg, aes(x = displ, y = hwy)) + 
@@ -40,6 +64,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 ggplot(mpg, aes(x = displ, y = hwy)) + 
   geom_point(aes(color = class)) + 
   geom_smooth()
+
 
 # Histograma revela que la distribución del kilometraje en carretera 
 # es bimodal
@@ -62,14 +87,54 @@ ggplot(mpg, aes(x = hwy, y = drv, fill = drv, color = drv)) +
 # ejemplo de obtener ayuda de cualquier geom:
 ?geom_smooth
 
+##############################
+##
+## Facetas
+##
+##############################
+
+# Facetar una varaible
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  facet_wrap(~cyl)
+
 # Facetar dos variables
 ggplot(mpg, aes(x = displ, y = hwy)) + 
   geom_point() + 
   facet_grid(drv ~ cyl, scales = "free")
 
+###################################
+##
+## Transformaciones estadísticas
+##
+###################################
+
+# Gráfico de barras
+ggplot(diamonds, aes(x = cut)) + 
+  geom_bar()
 # Gráfico de barras de proporciones en lugar de recuentos
 ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) + 
   geom_bar()
 
-ggplot(diamonds, aes(x = cut)) + 
+##########################
+##
+## Ajustes de Posición
+##
+##########################
+
+# Gráfico de barras coloreado
+ggplot(mpg, aes(x = drv, fill = drv)) + 
   geom_bar()
+
+# Gráfico de barras coloreadas que relaciona dos variables categóricas
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar()
+
+# Gráfico de barras con la misma altura. Para esto se usa el porcentaje
+# en lugar del conteo.
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar(position = "fill")
+
+# Gráfico de barras con las barras una a lado de otra
+ggplot(mpg, aes(x = drv, fill = class)) + 
+  geom_bar(position = "dodge")

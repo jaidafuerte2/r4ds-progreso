@@ -13,14 +13,13 @@ obesity <- read_csv("../data/obesity-latin.csv")
 source("../R/load_data.R")
 ```
 
-##  0.- Introducción
+## 0.- Introducción
 
 Conocer el tipo de la variable edad
 
 ```{r}
 class(obesity$Age) # produce: "numeric"
 ```
-
 
 Conocer los valores de la variable edad
 
@@ -111,13 +110,11 @@ Conocer el tipo de la variable de consumo de comida muy calórica
 class(obesity$come_comida_muy_calorica) # produce: "factor"
 ```
 
-
 Conocer los valores de la varaible consumo de comida muy calórica
 
 ```{r}
 unique(obesity$come_comida_muy_calorica) # produce: [1] no si
 ```
-
 
 Diagrama de caja que relaciona el consumo de comida muy calórica con edad, factada por tipo de obesidad
 
@@ -126,7 +123,6 @@ ggplot(obesity, aes(x = come_comida_muy_calorica, y = Age)) +
   geom_boxplot() +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla obesidad por tipo de obesidad y consumo de comida muy calórica, resumida por índice de masa corporal y edad.
 
@@ -141,7 +137,6 @@ obesity_calorica <- obesity |>
 knitr::kable(obesity_calorica) # produce:
 ```
 
-
 Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado por consumo de comida muy calórica
 
 ```{r}
@@ -151,7 +146,6 @@ ggplot(obesity_calorica, aes(x = med_age, y = med_imc)) +
   geom_point(aes( color = come_comida_muy_calorica)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla obesidad por tipo de obesidad y resumir por los que sí comen comida muy calórica
 
@@ -183,7 +177,6 @@ Conocer los valores de la varaible consumo de vegetales
 unique(obesity$come_vegetales)[1:20] # produce: 
 ```
 
-
 Diagrama de dispersión que relaciona consumo de vegetales y edad
 
 ```{r}
@@ -193,7 +186,6 @@ ggplot(obesity, aes(x = come_vegetales, y = Age)) +
   geom_point(aes(color = tipo_obesidad)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla de obesidad por tipo de obesidad , resumida por consumo de vegetales y edad
 
@@ -218,7 +210,6 @@ ggplot(obesity_vegetales, aes(x = med_vegetales, y = med_age)) +
   geom_point(aes(color = tipo_obesidad)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar por tipo de obesidad y resumir por edad y los que comen siempre vegetales
 
@@ -258,7 +249,6 @@ Conocer el tipo de la varaible de comidas principales
 class(obesity$comidas_principales) # produce: "numeric"
 ```
 
-
 Conocer los valores de la varaible comidas principales
 
 ```{r}
@@ -290,7 +280,6 @@ obesity_comidas <- obesity |>
 knitr::kable(obesity_comidas)
 ```
 
-
 Diagrama de dispersión que relaciona la edad con el número de comidas coloreado y facetado por tipo de obesidad
 
 ```{r}
@@ -300,7 +289,6 @@ ggplot(obesity_comidas, aes(x = med_age, y = avg_comidas)) +
   geom_point(aes(color = tipo_obesidad)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen menos de 3 veces al días
 
@@ -347,7 +335,6 @@ obesity |>
   knitr::kable()
 ```
 
-
 Agrupar la tabla de obesidad por tipo de obesidad y resumir por edad y los que comen mas de 4 veces al días
 
 ```{r}
@@ -372,14 +359,12 @@ Conocer el tipo de la variable consumo de refrigerios
 class(obesity$come_refrigerios) # produce:  "factor"
 ```
 
-
 Conocer los valores de la varaible consumo de refrigerio
 
 ```{r}
 unique(obesity$come_refrigerios) # produce : 
 # [1] ocasional frecuente siempre   nunca 
 ```
-
 
 Diagrama de caja que relaciona el consumo de refrigerios con la edad, coloreado por consumo de refrigerios y facetado por tipo de obesidad
 
@@ -390,7 +375,6 @@ ggplot(obesity, aes(x = come_refrigerios, y = Age)) +
   geom_boxplot(aes(color = come_refrigerios)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla obesidad por consumo de refrigerios y resumir por índice de masa corporal y edad
 
@@ -405,13 +389,12 @@ obesity_refrigerios <- obesity |>
 knitr::kable(obesity_refrigerios)
 ```
 
- Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado por consumo de refrigerios
+Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado por consumo de refrigerios
 
 ```{r}
 ggplot(obesity_refrigerios, aes(x = med_age, y = med_imc)) +
   geom_point(aes(color = come_refrigerios))
 ```
-
 
 Agrupar tabla por tipo de obesidad y resumir por los que nunca comen refrigerios y su edad
 
@@ -427,7 +410,6 @@ obesity |>
   ) |>
   knitr::kable()
 ```
-
 
 Agrupar tabla por tipo de obesidad y resumir por los que siempre comen refrigerios y su edad
 
@@ -451,7 +433,6 @@ Conocer el tipo de la variable de hábito de fumar
 ```{r}
 class(obesity$fuma) # produce: "factor"
 ```
-
 
 Conocer los valores de la variable hábito de fumar
 
@@ -493,7 +474,7 @@ ggplot(obesity_fuma, aes(x = med_age, y = prop_fumadores)) +
 
 ## 7.- Consumo de Agua y Edad
 
-Conocer el tipo de la variable de consumo de agua 
+Conocer el tipo de la variable de consumo de agua
 
 ```{r}
 class(obesity$agua_diaria) # produce: "numeric"
@@ -504,7 +485,6 @@ Conocer el tipo de valores de la variable de consumo de agua
 ```{r}
 unique(obesity$agua_diaria)[1:20] # produce:
 ```
-
 
 Diagrama de dispersión que relaciona la edad con el consumo de agua, facetado por tipo de obesidad
 
@@ -558,13 +538,11 @@ Conocer el tipo de la variable conusmo de bebidas calóricas
 class(obesity$toma_bebidas_calóricas) # produce: "factor"
 ```
 
-
 Conocer los valores de la variable consumo de bebidas calóricas
 
 ```{r}
 unique(obesity$toma_bebidas_calóricas) # produce: [1] no si
 ```
-
 
 Diagrama de caja que relaciona el consumo de bebidas calóricas conla edad, facetado por tipo de obesidad
 
@@ -574,7 +552,8 @@ ggplot(obesity, aes(x = toma_bebidas_calóricas, y = Age)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-Agrupar la tabla obesidad por consumo de bebidas calóricas y resumida por índice de masa corporal y edad 
+Agrupar la tabla obesidad por consumo de bebidas calóricas y resumida por índice de masa corporal y edad
+
 ```{r}
 obesity |>
   group_by(toma_bebidas_calóricas) |>
@@ -633,7 +612,6 @@ ggplot(obesity, aes(x = Age, y = actividad_fisica)) +
   geom_point(aes(color = tipo_obesidad)) +
   facet_wrap(~tipo_obesidad)
 ```
-
 
 Agrupar la tabla obesidad por tipo de obesidad y resumir por actividad física y edad
 
@@ -719,7 +697,6 @@ Conocer el tipo de la variable de consumo de alcohol
 class(obesity$consume_alcohol) # produce: "factor"
 ```
 
-
 Conocer los valores de la variable de consumo de alcohol
 
 ```{r}
@@ -751,7 +728,7 @@ obesity_alcohol <- obesity |>
 knitr::kable(obesity_alcohol) 
 ```
 
-Diagrama de dispersión que relaciona la edad con el índice de masacorporal, coloreado y formado por consumo de alcohol 
+Diagrama de dispersión que relaciona la edad con el índice de masacorporal, coloreado y formado por consumo de alcohol
 
 ```{r}
 #| fig-width: 5
@@ -767,7 +744,6 @@ Conocer el tipo de la variable medio de transporte
 ```{r}
 class(obesity$medio_transporte) # produce: "factor"
 ```
-
 
 Conocer los valores de la variable medio de transporte
 
@@ -786,7 +762,6 @@ ggplot(obesity, aes(x = medio_transporte, y = Age)) +
   facet_wrap(~tipo_obesidad)
 ```
 
-
 Agrupar la tabla obesidad por medio de transporte y resumir por índice de masa corporal y edad
 
 ```{r}
@@ -801,7 +776,6 @@ obesity_transporte <- obesity |>
 knitr::kable(obesity_transporte) # produce:
 ```
 
-
 Diagrama de dispersión que relaciona la edad con el índice de masa corporal, coloreado y formado por medio de transporte
 
 ```{r}
@@ -810,4 +784,3 @@ Diagrama de dispersión que relaciona la edad con el índice de masa corporal, c
 ggplot(obesity_transporte, aes(x = med_age, y = med_imc)) +
   geom_point(aes(color = medio_transporte, shape = medio_transporte))
 ```
-
