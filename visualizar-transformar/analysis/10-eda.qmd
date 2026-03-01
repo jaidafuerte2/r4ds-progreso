@@ -1,5 +1,5 @@
 ---
-title: "10-EDA"
+title: "10 EDA"
 format: html
 editor: visual
 ---
