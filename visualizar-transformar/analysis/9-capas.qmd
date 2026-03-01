@@ -69,7 +69,6 @@ ggplot(mpg, aes(x = displ, y = hwy)) + geom_smooth(aes(color = drv))
 
 ```
 
-
 Diagrama de disersión coloreado por class y con una única línea suavizada
 
 ```{r}
@@ -88,7 +87,7 @@ ggplot(mpg, aes(x = hwy)) +
   geom_histogram(binwidth = 2) 
 ```
 
-Gráfico de densidad revela que la distribución del kilometraje en carretera es bimodal 
+Gráfico de densidad revela que la distribución del kilometraje en carretera es bimodal
 
 ```{r}
 #| fig-width: 5
@@ -97,8 +96,7 @@ ggplot(mpg, aes(x = hwy)) +
   geom_density() 
 ```
 
-
-Diagrama de caja revela dos posibles valores atípicos 
+Diagrama de caja revela dos posibles valores atípicos
 
 ```{r}
 #| fig-width: 5
@@ -107,9 +105,7 @@ ggplot(mpg, aes(x = hwy)) +
   geom_boxplot()
 ```
 
-
- 
-Gráfico de crestas que sirve para visualizar las densidades de varaibles numéricas relacionadas con categóricas 
+Gráfico de crestas que sirve para visualizar las densidades de varaibles numéricas relacionadas con categóricas
 
 ```{r}
 #| fig-width: 6
@@ -176,7 +172,6 @@ ggplot(mpg, aes(x = drv, fill = class)) +
   geom_bar(position = "fill")
 ```
 
-
 Gráfico de barras con las barras una a lado de otra
 
 ```{r}
@@ -185,4 +180,3 @@ Gráfico de barras con las barras una a lado de otra
 ggplot(mpg, aes(x = drv, fill = class)) + 
   geom_bar(position = "dodge")
 ```
-

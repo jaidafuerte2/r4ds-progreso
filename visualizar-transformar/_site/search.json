@@ -104,9 +104,104 @@
     "href": "analysis/9-capas.html#facetas",
     "title": "9-capas",
     "section": "Facetas",
-    "text": "Facetas\nFacetar una varaible\n\nggplot(mpg, aes(x = displ, y = hwy)) + \n  geom_point() + \n  facet_wrap(~cyl)\n\n\n\n\n\n\n\n\nFacetar dos variables\n\nggplot(mpg, aes(x = displ, y = hwy)) + \n  geom_point() + \n  facet_grid(drv ~ cyl, scales = \"free\")",
+    "text": "Facetas\nFacetar una varaible\n\nggplot(mpg, aes(x = displ, y = hwy)) + \n  geom_point() + \n  facet_wrap(~cyl)\n\n\n\n\n\n\n\n\nFacetar dos variables con escalas personalizadas\n\nggplot(mpg, aes(x = displ, y = hwy)) + \n  geom_point() + \n  facet_grid(drv ~ cyl, scales = \"free\")",
     "crumbs": [
       "9-capas"
+    ]
+  },
+  {
+    "objectID": "analysis/11-eda.html",
+    "href": "analysis/11-eda.html",
+    "title": "10-EDA",
+    "section": "",
+    "text": "Ver en forma general las variables de la tabla diamonds\n\nknitr::kable(diamonds[1:4,]) # produce:\n\n\n\n\ncarat\ncut\ncolor\nclarity\ndepth\ntable\nprice\nx\ny\nz\n\n\n\n\n0.23\nIdeal\nE\nSI2\n61.5\n55\n326\n3.95\n3.98\n2.43\n\n\n0.21\nPremium\nE\nSI1\n59.8\n61\n326\n3.89\n3.84\n2.31\n\n\n0.23\nGood\nE\nVS1\n56.9\n65\n327\n4.05\n4.07\n2.31\n\n\n0.29\nPremium\nI\nVS2\n62.4\n58\n334\n4.20\n4.23\n2.63"
+  },
+  {
+    "objectID": "analysis/11-eda.html#introducción",
+    "href": "analysis/11-eda.html#introducción",
+    "title": "10-EDA",
+    "section": "",
+    "text": "Ver en forma general las variables de la tabla diamonds\n\nknitr::kable(diamonds[1:4,]) # produce:\n\n\n\n\ncarat\ncut\ncolor\nclarity\ndepth\ntable\nprice\nx\ny\nz\n\n\n\n\n0.23\nIdeal\nE\nSI2\n61.5\n55\n326\n3.95\n3.98\n2.43\n\n\n0.21\nPremium\nE\nSI1\n59.8\n61\n326\n3.89\n3.84\n2.31\n\n\n0.23\nGood\nE\nVS1\n56.9\n65\n327\n4.05\n4.07\n2.31\n\n\n0.29\nPremium\nI\nVS2\n62.4\n58\n334\n4.20\n4.23\n2.63"
+  },
+  {
+    "objectID": "analysis/11-eda.html#variación",
+    "href": "analysis/11-eda.html#variación",
+    "title": "10-EDA",
+    "section": "Variación",
+    "text": "Variación\n\nValore Típicos\nHistograma que muestra la distribución de pesos (carat) de casi 54 mil diamantes\n\nggplot(diamonds, aes(x = carat)) +\n  geom_histogram(binwidth = 0.5)\n\n\n\n\n\n\n\n\nFiltrar los diamantes más pequeños\n\nsmaller &lt;- diamonds |&gt; \n  filter(carat &lt; 3)\n# \nggplot(smaller, aes(x = carat)) +\n  geom_histogram(binwidth = 0.01)\n\n\n\n\n\n\n\n\n\n\nValores Atípicos\nHistograma del ancho del diamante (y) . y = ancho del diamante\n\nggplot(diamonds, aes(x = y)) + \n  geom_histogram(binwidth = 0.5)\n\n\n\n\n\n\n\n\nAcercar los valores pequeños del eje y con coord_cartesian\n\nggplot(diamonds, aes(x = y)) + \n  geom_histogram(binwidth = 0.5) +\n  coord_cartesian(ylim = c(0, 50))\n\n\n\n\n\n\n\n\nVisualizar valores inusuales en la tabla de diamantes, filtrando por largo (x) y ancho(y) de los diamantes, seleccionando, largo, ancho y profundidad (z) del diamante y ordenando según el ancho\n\n#?diamonds\nunusual &lt;- diamonds |&gt; \n  filter(y &lt; 3 | y &gt; 20) |&gt; \n  select(price, x, y, z) |&gt;\n  arrange(y)\nknitr::kable(unusual) # produce:\n\n\n\n\nprice\nx\ny\nz\n\n\n\n\n5139\n0.00\n0.0\n0.00\n\n\n6381\n0.00\n0.0\n0.00\n\n\n12800\n0.00\n0.0\n0.00\n\n\n15686\n0.00\n0.0\n0.00\n\n\n18034\n0.00\n0.0\n0.00\n\n\n2130\n0.00\n0.0\n0.00\n\n\n2130\n0.00\n0.0\n0.00\n\n\n2075\n5.15\n31.8\n5.12\n\n\n12210\n8.09\n58.9\n8.06"
+  },
+  {
+    "objectID": "analysis/11-eda.html#valores-inusuales",
+    "href": "analysis/11-eda.html#valores-inusuales",
+    "title": "10-EDA",
+    "section": "Valores Inusuales",
+    "text": "Valores Inusuales\nEliminar toda la fila con valores extraños (No recomendado)\n\ndiamonds2 &lt;- diamonds |&gt; \n  filter(between(y, 3, 20))\n\nRemplazar los valores inusuales con valores faltantes\n\ndiamonds2 &lt;- diamonds |&gt; \n  mutate(y = if_else(y &lt; 3 | y &gt; 20, NA, y))\n\nDiagrama de dispersión que relaciona el largo con el ancho de un diamante.\n\nggplot(diamonds2, aes(x = x, y = y)) + \n  geom_point(na.rm = TRUE) # Importante na.rm = TRUE para que no salga\n\n\n\n\n\n\n\n# el mensaje de que se cambiaron los valores inusuales por valores \n# faltantes"
+  },
+  {
+    "objectID": "analysis/11-eda.html#covariación",
+    "href": "analysis/11-eda.html#covariación",
+    "title": "10-EDA",
+    "section": "Covariación",
+    "text": "Covariación"
+  },
+  {
+    "objectID": "analysis/10-eda.html",
+    "href": "analysis/10-eda.html",
+    "title": "10-EDA",
+    "section": "",
+    "text": "Ver en forma general las variables de la tabla diamonds\n\nknitr::kable(diamonds[1:4,]) # produce:\n\n\n\n\ncarat\ncut\ncolor\nclarity\ndepth\ntable\nprice\nx\ny\nz\n\n\n\n\n0.23\nIdeal\nE\nSI2\n61.5\n55\n326\n3.95\n3.98\n2.43\n\n\n0.21\nPremium\nE\nSI1\n59.8\n61\n326\n3.89\n3.84\n2.31\n\n\n0.23\nGood\nE\nVS1\n56.9\n65\n327\n4.05\n4.07\n2.31\n\n\n0.29\nPremium\nI\nVS2\n62.4\n58\n334\n4.20\n4.23\n2.63",
+    "crumbs": [
+      "10-EDA"
+    ]
+  },
+  {
+    "objectID": "analysis/10-eda.html#introducción",
+    "href": "analysis/10-eda.html#introducción",
+    "title": "10-EDA",
+    "section": "",
+    "text": "Ver en forma general las variables de la tabla diamonds\n\nknitr::kable(diamonds[1:4,]) # produce:\n\n\n\n\ncarat\ncut\ncolor\nclarity\ndepth\ntable\nprice\nx\ny\nz\n\n\n\n\n0.23\nIdeal\nE\nSI2\n61.5\n55\n326\n3.95\n3.98\n2.43\n\n\n0.21\nPremium\nE\nSI1\n59.8\n61\n326\n3.89\n3.84\n2.31\n\n\n0.23\nGood\nE\nVS1\n56.9\n65\n327\n4.05\n4.07\n2.31\n\n\n0.29\nPremium\nI\nVS2\n62.4\n58\n334\n4.20\n4.23\n2.63",
+    "crumbs": [
+      "10-EDA"
+    ]
+  },
+  {
+    "objectID": "analysis/10-eda.html#variación",
+    "href": "analysis/10-eda.html#variación",
+    "title": "10-EDA",
+    "section": "Variación",
+    "text": "Variación\n\nValore Típicos\nHistograma que muestra la distribución de pesos (carat) de casi 54 mil diamantes\n\nggplot(diamonds, aes(x = carat)) +\n  geom_histogram(binwidth = 0.5)\n\n\n\n\n\n\n\n\nFiltrar los diamantes más pequeños\n\nsmaller &lt;- diamonds |&gt; \n  filter(carat &lt; 3)\n# \nggplot(smaller, aes(x = carat)) +\n  geom_histogram(binwidth = 0.01)\n\n\n\n\n\n\n\n\n\n\nValores Atípicos\nHistograma del ancho del diamante (y) . y = ancho del diamante\n\nggplot(diamonds, aes(x = y)) + \n  geom_histogram(binwidth = 0.5)\n\n\n\n\n\n\n\n\nAcercar los valores pequeños del eje y con coord_cartesian\n\nggplot(diamonds, aes(x = y)) + \n  geom_histogram(binwidth = 0.5) +\n  coord_cartesian(ylim = c(0, 50))\n\n\n\n\n\n\n\n\nVisualizar valores inusuales en la tabla de diamantes, filtrando por largo (x) y ancho(y) de los diamantes, seleccionando, largo, ancho y profundidad (z) del diamante y ordenando según el ancho\n\n#?diamonds\nunusual &lt;- diamonds |&gt; \n  filter(y &lt; 3 | y &gt; 20) |&gt; \n  select(price, x, y, z) |&gt;\n  arrange(y)\nknitr::kable(unusual) # produce:\n\n\n\n\nprice\nx\ny\nz\n\n\n\n\n5139\n0.00\n0.0\n0.00\n\n\n6381\n0.00\n0.0\n0.00\n\n\n12800\n0.00\n0.0\n0.00\n\n\n15686\n0.00\n0.0\n0.00\n\n\n18034\n0.00\n0.0\n0.00\n\n\n2130\n0.00\n0.0\n0.00\n\n\n2130\n0.00\n0.0\n0.00\n\n\n2075\n5.15\n31.8\n5.12\n\n\n12210\n8.09\n58.9\n8.06",
+    "crumbs": [
+      "10-EDA"
+    ]
+  },
+  {
+    "objectID": "analysis/10-eda.html#valores-inusuales",
+    "href": "analysis/10-eda.html#valores-inusuales",
+    "title": "10-EDA",
+    "section": "Valores Inusuales",
+    "text": "Valores Inusuales\nEliminar toda la fila con valores extraños (No recomendado)\n\ndiamonds2 &lt;- diamonds |&gt; \n  filter(between(y, 3, 20))\n\nRemplazar los valores inusuales con valores faltantes\n\ndiamonds2 &lt;- diamonds |&gt; \n  mutate(y = if_else(y &lt; 3 | y &gt; 20, NA, y))\n\nDiagrama de dispersión que relaciona el largo con el ancho de un diamante.\n\nggplot(diamonds2, aes(x = x, y = y)) + \n  geom_point(na.rm = TRUE) # Importante na.rm = TRUE para que no salga\n\n\n\n\n\n\n\n# el mensaje de que se cambiaron los valores inusuales por valores \n# faltantes",
+    "crumbs": [
+      "10-EDA"
+    ]
+  },
+  {
+    "objectID": "analysis/10-eda.html#covariación",
+    "href": "analysis/10-eda.html#covariación",
+    "title": "10-EDA",
+    "section": "Covariación",
+    "text": "Covariación\n\nVariable categórica y numérica\nGráfico de frecuencia que muestra la variación de el precio según su calidad (cut) de un diamante (difícil de interpretar)\n\nggplot(diamonds, aes(x = price)) + \n  geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)\n\n\n\n\n\n\n\n\nGráfico de densidad que muestra la varaición del precio según su calidad (un poco más fácil de interpretar)\n\nggplot(diamonds, aes(x = price, y = after_stat(density))) + \n  geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)\n\n\n\n\n\n\n\n\nDiagrama de caja que muestra la variación del precio según su calidad (fácil de interpretar)\n\nggplot(diamonds, aes(x = cut, y = price)) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\nDiagrama de caja que muestra la variación del hwy (millas por galón) según la clase de auto. Pero las cajas ordenadas según la mediana de su hwy\n\n?mpg # prduce: hwy = millas por galón en carretera\nggplot(mpg, aes(x = fct_reorder(class, hwy, median), y = hwy)) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\nEl mismo gráfico girado 90 grados para que sea más fácil visualizar los nombres que son largo\n\nggplot(mpg, aes(x = hwy, y = fct_reorder(class, hwy, median))) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\n\nDos variables numéricas\nDiagrama de dispersión que relaciona el peso (carat) con el precio de un diamante\n\nggplot(smaller, aes(x = carat, y = price)) +\n  geom_point()\n\n\n\n\n\n\n\n\nDiagrama de dispersión con transparencia que relaciona el peso (carat) con el precio de un diamante. La transparencia es importante porque se visuliza la transposición de los puntos del diagrama\n\nggplot(smaller, aes(x = carat, y = price)) + \n  geom_point(alpha = 1 / 100)\n\n\n\n\n\n\n\n\nDiagrama de caja que relaciona el precio del diamante con el precio como si el peso fuera una categoría gracias a group = cut_width(), esto agrupa (crea categorías) basadas en los valores numéricos de carat\n\nggplot(smaller, aes(x = carat, y = price)) + \n  geom_boxplot(aes(group = cut_width(carat, 0.1)))",
+    "crumbs": [
+      "10-EDA"
+    ]
+  },
+  {
+    "objectID": "analysis/11-comunicar.html#etiquetas",
+    "href": "analysis/11-comunicar.html#etiquetas",
+    "title": "11-Comunicar",
+    "section": "Etiquetas",
+    "text": "Etiquetas\nDiagrama de dispersión y línea suavizada que relaciona el tamaño delmotor (displ) con el consumo de gasolina (hwy) y coloreada por clase de vehículo. Etiquetado\n\nggplot(mpg, aes(x = displ, y = hwy)) +\n  geom_point(aes(color = class)) +\n  geom_smooth(se = FALSE) +\n  labs(\n    x = \"Engine displacement (L)\",\n    y = \"Highway fuel economy (mpg)\",\n    color = \"Car type\",\n    title = \"El consumo de gasolina aumenta con el tamaño del motor\",\n    subtitle = \"Los biplazas (coches deportivos) son una excepción debido a su peso ligero.\",\n    caption = \"Datos de fueleconomy.gov\"\n  )\n\n\n\n\n\n\n\n# NOTA: El propósito del título de un gráfico es resumir el hallazgo \n# principal (algo así como una entradilla), NO describir el gráfico en \n# general. El subtítulo añade detalles adicionales. La caption (o segundo\n# subtítulo) se usa para describir la fuente de los datos.",
+    "crumbs": [
+      "11-Comunicar"
     ]
   }
 ]

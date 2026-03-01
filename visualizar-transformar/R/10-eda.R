@@ -1,6 +1,41 @@
-library(tidyverse)
+##########################################################
+##                                                      ##  
+##                     10.- EDA                         ##
+##                                                      ##
+##########################################################
 
-View(diamonds)
+########################
+##
+## Introducción
+##
+########################
+
+library(tidyverse)
+library(kableExtra)
+
+# Ver en forma general las variables de la tabla diamonds 
+glimpse(diamonds[1:4,]) # produce:
+#Rows: 4
+#Columns: 10
+#$ carat   <dbl> 0.23, 0.21, 0.23, 0.29
+#$ cut     <ord> Ideal, Premium, Good, Premium
+#$ color   <ord> E, E, E, I
+#$ clarity <ord> SI2, SI1, VS1, VS2
+#$ depth   <dbl> 61.5, 59.8, 56.9, 62.4
+#$ table   <dbl> 55, 61, 65, 58
+#$ price   <int> 326, 326, 327, 334
+#$ x       <dbl> 3.95, 3.89, 4.05, 4.20
+#$ y       <dbl> 3.98, 3.84, 4.07, 4.23
+#$ z       <dbl> 2.43, 2.31, 2.31, 2.63
+
+########################
+##
+##  Variación
+##
+########################
+
+####### Valore Típicos #######
+
 # Histograma que muestra la distribución de pesos (carat) de casi 54 mil 
 # diamantes 
 ggplot(diamonds, aes(x = carat)) +
@@ -12,6 +47,8 @@ smaller <- diamonds |>
 # 
 ggplot(smaller, aes(x = carat)) +
   geom_histogram(binwidth = 0.01)
+
+####### Valores Atípicos #########
 
 # Histograma del ancho del diamante (y) . y = ancho del diamante
 ggplot(diamonds, aes(x = y)) + 
@@ -44,6 +81,12 @@ unusual # produce:
 #8  2075  5.15  31.8  5.12
 #9 12210  8.09  58.9  8.06
 
+#############################
+##
+## Valores Inusuales
+##
+#############################
+
 # Eliminar toda la fila con valores extraños (No recomendado)
 diamonds2 <- diamonds |> 
   filter(between(y, 3, 20))
@@ -57,9 +100,15 @@ diamonds2 <- diamonds |>
 ggplot(diamonds2, aes(x = x, y = y)) + 
   geom_point(na.rm = TRUE) # Importante na.rm = TRUE para que no salga
 # el mensaje de que se cambiaron los valores inusuales por valores 
-# cambiantes
+# faltantes
 
+#########################
+##
+## Covariación
+##
+#########################
 
+####### Variable categórica y numérica #########
 
 # Gráfico de frecuencia que muestra la variación de el precio según su 
 # calidad (cut) de un diamante (difícil de interpretar)
@@ -67,7 +116,7 @@ ggplot(diamonds, aes(x = price)) +
   geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
 
 # Gráfico de densidad que muestra la varaición del precio según su
-# calidad (difícil de interpretar)
+# calidad (un poco más fácil de interpretar)
 ggplot(diamonds, aes(x = price, y = after_stat(density))) + 
   geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
 
@@ -86,6 +135,8 @@ ggplot(mpg, aes(x = fct_reorder(class, hwy, median), y = hwy)) +
 # los nombres que son largo
 ggplot(mpg, aes(x = hwy, y = fct_reorder(class, hwy, median))) +
   geom_boxplot()
+
+####### Dos variables numéricas #######
 
 # Diagrama de dispersión que relaciona el peso (carat) con el precio de
 # un diamante

@@ -1,0 +1,186 @@
+---
+title: "10-EDA"
+format: html
+editor: visual
+---
+
+## Introducción
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+```
+
+Ver en forma general las variables de la tabla diamonds 
+
+```{r}
+knitr::kable(diamonds[1:4,]) # produce:
+```
+
+##  Variación
+
+### Valore Típicos
+
+Histograma que muestra la distribución de pesos (carat) de casi 54 mil diamantes 
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.5)
+```
+
+
+Filtrar los diamantes más pequeños
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+smaller <- diamonds |> 
+  filter(carat < 3)
+# 
+ggplot(smaller, aes(x = carat)) +
+  geom_histogram(binwidth = 0.01)
+```
+
+### Valores Atípicos
+
+Histograma del ancho del diamante (y) . y = ancho del diamante
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = y)) + 
+  geom_histogram(binwidth = 0.5)
+```
+
+
+Acercar los valores pequeños del eje y con coord_cartesian
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = y)) + 
+  geom_histogram(binwidth = 0.5) +
+  coord_cartesian(ylim = c(0, 50))
+```
+
+Visualizar valores inusuales en la tabla de diamantes, filtrando por largo (x) y ancho(y) de los diamantes, seleccionando, largo, ancho y profundidad (z) del diamante y ordenando según el ancho
+
+```{r}
+#?diamonds
+unusual <- diamonds |> 
+  filter(y < 3 | y > 20) |> 
+  select(price, x, y, z) |>
+  arrange(y)
+knitr::kable(unusual) # produce:
+```
+
+## Valores Inusuales
+
+Eliminar toda la fila con valores extraños (No recomendado)
+
+```{r}
+diamonds2 <- diamonds |> 
+  filter(between(y, 3, 20))
+```
+
+Remplazar los valores inusuales con valores faltantes 
+
+```{r}
+diamonds2 <- diamonds |> 
+  mutate(y = if_else(y < 3 | y > 20, NA, y))
+```
+
+Diagrama de dispersión que relaciona el largo con el ancho de un 
+diamante. 
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds2, aes(x = x, y = y)) + 
+  geom_point(na.rm = TRUE) # Importante na.rm = TRUE para que no salga
+# el mensaje de que se cambiaron los valores inusuales por valores 
+# faltantes
+```
+
+## Covariación
+
+### Variable categórica y numérica
+
+Gráfico de frecuencia que muestra la variación de el precio según su calidad (cut) de un diamante (difícil de interpretar)
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = price)) + 
+  geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
+```
+
+
+Gráfico de densidad que muestra la varaición del precio según su calidad (un poco más fácil de interpretar)
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = price, y = after_stat(density))) + 
+  geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
+```
+
+
+Diagrama de caja que muestra la variación del precio según su calidad (fácil de interpretar)
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(diamonds, aes(x = cut, y = price)) +
+  geom_boxplot()
+```
+
+Diagrama de caja que muestra la variación del hwy (millas por galón) según la clase de auto. Pero las cajas ordenadas según la mediana de su hwy
+
+```{r}
+?mpg # prduce: hwy = millas por galón en carretera
+ggplot(mpg, aes(x = fct_reorder(class, hwy, median), y = hwy)) +
+  geom_boxplot()
+```
+
+El mismo gráfico girado 90 grados para que sea más fácil visualizar los nombres que son largo
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(mpg, aes(x = hwy, y = fct_reorder(class, hwy, median))) +
+  geom_boxplot()
+```
+
+### Dos variables numéricas
+
+Diagrama de dispersión que relaciona el peso (carat) con el precio de un diamante
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+ggplot(smaller, aes(x = carat, y = price)) +
+  geom_point()
+```
+
+Diagrama de dispersión con transparencia que relaciona el peso (carat) con el precio de un diamante. La transparencia es importante porque se visuliza la transposición de los puntos del diagrama
+
+```{r}
+ggplot(smaller, aes(x = carat, y = price)) + 
+  geom_point(alpha = 1 / 100)
+```
+
+
+Diagrama de caja que relaciona el precio del diamante con el precio como si el peso fuera una categoría gracias a group = cut_width(), esto agrupa (crea categorías) basadas en los valores numéricos de carat
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+ggplot(smaller, aes(x = carat, y = price)) + 
+  geom_boxplot(aes(group = cut_width(carat, 0.1)))
+```
+

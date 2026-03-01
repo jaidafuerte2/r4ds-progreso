@@ -1,0 +1,42 @@
+---
+title: "11-Comunicar"
+format: html
+editor: visual
+---
+
+## Introducción
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(scales)
+library(ggrepel)
+library(patchwork)
+```
+
+## Etiquetas
+
+Diagrama de dispersión y línea suavizada que relaciona el tamaño delmotor (displ) con el consumo de gasolina (hwy) y coloreada por clase de vehículo. Etiquetado
+
+```{r}
+#| message: false
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  labs(
+    x = "Engine displacement (L)",
+    y = "Highway fuel economy (mpg)",
+    color = "Car type",
+    title = "El consumo de gasolina aumenta con el tamaño del motor",
+    subtitle = "Los biplazas (coches deportivos) son una excepción debido a su peso ligero.",
+    caption = "Datos de fueleconomy.gov"
+  )
+# NOTA: El propósito del título de un gráfico es resumir el hallazgo 
+# principal (algo así como una entradilla), NO describir el gráfico en 
+# general. El subtítulo añade detalles adicionales. La caption (o segundo
+# subtítulo) se usa para describir la fuente de los datos.
+
+```
+

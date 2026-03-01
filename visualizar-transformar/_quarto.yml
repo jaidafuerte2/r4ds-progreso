@@ -9,8 +9,8 @@ website:
     contents: 
       - index.qmd
       - analysis/9-capas.qmd
-      #- analysis/eda.qmd
-      #- analysis/comunicar.qmd
+      - analysis/10-eda.qmd
+      - analysis/11-comunicar.qmd
   
 page-footer:
   left: "Copyright 2026, COVSAcorp"

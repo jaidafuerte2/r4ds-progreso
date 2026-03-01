@@ -1,7 +1,25 @@
+##########################################################
+##                                                      ##  
+##                 11.- Comunicación                    ##
+##                                                      ##
+##########################################################
+
+#############################
+##
+## Introducción
+##
+#############################
+
 library(tidyverse)
 library(scales)
 library(ggrepel)
 library(patchwork)
+
+#######################
+##
+## Etiquetas
+##
+#######################
 
 # Diagrama de dispersión y línea suavizada que relaciona el tamaño del 
 # motor (displ) con el consumo de gasolina (hwy) y coloreada por clase
@@ -21,6 +39,12 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 # principal (algo así como una entradilla), NO describir el gráfico en 
 # general. El subtítulo añade detalles adicionales. La caption (o segundo
 # subtítulo) se usa para describir la fuente de los datos.
+
+#######################
+##
+##   Anotaciones
+##
+#######################
 
 # Filtrar por consumo de gasolina (hwy) y tamaño del motor (displ)
 potential_outliers <- mpg |>
@@ -63,6 +87,13 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
     arrow = arrow(type = "closed")
   )
 
+#######################
+##
+##   Escalas
+##
+#######################
+
+####### Marcas de ejes y leyendas #########
 # Gráfico de dispersión que relaciona el tamaño del motor con el uso 
 # de gasolina y coloreado por tipo de tracción
 ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
@@ -102,13 +133,15 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill") +
   scale_y_continuous(name = "Percentage", labels = label_percent())
 
+######## Diseño de la leyenda #########
+
 # Diagrama de dispersión que relaciona el tamaño del motor con el 
 # consumo de gasolina y coloreado por la clase de auto
 base <- ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = class))
-# Por defecto la leyenda del color es a la drecha
+# Por defecto la leyenda del color es a la derecha
 base + theme(legend.position = "right") # the default
-# Aquí se cambia la etiqueta a laizquiera 
+# Aquí se cambia la etiqueta a la izquierda 
 base + theme(legend.position = "left")
 # Se cambia la leyenda a arriba y que esté en tres columnas
 base + 
@@ -122,7 +155,8 @@ base +
 # si el gráfico es alto y estrecho es mejor colocarlo a la izquierda 
 # o a la derecha.
 
-# Diagrama de disprsión que relaciona el tamaño del motor con el consumo
+
+# Diagrama de dispersión que relaciona el tamaño del motor con el consumo
 # de gasolina, coloreada por clase de auto, junto con una línea 
 # suavizada, con la leyenda abajo ordenada en 2 filas y con los círculos
 # de las leyendas agrandadas a 4 pixeles
@@ -134,11 +168,13 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 # NOTA: Esto es muy importante porque comúnmente es medio difícil 
 # identificar los colores de los círuculos cuando son pequeños
 
+########  Reemplazo de una escala (incluso de color) ##########
+
 # Gráfico que relaciona el peso (carat) con el precio del diamante 
 ggplot(diamonds, aes(x = log10(carat), y = log10(price))) +
   geom_bin2d()
 # Cuando hay logaritmos, para que se vea bien la leyenda (sin el 
-# prefijo log) se pueden usar alguna funciones
+# prefijo log) se pueden usar algunas funciones
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_bin2d() + 
   scale_x_log10() + 
@@ -155,13 +191,25 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = drv, shape = drv)) +
   scale_color_brewer(palette = "Set1")
 
+###################
+##
+##   Temas
+##
+###################
+
 # Diagrama de dispersión y línea suavizada (sin intervalos de confianza)
 # que relacionan el tamaño del motor con el consumo de gasolina
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth(se = FALSE) +
-  theme_linedraw() # Las opciones aceptables son: linedraw, bw y 
-# gray que es la opción por defecto
+  theme_linedraw() # Las opciones aceptables son: theme_linedraw, 
+# theme_bw y theme_gray que es la opción por defecto
+
+#########################
+##
+##    Diseño
+##
+#########################
 
 # Juntar 2 gráficos
 p1 <- ggplot(mpg, aes(x = displ, y = hwy)) + 
