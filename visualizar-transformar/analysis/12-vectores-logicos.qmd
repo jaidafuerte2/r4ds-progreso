@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-# Introducción
+## Introducción
 
 ```{r}
 #| label: setup
@@ -15,3 +15,192 @@ library(nycflights13)
 ```
 
 ## Comparaciones
+
+Filtrar la tabla flights por salidas diurnas que llegan aproximadamente a tiempo
+
+```{r}
+my_flights <- flights %>%
+  filter(dep_time > 600 & dep_time < 2000 & abs(arr_delay) < 20)
+my_flights[1:6,] # produce:
+```
+
+Crear variables lógicas(boleanas) de los vuelos que salieron en la mañana y otra variable de los que llegaron más o menos a tiempo. Luego filtrar según estas nuevas variables lógicas
+
+```{r}
+my_flights <- flights |> 
+  mutate(
+    daytime = dep_time > 600 & dep_time < 2000,
+    approx_ontime = abs(arr_delay) < 20,
+    .keep = "used" # Mostrar sólo las variables que se usaron en mutate
+  ) |>
+  filter(daytime & approx_ontime)
+my_flights[1:6,] # produce:
+```
+
+### Valores Faltantes
+
+Los valores faltantes son contagiosos, una comparación con un valor faltante, dará como resultado un valor faltante 
+
+```{r}
+NA > 5 # produce:
+
+10 == NA # produce:
+
+
+# We don't know how old Mary is
+age_mary <- NA
+
+# We don't know how old John is
+age_john <- NA
+
+# Are Mary and John the same age?
+age_mary == age_john # produce:
+```
+
+En conclusión, el siguiente código no funciona:
+
+```{r}
+flights |> 
+  filter(dep_time == NA)
+```
+
+Para obtener un resultado adecuado se necesita is.na()
+
+### is.na()
+
+Algunos Ejemplos
+
+```{r}
+is.na(c(TRUE, NA, FALSE)) # produce:
+
+is.na(c(1, NA, 3)) # produce:
+
+is.na(c("a", NA, "b")) # produce:
+#> [1] FALSE  TRUE FALSE
+```
+
+Filtra a todas las observaciones con que tienen valores faltantes en la variable dep_time
+
+```{r}
+my_flights <- flights |> 
+  filter(is.na(dep_time))
+my_flights[1:6,] # produce:
+```
+
+## Álgebra Booleana
+
+### Orden de las operaciones
+
+Forma correcta de filtrar a los vuelos de Noviembre y Diciembre
+
+```{r}
+my_flights <- flights |> 
+  filter(month == 11 | month == 12)
+my_flights[1:6,] # produce:
+```
+
+Forma incorrecta de filtrar a los vuelos de Noviembre y Diciembre
+
+```{r}
+my_flights <- flights |> 
+  filter(month == 11 | 12)
+my_flights[1:6,] # produce:
+```
+
+### %in%
+
+%in% devuelve un vector lógico de la misma longitud que x que es TRUE siempre que un valor en x esté en cualquier lugar de y.
+
+```{r}
+1:12 %in% c(1, 5, 11) # produce:
+  
+letters[1:10] %in% c("a", "e", "i", "o", "u") # produce:
+
+```
+
+Para encontrar todos los vuelos de noviembre y diciembre podríamos escribir:
+
+```{r}
+my_flights <- flights |> 
+  filter(month %in% c(11, 12))
+my_flights[1:6,] # produce:
+```
+
+```{r}
+# Con %in% las reglas de NA son diferentes
+c(1, 2, NA) == NA # produce:
+c(1, 2, NA) %in% NA # produce:
+
+```
+
+Por ejemplo, este código filtra los valores de deptime que son NA o 0800
+
+```{r}
+my_flights <- flights |> 
+  filter(dep_time %in% c(NA, 0800))
+my_flights[1:6,] # produce:
+```
+
+## Resúmenes
+
+### Resúmenes numéricos de vectores lógicos
+
+Cuando se utiliza un vector lógico en un contexto numérico, TRUE se convierte en 1 y FALSE se convierte en 0. Esto hace que sum() y mean()sean muy útiles con vectores lógicos porque sum(x) da el número de TRUEs y mean(x) da la proporción de TRUEs. (porque mean() simplemente usa sum() para sumar y divide por length())
+
+Sacar la proporción de vuelos que se retrasaron en la salidad como máximo una hora y el número de vuelos  que se retrasaron  en la llegada cinco o más horas
+
+```{r}
+my_flights <- flights |> 
+  group_by(year, month, day) |> 
+  summarize(
+    proportion_delayed = mean(dep_delay <= 60, na.rm = TRUE),
+    count_long_delay = sum(arr_delay >= 300, na.rm = TRUE),
+    .groups = "drop" # desagrupa
+  )
+my_flights[1:6,] # produce:
+```
+
+## Tranformaciones Condicionales
+
+### if_else()
+
+if_else ejecuta una comparación, si es verdadera se ejecuta el segundo argumento del paréntesis, sino el tercero. En el caso de valores faltantes devuelve NA
+
+```{r}
+x <- c(-3:3, NA)
+if_else(x > 0, "+ve", "-ve") # produce:
+```
+
+Existe un cuarto argumento opcional que se usará si la entrada es NA
+
+```{r}
+if_else(x > 0, "+ve", "-ve", "???") # produce:
+```
+
+### case_when()
+
+case_when realiza varias comparaciones, cuando encuentra una TRUE, devuelve lo que está posterior a "~"
+
+```{r}
+x <- c(-3:3, NA)
+
+case_when(
+  x == 0   ~ "0",
+  x < 0    ~ "-ve", 
+  x > 0    ~ "+ve",
+  is.na(x) ~ "???"
+) # produce:
+```
+
+Se puede usar .default para crear un valor predeterminado que abarque todos los casos.
+
+```{r}
+case_when(
+  x < 0 ~ "-ve",
+  x > 0 ~ "+ve",
+  .default = "???"
+) # produce:
+```
+
+
+

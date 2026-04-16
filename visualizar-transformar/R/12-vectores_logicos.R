@@ -235,23 +235,3 @@ if_else(x > 0, "+ve", "-ve", "???") # produce:
 
 ############### case_when() ###################
 
-x <- c(-3:3, NA)
-# Case when relaiza varias comparaciones, cuando encuentra una TRUE,
-# devuelve lo que está posterior a "~"
-case_when(
-  x == 0   ~ "0",
-  x < 0    ~ "-ve", 
-  x > 0    ~ "+ve",
-  is.na(x) ~ "???"
-) # produce:  
-# [1] "-ve" "-ve" "-ve" "0"   "+ve" "+ve" "+ve" "???"
-
-# Se puede usar .default para crear un valor predeterminado que
-# abarque todos los casos.
-case_when(
-  x < 0 ~ "-ve",
-  x > 0 ~ "+ve",
-  .default = "???"
-) # produce:
-# [1] "-ve" "-ve" "-ve" "???" "+ve" "+ve" "+ve" "???"
-
