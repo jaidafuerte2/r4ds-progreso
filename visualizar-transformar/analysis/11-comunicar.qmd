@@ -100,7 +100,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   )
 ```
 
-##   Escalas
+## Escalas
 
 ### Marcas de ejes y leyendas
 
@@ -135,7 +135,6 @@ ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
   scale_color_discrete(labels = c("4" = "4-wheel", "f" = "front", 
                                   "r" = "rear"))
 ```
-
 
 Diagrama de caja que relaciona el precio con la calidad del diamante. Con el eje de las x reescalado
 
@@ -185,7 +184,7 @@ Por defecto la leyenda del color es a la derecha
 base + theme(legend.position = "right") # the default
 ```
 
-Aquí se cambia la etiqueta a la izquierda 
+Aquí se cambia la etiqueta a la izquierda
 
 ```{r}
 #| fig-width: 6
@@ -231,9 +230,9 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 # identificar los colores de los círculos cuando son pequeños
 ```
 
-###  Reemplazo de una escala (incluso de color)
+### Reemplazo de una escala (incluso de color)
 
-Gráfico que relaciona el peso (carat) con el precio del diamante 
+Gráfico que relaciona el peso (carat) con el precio del diamante
 
 ```{r}
 #| fig-width: 5
@@ -254,7 +253,6 @@ ggplot(diamonds, aes(x = carat, y = price)) +
   scale_x_log10() + 
   scale_y_log10()
 ```
-
 
 Diagrama de dispersión con una escala de color que podrían leer incluso personas daltónicas
 
@@ -307,7 +305,6 @@ p2 <- ggplot(mpg, aes(x = drv, y = hwy)) +
 p1 + p2
 ```
 
-
 Juntar 2 gráficos horizontalmente y 1 verticalmente
 
 ```{r}
@@ -318,4 +315,3 @@ p3 <- ggplot(mpg, aes(x = cty, y = hwy)) +
   labs(title = "Plot 3")
 (p1 | p3) / p2
 ```
-

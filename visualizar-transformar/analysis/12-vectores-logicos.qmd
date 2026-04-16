@@ -1,0 +1,17 @@
+---
+title: "12 Vectores Lógicos"
+format: html
+editor: visual
+---
+
+# Introducción
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(nycflights13)
+```
+
+## Comparaciones

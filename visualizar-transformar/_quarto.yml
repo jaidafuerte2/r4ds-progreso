@@ -13,7 +13,9 @@ website:
         - analysis/9-capas.qmd
         - analysis/10-eda.qmd
         - analysis/11-comunicar.qmd
-      #- section: "Transformar"
+      - section: "Transformar"
+        contents: 
+        - analysis/12-vectores-logicos.qmd
   
   page-footer:
     left: "Copyright 2026, COVSAcorp"
