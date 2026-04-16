@@ -8,17 +8,20 @@ website:
     style: docked
     contents: 
       - index.qmd
-      - analysis/9-capas.qmd
-      - analysis/10-eda.qmd
-      - analysis/11-comunicar.qmd
+      - section: "Visualización"
+        contents: 
+        - analysis/9-capas.qmd
+        - analysis/10-eda.qmd
+        - analysis/11-comunicar.qmd
+      #- section: "Transformar"
   
-page-footer:
-  left: "Copyright 2026, COVSAcorp"
-  right: 
-  - icon: github
-    href: https://github.com/
-  - icon: twitter
-    href: https://twitter.com/
+  page-footer:
+    left: "Copyright 2026, COVSAcorp"
+    right: 
+    - icon: github
+      href: https://github.com/
+    - icon: twitter
+      href: https://twitter.com/
     
 format:
   html: 
