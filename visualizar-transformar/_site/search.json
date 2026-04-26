@@ -313,5 +313,82 @@
       "Transformar",
       "12 Vectores Lógicos"
     ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html",
+    "href": "analysis/13-numeros.html",
+    "title": "13 Números",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(nycflights13)",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#introducción",
+    "href": "analysis/13-numeros.html#introducción",
+    "title": "13 Números",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(nycflights13)",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#hacer-números",
+    "href": "analysis/13-numeros.html#hacer-números",
+    "title": "13 Números",
+    "section": "Hacer números",
+    "text": "Hacer números\nCambiar cadenas a enteros de doble precisión\n\nx &lt;- c(\"1.2\", \"5.6\", \"1e3\")\nparse_double(x) # produce:\n\n[1]    1.2    5.6 1000.0\n\n\nCambiar cadenas que tengan caracteres no numéricos a números (especialemnte útil para porcentajes y datos monetarios)\n\nx &lt;- c(\"$1,234\", \"USD 3,513\", \"59%\")\nparse_number(x) # produce:\n\n[1] 1234 3513   59",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#recuentos",
+    "href": "analysis/13-numeros.html#recuentos",
+    "title": "13 Números",
+    "section": "Recuentos",
+    "text": "Recuentos\nExplorar rápidamente contando la cantidad de destinos específicos de los vuelos\n\ncount_dest &lt;- flights |&gt; count(dest) # produce:\ncount_dest[1:5,] # produce:\n\n# A tibble: 5 × 2\n  dest      n\n  &lt;chr&gt; &lt;int&gt;\n1 ABQ     254\n2 ACK     265\n3 ALB     439\n4 ANC       8\n5 ATL   17215\n\n\nOrdenar en orden descendente o ver los vuelos más comunes\n\ncount_dest &lt;- flights |&gt; count(dest, sort = TRUE)\ncount_dest[1:5,] # produce:\n\n# A tibble: 5 × 2\n  dest      n\n  &lt;chr&gt; &lt;int&gt;\n1 ORD   17283\n2 ATL   17215\n3 LAX   16174\n4 BOS   15508\n5 MCO   14082\n\n\nCalcular la cantidad de vuelos por destino específico y calcular la media de retraso de llegada según cada destino\n\ncount_dest &lt;- flights |&gt; \n  group_by(dest) |&gt; \n  summarize(\n    n = n(),\n    delay = mean(arr_delay, na.rm = TRUE)\n  )\ncount_dest[1:5,]\n\n# A tibble: 5 × 3\n  dest      n delay\n  &lt;chr&gt; &lt;int&gt; &lt;dbl&gt;\n1 ABQ     254  4.38\n2 ACK     265  4.85\n3 ALB     439 14.4 \n4 ANC       8 -2.5 \n5 ATL   17215 11.3 \n\n\nContar los valores faltantes de la variable hora de salida en cada destino (con sum() y is.na())\n\nmy_flights &lt;- flights |&gt; \n  group_by(dest) |&gt; \n  summarize(n_cancelled = sum(is.na(dep_time)))\nmy_flights[1:5,] # produce:\n\n# A tibble: 5 × 2\n  dest  n_cancelled\n  &lt;chr&gt;       &lt;int&gt;\n1 ABQ             0\n2 ACK             0\n3 ALB            20\n4 ANC             0\n5 ATL           317",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#transformaciones-numéricas",
+    "href": "analysis/13-numeros.html#transformaciones-numéricas",
+    "title": "13 Números",
+    "section": "Transformaciones numéricas",
+    "text": "Transformaciones numéricas\nR usa reglas de reciclaje para manejar las operaciones con vectores (variables)\n\nx &lt;- c(1, 2, 10, 20)\nx / 5 # produce:\n\n[1] 0.2 0.4 2.0 4.0\n\n\nPor la reglas de reciclaje, lo anterior es una abriviación de:\n\nx / c(5, 5, 5, 5) # produce:\n\n[1] 0.2 0.4 2.0 4.0\n\n\nNormalmente (aunque no siempre) muestra una advertencia si el vector más largo no es un múltiplo del más corto:\n\nx * c(1, 2) # produce: \n\n[1]  1  4 10 40\n\nx * c(1, 2, 3) # produce:\n\nWarning in x * c(1, 2, 3): longer object length is not a multiple of shorter\nobject length\n\n\n[1]  1  4 30 20\n\n\n\nMínimo y Máximo\nCrear una tabla con variables x e y\n\ndf &lt;- tribble(\n  ~x, ~y,\n  1,  3,\n  5,  2,\n  7, NA,\n)\n\nCrear nuevas variable con los valores mínimos y máximos\n\ndf |&gt; \n  mutate(\n    min = pmin(x, y, na.rm = TRUE),\n    max = pmax(x, y, na.rm = TRUE)\n  ) # produce:\n\n# A tibble: 3 × 4\n      x     y   min   max\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     1     3     1     3\n2     5     2     2     5\n3     7    NA     7     7\n\n\n\n\nAritmética modular\n\n# Ejemplo de división entera\n1:10 %/% 3 # produce: \n\n [1] 0 0 1 1 1 2 2 2 3 3\n\n# Cálculo del resto de una división (la operación módulo)\n1:10 %% 3 # produce: \n\n [1] 1 2 0 1 2 0 1 2 0 1\n\n\nUsar la división entera y el módulo para desempaquetar la hora de salida\n\nmy_flights &lt;- flights |&gt; \n  mutate(\n    hour = sched_dep_time %/% 100,\n    minute = sched_dep_time %% 100,\n    .keep = \"used\"\n  )\nmy_flights[1:5,1:3] # produce:\n\n# A tibble: 5 × 3\n  sched_dep_time  hour minute\n           &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1            515     5     15\n2            529     5     29\n3            540     5     40\n4            545     5     45\n5            600     6      0\n\n\nCombinar eso con mean(is.na(x)) para ver cómo varía la proporción de vuelos cancelados a lo largo del día\n\nflights |&gt; \n  group_by(hour = sched_dep_time %/% 100) |&gt; \n  summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) |&gt; \n  filter(hour &gt; 1) |&gt; \n  ggplot(aes(x = hour, y = prop_cancelled)) +\n  geom_line(color = \"grey50\") + \n  geom_point(aes(size = n))\n\n\n\n\n\n\n\n\n\n\nRedondeo\n\nround(123.456) # produce:\n\n[1] 123\n\nround(123.456, 2)  # produce\n\n[1] 123.46\n\nround(123.456, 1)  # produce\n\n[1] 123.5\n\nround(123.456, -1) # produce\n\n[1] 120\n\nround(123.456, -2) # produce\n\n[1] 100\n\n\nR usa el método de redondeo bancario (la mitad hacia arriba y la mitad hacia abajo)\n\nround(c(1.5, 2.5)) # produce:\n\n[1] 2 2\n\n\n\nx &lt;- 123.456\n\n# floor siempre redondea hacia abajo\nfloor(x) # produce:\n\n[1] 123\n\n# ceiling siempre redondea hacia arriba \nceiling(x) # produce:\n\n[1] 124",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#transformaciones-generales",
+    "href": "analysis/13-numeros.html#transformaciones-generales",
+    "title": "13 Números",
+    "section": "Transformaciones generales",
+    "text": "Transformaciones generales\n\nDesplazamientos\n\nx &lt;- c(2, 5, 11, 11, 19, 35)\nlag(x) # produce:\n\n[1] NA  2  5 11 11 19\n\nlead(x) # produce:\n\n[1]  5 11 11 19 35 NA\n\n\nConocer la diferencia entre el valor actual y el anterior\n\nx - lag(x) # produce:\n\n[1] NA  3  6  0  8 16\n\n\nHorarios en que alguien visitó un sitio web\n\nevents &lt;- tibble(\n  time = c(0, 1, 2, 3, 5, 10, 12, 15, 17, 19, 20, 27, 28, 30)\n)\n\nCalcular el tiempo entre cada evento y determinar si hay una diferencia lo suficientemente grande como para calificar\n\nevents &lt;- events |&gt; \n  mutate(\n    diff = time - lag(time, default = first(time)),\n    has_gap = diff &gt;= 5\n  )\nevents[1:5,1:3] # produce:\n\n# A tibble: 5 × 3\n   time  diff has_gap\n  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n1     0     0 FALSE  \n2     1     1 FALSE  \n3     2     1 FALSE  \n4     3     1 FALSE  \n5     5     2 FALSE",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
+  },
+  {
+    "objectID": "analysis/13-numeros.html#resúmenes-numéricos",
+    "href": "analysis/13-numeros.html#resúmenes-numéricos",
+    "title": "13 Números",
+    "section": "Resúmenes numéricos",
+    "text": "Resúmenes numéricos\n\nCentro\nAgrupar por año, mes y día y resumir por media, mediana y cantidad de retraso de salida\n\nmy_flights &lt;- flights |&gt;\n  group_by(year, month, day) |&gt;\n  summarize(\n    mean = mean(dep_delay, na.rm = TRUE),\n    median = median(dep_delay, na.rm = TRUE),\n    n = n(),\n    .groups = \"drop\"\n  )\nmy_flights[1:5,1:6] # produce:\n\n# A tibble: 5 × 6\n   year month   day  mean median     n\n  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;\n1  2013     1     1 11.5      -1   842\n2  2013     1     2 13.9       0   943\n3  2013     1     3 11.0       0   914\n4  2013     1     4  8.95     -1   915\n5  2013     1     5  5.73     -1   720\n\n\nDiagrama de dispersión que relaciona la media con la mediana\n\nmy_flights %&gt;%\n  ggplot(aes(x = mean, y = median)) + \n  geom_abline(slope = 1, intercept = 0, color = \"white\", linewidth = 2) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n\nMínimos, Máximos y Cuantiles\nAgrupar los vuelos por año, mes y día y resumir por valor máximo de retraso de salida y cuantil 95 (El valor mayor que el 95% de los valores, el cuantil 25 es el valor mayor que el 25% de los valores y el cuantil 50 es la mediana)\n\nmy_flights &lt;- flights |&gt;\n  group_by(year, month, day) |&gt;\n  summarize(\n    max = max(dep_delay, na.rm = TRUE),\n    q95 = quantile(dep_delay, 0.95, na.rm = TRUE),\n    .groups = \"drop\"\n  )\nmy_flights[1:5,] # produce:\n\n# A tibble: 5 × 5\n   year month   day   max   q95\n  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;\n1  2013     1     1   853  70.1\n2  2013     1     2   379  85  \n3  2013     1     3   291  68  \n4  2013     1     4   288  60  \n5  2013     1     5   327  41",
+    "crumbs": [
+      "Transformar",
+      "13 Números"
+    ]
   }
 ]

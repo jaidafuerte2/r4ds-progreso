@@ -39,7 +39,7 @@ my_flights[1:6,] # produce:
 
 ### Valores Faltantes
 
-Los valores faltantes son contagiosos, una comparación con un valor faltante, dará como resultado un valor faltante 
+Los valores faltantes son contagiosos, una comparación con un valor faltante, dará como resultado un valor faltante
 
 ```{r}
 NA > 5 # produce:
@@ -147,7 +147,7 @@ my_flights[1:6,] # produce:
 
 Cuando se utiliza un vector lógico en un contexto numérico, TRUE se convierte en 1 y FALSE se convierte en 0. Esto hace que sum() y mean()sean muy útiles con vectores lógicos porque sum(x) da el número de TRUEs y mean(x) da la proporción de TRUEs. (porque mean() simplemente usa sum() para sumar y divide por length())
 
-Sacar la proporción de vuelos que se retrasaron en la salidad como máximo una hora y el número de vuelos  que se retrasaron  en la llegada cinco o más horas
+Sacar la proporción de vuelos que se retrasaron en la salidad como máximo una hora y el número de vuelos que se retrasaron en la llegada cinco o más horas
 
 ```{r}
 my_flights <- flights |> 
@@ -179,7 +179,7 @@ if_else(x > 0, "+ve", "-ve", "???") # produce:
 
 ### case_when()
 
-case_when realiza varias comparaciones, cuando encuentra una TRUE, devuelve lo que está posterior a "~"
+case_when realiza varias comparaciones, cuando encuentra una TRUE, devuelve lo que está posterior a "\~"
 
 ```{r}
 x <- c(-3:3, NA)
@@ -201,6 +201,3 @@ case_when(
   .default = "???"
 ) # produce:
 ```
-
-
-

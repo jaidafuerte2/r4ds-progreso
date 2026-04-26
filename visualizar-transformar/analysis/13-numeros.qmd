@@ -1,0 +1,254 @@
+---
+title: "13 Números"
+format: html
+editor: visual
+---
+
+## Introducción
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(nycflights13)
+```
+
+## Hacer números
+
+Cambiar cadenas a enteros de doble precisión
+```{r}
+x <- c("1.2", "5.6", "1e3")
+parse_double(x) # produce:
+```
+
+
+Cambiar cadenas que tengan caracteres no numéricos a números (especialemnte útil para porcentajes y datos monetarios)
+
+```{r}
+x <- c("$1,234", "USD 3,513", "59%")
+parse_number(x) # produce:
+```
+
+## Recuentos
+
+Explorar rápidamente contando la cantidad de destinos específicos de los vuelos
+
+```{r}
+count_dest <- flights |> count(dest) # produce:
+count_dest[1:5,] # produce:
+```
+
+Ordenar en orden descendente o ver los vuelos más comunes
+
+```{r}
+count_dest <- flights |> count(dest, sort = TRUE)
+count_dest[1:5,] # produce:
+```
+Calcular la cantidad de vuelos por destino específico y calcular la media de retraso de llegada según cada destino
+
+```{r}
+count_dest <- flights |> 
+  group_by(dest) |> 
+  summarize(
+    n = n(),
+    delay = mean(arr_delay, na.rm = TRUE)
+  )
+count_dest[1:5,]
+```
+Contar los valores faltantes de la variable hora de salida en cada destino (con sum() y is.na())
+
+```{r}
+my_flights <- flights |> 
+  group_by(dest) |> 
+  summarize(n_cancelled = sum(is.na(dep_time)))
+my_flights[1:5,] # produce:
+
+```
+
+## Transformaciones numéricas
+
+R usa reglas de reciclaje para manejar las operaciones con vectores (variables)
+
+```{r}
+x <- c(1, 2, 10, 20)
+x / 5 # produce:
+```
+
+Por la reglas de reciclaje, lo anterior es una abriviación de:
+
+```{r}
+x / c(5, 5, 5, 5) # produce:
+```
+
+Normalmente (aunque no siempre) muestra una advertencia si el vector más largo no es un múltiplo del más corto:
+```{r}
+x * c(1, 2) # produce: 
+x * c(1, 2, 3) # produce:
+```
+
+### Mínimo y Máximo
+
+Crear una tabla con variables x e y
+
+```{r}
+df <- tribble(
+  ~x, ~y,
+  1,  3,
+  5,  2,
+  7, NA,
+)
+```
+
+Crear nuevas variable con los valores mínimos y máximos  
+
+```{r}
+df |> 
+  mutate(
+    min = pmin(x, y, na.rm = TRUE),
+    max = pmax(x, y, na.rm = TRUE)
+  ) # produce:
+```
+
+### Aritmética modular
+
+```{r}
+# Ejemplo de división entera
+1:10 %/% 3 # produce: 
+
+# Cálculo del resto de una división (la operación módulo)
+1:10 %% 3 # produce: 
+```
+
+Usar la división entera y el módulo para desempaquetar la hora de salida
+
+```{r}
+my_flights <- flights |> 
+  mutate(
+    hour = sched_dep_time %/% 100,
+    minute = sched_dep_time %% 100,
+    .keep = "used"
+  )
+my_flights[1:5,1:3] # produce:
+```
+
+Combinar eso con mean(is.na(x)) para ver cómo varía la proporción de vuelos cancelados a lo largo del día
+
+```{r}
+flights |> 
+  group_by(hour = sched_dep_time %/% 100) |> 
+  summarize(prop_cancelled = mean(is.na(dep_time)), n = n()) |> 
+  filter(hour > 1) |> 
+  ggplot(aes(x = hour, y = prop_cancelled)) +
+  geom_line(color = "grey50") + 
+  geom_point(aes(size = n))
+```
+
+### Redondeo
+
+```{r}
+round(123.456) # produce:
+
+round(123.456, 2)  # produce
+
+round(123.456, 1)  # produce
+
+round(123.456, -1) # produce
+
+round(123.456, -2) # produce
+```
+
+R usa el método de redondeo bancario (la mitad hacia arriba y la mitad hacia abajo)
+
+```{r}
+round(c(1.5, 2.5)) # produce:
+```
+
+```{r}
+x <- 123.456
+
+# floor siempre redondea hacia abajo
+floor(x) # produce:
+
+# ceiling siempre redondea hacia arriba 
+ceiling(x) # produce:
+```
+
+## Transformaciones generales
+
+### Desplazamientos
+
+```{r}
+x <- c(2, 5, 11, 11, 19, 35)
+lag(x) # produce:
+lead(x) # produce:
+```
+
+Conocer la diferencia entre el valor actual y el anterior
+
+```{r}
+
+x - lag(x) # produce:
+```
+
+Horarios en que alguien visitó un sitio web
+
+```{r}
+events <- tibble(
+  time = c(0, 1, 2, 3, 5, 10, 12, 15, 17, 19, 20, 27, 28, 30)
+)
+```
+
+Calcular el tiempo entre cada evento y determinar si hay una diferencia lo suficientemente grande como para calificar
+
+```{r}
+events <- events |> 
+  mutate(
+    diff = time - lag(time, default = first(time)),
+    has_gap = diff >= 5
+  )
+events[1:5,1:3] # produce:
+```
+
+## Resúmenes numéricos
+
+### Centro
+
+Agrupar por año, mes  y día y resumir por media, mediana y cantidad de retraso de salida
+
+```{r}
+my_flights <- flights |>
+  group_by(year, month, day) |>
+  summarize(
+    mean = mean(dep_delay, na.rm = TRUE),
+    median = median(dep_delay, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  )
+my_flights[1:5,1:6] # produce:
+```
+
+Diagrama de dispersión que relaciona la media con la mediana
+
+```{r}
+my_flights %>%
+  ggplot(aes(x = mean, y = median)) + 
+  geom_abline(slope = 1, intercept = 0, color = "white", linewidth = 2) +
+  geom_point()
+```
+
+### Mínimos, Máximos y Cuantiles
+
+Agrupar los vuelos por año, mes y día y resumir por valor máximo de retraso de salida y cuantil 95 (El valor mayor que el 95% de los valores, el cuantil 25 es el valor mayor que el 25% de los valores y el cuantil 50 es la mediana)
+
+```{r}
+my_flights <- flights |>
+  group_by(year, month, day) |>
+  summarize(
+    max = max(dep_delay, na.rm = TRUE),
+    q95 = quantile(dep_delay, 0.95, na.rm = TRUE),
+    .groups = "drop"
+  )
+my_flights[1:5,] # produce:
+```
+

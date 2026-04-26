@@ -16,6 +16,7 @@ website:
       - section: "Transformar"
         contents: 
         - analysis/12-vectores-logicos.qmd
+        - analysis/13-numeros.qmd
   
   page-footer:
     left: "Copyright 2026, COVSAcorp"
